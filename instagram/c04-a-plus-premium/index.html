@@ -88,7 +88,19 @@
   .cover .logo{left:50%;transform:translateX(-50%);bottom:56px;height:42px}
 
   /* ---------- 02 ---------- */
-  .compare{position:absolute;left:88px;right:88px;bottom:190px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  /* slide 2: foto da porta em tons WayBrand, com opacidade */
+  .s2bg{background:#061210;color:#fff}
+  .s2bg:before{content:"";position:absolute;inset:0;background:url(assets/slide2-porta.jpg) center/cover;opacity:.8}
+  .s2bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,18,16,.8) 0%,rgba(6,18,16,.35) 36%,rgba(6,18,16,0) 55%,rgba(6,18,16,.7) 100%)}
+  .s2bg .compare,.s2bg .handle{z-index:2}
+  .s2bg .pill.onsolid{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.18)}
+  .s2bg h2 em{color:var(--green)}
+  .compare{position:absolute;left:88px;right:88px;bottom:170px;display:grid;grid-template-columns:1fr 1.55fr;gap:22px;align-items:end}
+  .compare .card:not(.now){background:rgba(11,42,34,.82);backdrop-filter:blur(6px);border:1.5px solid rgba(255,255,255,.1)}
+  .compare .card.now{padding:48px 44px;box-shadow:0 0 70px rgba(0,180,144,.45);border:3px solid var(--green)}
+  .compare .card.now .big{font-size:56px}
+  .compare .card.now .ok{width:46px;height:46px;font-size:26px}
+  .compare .card.now small{font-size:30px}
   .compare .card{background:#0B2A22;color:#fff}
   .compare .card.now{background:#fff;color:#000}
   .tag{font:700 20px/1 'Inter';letter-spacing:.16em;text-transform:uppercase;opacity:.7;margin-bottom:22px}
@@ -175,7 +187,7 @@
 </section>
 
 <!-- 02 · O QUE MUDOU — verde sólido -->
-<section class="slide solid" id="s2"><div class="pad">
+<section class="slide s2bg" id="s2"><div class="pad" style="position:absolute;z-index:2">
   <span class="pill onsolid">O que mudou</span>
   <h2>O Premium era<br><em>clube fechado.</em></h2>
   <p class="lead">Durante anos, só as gigantes tinham esse formato no anúncio. Hoje ele está disponível pra quem tem <b>marca registrada na Amazon</b> (Brand&nbsp;Registry).</p>
