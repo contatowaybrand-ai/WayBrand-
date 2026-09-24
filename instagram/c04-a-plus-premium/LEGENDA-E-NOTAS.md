@@ -1,33 +1,34 @@
-# C04 · A+ Premium — carrossel (8 slides, 1080×1350)
+# C04 · A+ Premium, carrossel de 6 slides (1080×1350)
 
-PNGs finais em `png/`. Fonte editável: `index.html` (renderizar com `node render.mjs`).
+Segue o padrão do feed @waybrand.co, com base na análise post a post de 24/09/2026 (ver `ANALISE-FEED.md`).
+Modelo principal: o carrossel "Case 18% → 30%" (11/09/2026).
+
+| Slide | Fundo | Conteúdo |
+|---|---|---|
+| 01 Capa | escuro + cena de luz | "O A+ Premium não é mais só para Apple, JBL e Red Bull." + faixa verde "Marcas registradas podem vender **até 33% mais.**" |
+| 02 O que mudou | verde sólido #00A884 | "O Premium era *clube fechado.*" Antes (✕ só gigantes) × Agora (✓ marcas registradas) |
+| 03 A diferença | branco | "Mesmo anúncio. *Outra página.*" Antes/depois com divisor: básico × Premium |
+| 04 O que libera | escuro #18241E | "5 recursos que *vendem por você.*" Banner, vídeo, interativo, perguntas e respostas, comparativo |
+| 05 Por que vende mais | claro | "O cliente fica. *E a Amazon percebe.*" Notificações "Nova venda na Amazon" |
+| 06 Fechamento | claro | ~~"A+ Premium é coisa de marca grande."~~ → "É gratuito pra marca registrada. *E quase ninguém usa.*" + caminho no Seller Central + barra de comentário PREMIUM |
 
 ## Legenda
 
 Durante anos, o A+ Premium foi coisa de Apple, JBL e Red Bull.
 
-Agora ele está liberado pra marcas registradas na Amazon. E quase ninguém no Brasil está usando.
+Hoje ele está disponível pra quem tem marca registrada na Amazon. E quase ninguém no Brasil está usando.
 
-O Premium transforma a descrição do seu anúncio numa página de vendas: banner em tela cheia, vídeo, imagem interativa, carrossel, perguntas e respostas e comparativo da sua linha. O cliente fica mais tempo no seu anúncio, e a Amazon percebe.
+Banner em tela cheia. Vídeo na descrição. Imagem interativa. Perguntas e respostas. Comparativo da sua linha.
 
-É gratuito. A diferença é só quem começa primeiro.
+O cliente fica mais tempo no seu anúncio. E a Amazon percebe.
 
-Quer saber se a sua marca já pode usar? Mande PREMIUM no direct.
+É gratuito. A diferença é quem começa primeiro.
 
-#amazonbrasil #sellercentral #marcapropria #conteudoA #marketplace
+Comente PREMIUM e a gente avalia se a sua marca já pode usar.
 
 ## Conferir antes de postar
 
-1. **O "até 33%" não tem fonte da Amazon.** A Amazon divulga *até 8%* para o A+ básico e *até 20%* para o A+ Premium. O 33% que circula vem de pesquisa sobre consistência de marca entre canais (Lucidpress/Marq), não sobre A+ nem registro de marca. A pauta pede fonte da Amazon pra esse tipo de número. Alternativa segura pra capa: "Marcas registradas podem vender até 20% mais." (basta trocar no `index.html` e renderizar de novo).
-2. **Requisitos do Premium no Brasil:** confirmar com o André no Seller Central antes de dizer que ele está "liberado" (pauta, C04, cuidados).
-3. **Fonte:** as imagens foram renderizadas com Archivo Expanded e Manrope (substitutas livres). Se a máquina tiver RF Dewi instalada, o `index.html` usa RF Dewi automaticamente. Renderize de novo aí pra ficar 100% na tipografia da marca.
-4. Os exemplos do slide 5 ("Tampa com trava") e do slide 6 (perguntas) são genéricos. Não mostram produto de cliente.
-
-## Sistema visual aplicado (base: pauta "O formato que o feed já tem" + prints de referência)
-
-- 4:5, fundo preto #080909, feixe de luz cônico vindo de cima, grão fino por cima.
-- Título: RF Dewi Expanded Ultrabold, off-white #F2F0EA. Corpo: RF Dewi Semibold/Regular #C9CCC8. Rótulos em caixa alta espaçada #9FA8A4.
-- Verde da marca #00B48E, clareado pra #2FE0B0 com brilho, só na frase de impacto, nos destaques e nos elementos ativos.
-- Capa sem logo (gancho puro); a marca entra só no último slide.
-- Estrutura dos prints de referência: rótulo pequeno no topo, título grande no terço de baixo, rodapé com @ à esquerda e navegação à direita.
-- Voz do André: "você", direto, frase curta, termos do Seller Central como aparecem lá, sem "hack" nem promessa garantida. CTA com palavra-chave na DM (plano do Instagram).
+1. **"Até 33%" não tem fonte da Amazon.** A Amazon divulga até 8% (A+ básico) e até 20% (A+ Premium). O 33% vem de uma pesquisa sobre consistência de marca entre canais. Versão segura: "até 20% mais". Pra trocar, é só mudar `.l2` no `index.html` e rodar `node render.mjs`.
+2. Confirmar com o André os requisitos atuais do Premium no Brasil.
+3. Capa: a cena foi feita em código. Há dois renders 3D gerados no Magnific (corda de veludo aberta + notebook com página verde). Para usar um deles, salve como `assets/capa.png`, descomente a linha `<img class="bgimg">` do slide 1 e renderize de novo.
+4. Fonte do render: Inter (Black/ExtraBold + itálico), a grotesca mais próxima do que o feed usa hoje.

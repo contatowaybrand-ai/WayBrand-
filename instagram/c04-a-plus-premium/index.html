@@ -3,263 +3,259 @@
 <head>
 <meta charset="utf-8">
 <title>C04 · A+ Premium</title>
-<!-- Fontes: se RF Dewi estiver instalada na máquina, ela é usada. Senão cai em Archivo Expanded / Manrope (Google Fonts, OFL, em assets/fonts). -->
+<!-- Segue o padrão do feed @waybrand.co (base: post "Case 18% → 30%", 11/09/2026).
+     Capa: se existir assets/capa.png (render 3D), ela entra no lugar da cena feita em CSS. -->
 <style>
-  @font-face{font-family:'Archivo';font-weight:800 900;font-stretch:125%;src:url(assets/fonts/Archivo-Expanded.woff2) format('woff2')}
-  @font-face{font-family:'Manrope';font-weight:500 800;src:url(assets/fonts/Manrope.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:italic;font-weight:300 900;src:url(assets/fonts/Inter-italic.woff2) format('woff2')}
   :root{
-    --bg:#080909;
-    --ink:#F2F0EA;        /* títulos */
-    --body:#C9CCC8;       /* corpo */
-    --muted:#9FA8A4;      /* rótulos */
-    --line:#262a29;
-    --green:#00B48E;      /* verde da marca */
-    --green-lit:#2FE0B0;  /* verde clareado pra brilhar no preto (só na frase de impacto) */
-    --display:"RF Dewi Expanded","RFDewiExpanded-Ultrabold","Archivo",sans-serif;
-    --sans:"RF Dewi","RFDewi-Semibold","Manrope",sans-serif;
+    --green:#00B490;      /* verde oficial 2026 */
+    --green-solid:#00A884;/* fundo sólido */
+    --green-light:#6CC6B4;
+    --black:#000;
+    --dark:#0C1818;
+    --dark2:#18241E;
+    --light:#F0F0F0;
+    --red:#E5484D;        /* só pro negativo */
+    --red-deep:#42060C;
+    --yellow:#FCD800;     /* só UI da Amazon */
+    --gray:#84909C;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#1b1d1d;font-family:var(--sans);-webkit-font-smoothing:antialiased;display:flex;flex-wrap:wrap;gap:40px;padding:40px}
-  .slide{position:relative;width:1080px;height:1350px;background:var(--bg);overflow:hidden;color:var(--ink);flex:none}
+  body{background:#222;font-family:'Inter',sans-serif;font-optical-sizing:auto;-webkit-font-smoothing:antialiased;display:flex;flex-wrap:wrap;gap:40px;padding:40px}
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;flex:none}
+  .pad{position:absolute;inset:0;padding:96px 88px}
+  .dark{background:var(--dark);color:#fff}
+  .dark2{background:var(--dark2);color:#fff}
+  .solid{background:var(--green-solid);color:#fff}
+  .white{background:#fff;color:#000}
+  .light{background:var(--light);color:#000}
 
-  /* feixe de luz cônico vindo de cima */
-  .beam{position:absolute;left:50%;top:-80px;width:620px;height:1000px;transform:translateX(-50%);pointer-events:none;
-    background:radial-gradient(ellipse 50% 100% at 50% 0%, rgba(242,240,234,.55) 0%, rgba(242,240,234,.22) 35%, rgba(242,240,234,.06) 65%, transparent 85%);
-    clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);filter:blur(28px)}
-  .beam.soft{opacity:.45}
-  .beam.side{left:78%;opacity:.35}
-  .floor{position:absolute;left:0;right:0;bottom:0;height:420px;pointer-events:none;
-    background:radial-gradient(ellipse 60% 100% at 50% 100%, rgba(0,180,142,.16), transparent 70%)}
-  /* grão fino */
-  .grain{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  /* etiqueta em pílula: "● O PROBLEMA" */
+  .pill{display:inline-flex;align-items:center;gap:14px;padding:14px 26px;border-radius:999px;font:700 22px/1 'Inter';letter-spacing:.14em;text-transform:uppercase}
+  .pill:before{content:"";width:12px;height:12px;border-radius:50%;background:currentColor}
+  .pill.onsolid{background:#0B2A22;color:#fff}.pill.onsolid:before{background:var(--green-light)}
+  .pill.onwhite{background:#EEF2F1;color:#000}.pill.onwhite:before{background:var(--green)}
+  .light .pill.onwhite{background:#fff}
+  .pill.ondark{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.14)}.pill.ondark:before{background:var(--green)}
 
-  .top{position:absolute;top:84px;left:96px;right:96px;display:flex;justify-content:space-between;
-    font:600 22px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}
-  .foot{position:absolute;bottom:80px;left:96px;right:96px;display:flex;justify-content:space-between;align-items:center;
-    font:600 22px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-  .foot b{color:var(--ink);font-weight:700}
+  /* títulos: grotesca Black, sentence case, 2ª linha em itálico */
+  h2{font:900 82px/1.02 'Inter';letter-spacing:-.035em;margin:34px 0 30px}
+  h2 em{font-style:italic;font-weight:800}
+  .solid h2 em{color:#fff}
+  .white h2 em,.light h2 em{color:var(--green)}
+  .dark2 h2 em,.dark h2 em{color:var(--green)}
+  .lead{font:300 36px/1.35 'Inter';max-width:880px}
+  .lead b{font-weight:700}
+  .handle{position:absolute;bottom:64px;right:88px;font:700 24px/1 'Inter'}
+  .slide .logo{position:absolute;bottom:58px;left:88px;height:46px}
+  .num{position:absolute;top:104px;right:88px;font:600 22px/1 'Inter';letter-spacing:.14em;opacity:.55}
 
-  .copy{position:absolute;left:96px;right:96px;bottom:190px}
-  .kicker{font:700 24px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--green-lit);margin-bottom:28px}
-  h1,h2{font-family:var(--display);font-weight:900;font-stretch:125%;letter-spacing:-.01em;color:var(--ink)}
-  h2{font-size:66px;line-height:1.04;margin-bottom:30px}
-  p{font:500 36px/1.38 var(--sans);color:var(--body);max-width:860px}
-  p strong{color:var(--ink);font-weight:700}
-  .punch{color:var(--green-lit);text-shadow:0 0 28px rgba(47,224,176,.45),0 0 2px rgba(47,224,176,.6)}
+  /* cards e chips (linguagem de UI) */
+  .card{border-radius:28px;padding:36px}
+  .chip{display:inline-flex;align-items:center;gap:14px;padding:18px 26px;border-radius:18px;font:600 28px/1 'Inter'}
+  .x,.ok{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:900 20px/1 'Inter';color:#fff}
+  .x{background:var(--red)} .ok{background:var(--green)}
 
-  /* ---------- capa ---------- */
-  .cover .copy{bottom:230px}
-  .cover .lead{font:600 50px/1.2 var(--sans);color:var(--ink);margin-bottom:34px;max-width:900px}
-  .cover h1{font-size:86px;line-height:1.02}
-  .cover .swipe{position:absolute;left:96px;bottom:110px;font:600 22px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-  .brands{display:flex;gap:18px;margin-bottom:44px}
-  .brands span{font:700 22px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--muted);
-    padding:14px 22px;border:1.5px solid #3a3f3d;border-radius:999px;text-decoration:line-through;text-decoration-color:rgba(47,224,176,.8);text-decoration-thickness:2px}
+  /* ---------- 01 CAPA ---------- */
+  .cover{background:radial-gradient(ellipse 70% 55% at 50% 30%,#123a31 0%,#0C1818 55%,#050909 100%)}
+  .cover .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .spot{position:absolute;left:50%;top:-120px;width:760px;height:980px;transform:translateX(-50%);
+    background:radial-gradient(ellipse 50% 100% at 50% 0%,rgba(255,255,255,.22),rgba(255,255,255,.06) 50%,transparent 80%);
+    clip-path:polygon(36% 0,64% 0,100% 100%,0 100%);filter:blur(24px)}
+  .laptop{position:absolute;left:50%;top:170px;transform:translateX(-50%) perspective(1600px) rotateX(8deg);width:760px}
+  .lid{height:470px;border-radius:26px 26px 8px 8px;background:#0a0f0e;border:3px solid #26302d;padding:18px;box-shadow:0 0 120px rgba(0,180,144,.35),0 40px 80px rgba(0,0,0,.7)}
+  .screen{height:100%;border-radius:10px;overflow:hidden;background:#0f1614;display:flex;flex-direction:column;gap:12px;padding:12px}
+  .hero{flex:1.3;border-radius:8px;background:linear-gradient(120deg,#007a62,#00B490 55%,#6CE8C8);position:relative;box-shadow:0 0 50px rgba(0,180,144,.5)}
+  .hero:after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.35);
+    box-shadow:inset 0 0 0 3px rgba(255,255,255,.9)}
+  .hero:before{content:"";position:absolute;left:calc(50% + 4px);top:50%;transform:translate(-50%,-50%);border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent;z-index:1}
+  .mods{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .mods i{border-radius:8px;background:#16322b;border:1.5px solid #1f4a3f}
+  .base{height:22px;width:880px;margin-left:-60px;border-radius:0 0 30px 30px;background:linear-gradient(#2c3532,#141a18)}
+  .floorglow{position:absolute;left:50%;top:640px;transform:translateX(-50%);width:900px;height:160px;background:radial-gradient(ellipse at center,rgba(0,180,144,.35),transparent 70%);filter:blur(10px)}
+  /* os "donos" antigos, riscados */
+  .owners{position:absolute;top:120px;left:0;right:0;display:flex;justify-content:center;gap:16px}
+  .owners span{font:600 22px/1 'Inter';letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);padding:12px 20px;border-radius:999px;border:1.5px solid rgba(255,255,255,.18);
+    background:rgba(0,0,0,.35);text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:3px}
+  .cover-copy{position:absolute;left:0;right:0;bottom:150px;text-align:center;color:#fff}
+  .cover-copy .apoio{font:300 42px/1.3 'Inter';margin:0 auto 34px;max-width:900px}
+  .cover-copy .apoio b{font-weight:800}
+  .band{display:inline-block;background:var(--green);padding:26px 40px 30px;transform:rotate(-1.5deg);box-shadow:0 20px 60px rgba(0,180,144,.35)}
+  .band .l1{font:400 44px/1.1 'Inter';letter-spacing:-.01em;color:#fff}
+  .band .l1 b{font-weight:800}
+  .band .l2{font:900 104px/1 'Inter';letter-spacing:-.04em;color:#000;margin-top:8px}
+  .cover .logo{left:50%;transform:translateX(-50%);bottom:56px;height:42px}
 
-  /* ---------- ilustrações (wireframes do A+) ---------- */
-  .art{position:absolute;left:96px;right:96px;top:190px;height:600px;display:flex;align-items:center;justify-content:center}
-  .win{background:#111414;border:1.5px solid #2b302e;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-  .win .bar{height:34px;border-bottom:1.5px solid #232826;display:flex;gap:8px;align-items:center;padding:0 16px}
-  .win .bar i{width:10px;height:10px;border-radius:50%;background:#333a38}
-  .lbl{font:700 20px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-  .lbl.g{color:var(--green-lit)}
-  .blk{background:#1c2120;border-radius:8px}
-  .blk.g{background:linear-gradient(135deg,#0b5a49,#00B48E 60%,#2FE0B0);box-shadow:0 0 40px rgba(0,180,142,.25)}
-  .lines i{display:block;height:12px;border-radius:6px;background:#232927;margin-top:12px}
+  /* ---------- 02 ---------- */
+  .compare{position:absolute;left:88px;right:88px;bottom:190px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .compare .card{background:#0B2A22;color:#fff}
+  .compare .card.now{background:#fff;color:#000}
+  .tag{font:700 20px/1 'Inter';letter-spacing:.16em;text-transform:uppercase;opacity:.7;margin-bottom:22px}
+  .compare .big{font:800 40px/1.12 'Inter';letter-spacing:-.02em;display:flex;gap:16px;align-items:flex-start}
+  .compare .big .x,.compare .big .ok{margin-top:4px}
+  .compare small{display:block;margin-top:16px;font:400 26px/1.3 'Inter';opacity:.75}
 
-  /* comparativo básico × premium */
-  .vs{display:flex;flex-direction:column;gap:34px;width:100%}
-  .vs .win .page{padding:22px;display:flex;gap:0;height:150px;background:#0e1111}
-  .vs .white{background:#e9e7e1;opacity:.9}
-  /* vídeo */
-  .player{width:100%;height:500px;position:relative}
-  .player .screen{position:absolute;inset:34px 0 70px 0;background:radial-gradient(ellipse at 30% 40%,#16322b,#0c1210 70%)}
-  .play{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;
-    background:rgba(47,224,176,.12);border:3px solid var(--green-lit);box-shadow:0 0 60px rgba(47,224,176,.35)}
-  .play:after{content:"";position:absolute;left:58px;top:44px;border-left:52px solid var(--green-lit);border-top:31px solid transparent;border-bottom:31px solid transparent}
-  .scrub{position:absolute;left:28px;right:28px;bottom:30px;height:8px;border-radius:4px;background:#26302d}
-  .scrub:before{content:"";position:absolute;left:0;top:0;bottom:0;width:62%;border-radius:4px;background:var(--green-lit)}
-  .scrub:after{content:"";position:absolute;left:62%;top:50%;width:22px;height:22px;border-radius:50%;background:var(--ink);transform:translate(-50%,-50%)}
-  /* hotspots */
-  .hot{width:100%;height:520px;position:relative}
-  .hot .img{position:absolute;inset:34px 0 0 0;background:radial-gradient(ellipse at 40% 55%,#1d2523,#0f1312 70%)}
-  .prod{position:absolute;left:28%;top:18%;width:190px;height:330px;border-radius:40px 40px 24px 24px;background:linear-gradient(180deg,#2a3230,#171c1b);border:1.5px solid #39413e}
-  .dot{position:absolute;width:34px;height:34px;border-radius:50%;background:var(--green-lit);box-shadow:0 0 0 10px rgba(47,224,176,.18),0 0 30px rgba(47,224,176,.6)}
-  .tip{position:absolute;left:58%;top:22%;width:300px;padding:24px;border-radius:14px;background:#161b1a;border:1.5px solid #2f3a37}
-  .tip b{display:block;font:700 26px/1.2 var(--sans);color:var(--ink);margin-bottom:6px}
-  .tip span{font:500 22px/1.3 var(--sans);color:var(--muted)}
-  .pager{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:12px}
-  .pager i{width:12px;height:12px;border-radius:50%;background:#39413e}.pager i.on{background:var(--green-lit);width:36px;border-radius:6px}
-  /* perguntas */
-  .qa{width:100%;display:flex;flex-direction:column;gap:22px}
-  .q{border:1.5px solid #2b302e;border-radius:16px;padding:28px 32px;background:#101413}
-  .q b{display:flex;gap:18px;font:700 30px/1.25 var(--sans);color:var(--ink)}
-  .q b:before{content:"P";flex:none;width:44px;height:44px;border-radius:10px;background:#1f2624;color:var(--muted);font-size:22px;display:grid;place-items:center}
-  .q span{display:flex;gap:18px;margin-top:16px;font:500 26px/1.35 var(--sans);color:var(--body)}
-  .q span:before{content:"R";flex:none;width:44px;height:44px;border-radius:10px;background:rgba(47,224,176,.14);color:var(--green-lit);font:700 22px/44px var(--sans);text-align:center}
-  .q.dim{opacity:.45}
-  /* comparativo da linha */
-  .grid{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .card{border:1.5px solid #2b302e;border-radius:16px;padding:26px;background:#101413}
-  .card.on{border-color:var(--green-lit);box-shadow:0 0 50px rgba(47,224,176,.18)}
-  .card .ph{height:190px;border-radius:10px;background:radial-gradient(ellipse at 50% 60%,#232b29,#141817);margin-bottom:22px;position:relative}
-  .card .ph:after{content:"";position:absolute;left:50%;top:50%;width:70px;height:120px;transform:translate(-50%,-50%);border-radius:22px 22px 12px 12px;background:#2c3532}
-  .card.on .ph:after{background:linear-gradient(180deg,#1a8f73,#0b5a49)}
-  .row{display:flex;align-items:center;gap:12px;height:44px;border-top:1.5px solid #1f2523}
-  .row i{width:22px;height:22px;border-radius:50%;background:#2a322f;flex:none}
-  .row i.y{background:var(--green-lit)}
-  .row em{display:block;height:10px;border-radius:5px;background:#252c2a;flex:1}
-  .tag{font:700 18px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-  .card.on .tag{color:var(--green-lit)}
+  /* ---------- 03 antes/depois ---------- */
+  .ba{position:absolute;left:88px;right:88px;top:560px;height:470px;border-radius:28px;overflow:hidden;border:1.5px solid #dde3e1;background:#f6f8f7;display:flex}
+  .ba .side{flex:1;padding:30px;display:flex;flex-direction:column;gap:14px;position:relative}
+  .ba .side .t{font:700 20px/1 'Inter';letter-spacing:.16em;text-transform:uppercase;color:#6b7680;margin-bottom:6px}
+  .ba .after .t{color:var(--green)}
+  .ba .before{background:#eceeed}
+  .ba .before .row{display:flex;gap:0;height:120px}
+  .ba .before .row .w{flex:.5;background:#fff}
+  .ba .before .row .c{flex:2;background:#c9cfcd}
+  .ba .line{height:14px;border-radius:7px;background:#d3d8d6}
+  .ba .after{background:#0C1818}
+  .ba .after .hero2{height:150px;border-radius:10px;background:linear-gradient(120deg,#007a62,#00B490 55%,#6CE8C8);position:relative}
+  .ba .after .hero2:after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;box-shadow:inset 0 0 0 3px #fff;background:rgba(0,0,0,.3)}
+  .ba .after .g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;height:110px}
+  .ba .after .g i{border-radius:8px;background:#16322b;border:1.5px solid #1f4a3f}
+  .ba .after .qa{height:60px;border-radius:8px;background:#122420;border:1.5px solid #1f4a3f}
+  .divider{position:absolute;left:50%;top:0;bottom:0;width:4px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+  .knob{position:absolute;left:50%;top:50%;width:64px;height:64px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 8px 24px rgba(0,0,0,.25);display:grid;place-items:center;font:800 24px/1 'Inter';color:#000}
+  .checks{position:absolute;left:88px;right:88px;bottom:150px;display:flex;flex-direction:column;gap:16px}
+  .checks .chip{background:#EEF2F1;color:#000;font-weight:600}
 
-  /* ---------- fechamento ---------- */
-  .end h1{font-size:92px;line-height:1.02;margin-bottom:40px}
-  .path{display:flex;flex-wrap:nowrap;align-items:center;gap:10px;margin:0 0 56px}
-  .path span{font:700 25px/1 var(--sans);color:var(--ink);padding:16px 18px;white-space:nowrap;border:1.5px solid #343a38;border-radius:12px;background:#0f1312}
-  .path em{font-style:normal;color:var(--green-lit);font:700 26px/1 var(--sans)}
-  .cta{font:600 36px/1.35 var(--sans);color:var(--body)}
-  .cta b{color:var(--ink)}
-  .kw{display:inline-block;font:900 34px/1 var(--display);font-stretch:125%;color:var(--bg);background:var(--green-lit);padding:10px 16px;border-radius:8px;box-shadow:0 0 40px rgba(47,224,176,.4);vertical-align:2px}
-  .logo{position:absolute;left:96px;bottom:84px;height:62px}
+  /* ---------- 04 módulos ---------- */
+  .mlist{position:absolute;left:88px;right:88px;top:450px;display:flex;flex-direction:column;gap:18px}
+  .m{display:flex;align-items:center;gap:28px;padding:30px 32px;border-radius:22px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09)}
+  .m .ic{flex:none;width:72px;height:72px;border-radius:18px;background:rgba(0,180,144,.14);border:1.5px solid rgba(0,180,144,.45);display:grid;place-items:center}
+  .m .ic svg{width:38px;height:38px;stroke:var(--green);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .m b{display:block;font:800 36px/1.15 'Inter';letter-spacing:-.01em}
+  .m span{display:block;font:300 27px/1.3 'Inter';color:rgba(255,255,255,.72);margin-top:4px}
+
+  /* ---------- 05 notificações ---------- */
+  .notifs{position:absolute;left:88px;right:88px;top:600px;display:flex;flex-direction:column;gap:18px}
+  .n{display:flex;align-items:center;gap:22px;padding:24px 28px;border-radius:24px;background:#0C1818;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+  .n .ic{flex:none;width:64px;height:64px;border-radius:16px;background:var(--green);display:grid;place-items:center}
+  .n .ic img{height:34px}
+  .n b{display:block;font:700 28px/1.2 'Inter'}
+  .n span{display:block;font:400 23px/1.3 'Inter';color:rgba(255,255,255,.65);margin-top:4px}
+  .n time{margin-left:auto;font:500 20px/1 'Inter';color:rgba(255,255,255,.45);align-self:flex-start;margin-top:6px}
+  .n.fade{opacity:.55;transform:scale(.96)}
+  .why{position:absolute;left:88px;right:88px;bottom:150px;display:flex;flex-wrap:wrap;gap:14px}
+  .why .chip{background:#0B2A22;color:#fff;font-size:26px}
+
+  /* ---------- 06 fechamento ---------- */
+  .myth{font:500 42px/1.25 'Inter';color:#000;margin-top:44px}
+  .myth s{text-decoration-color:var(--red);text-decoration-thickness:5px;color:#6b7680}
+  .answer{font:900 84px/1.03 'Inter';letter-spacing:-.035em;margin:26px 0 30px}
+  .answer em{font-style:italic;font-weight:800;color:var(--green)}
+  .where{display:flex;align-items:center;gap:12px;flex-wrap:nowrap;margin-bottom:40px}
+  .where span{font:700 25px/1 'Inter';padding:16px 20px;border-radius:14px;background:#fff;border:1.5px solid #dde3e1;white-space:nowrap}
+  .where em{font-style:normal;font:800 26px/1 'Inter';color:var(--green)}
+  .comment{display:flex;align-items:center;gap:20px;padding:18px 20px 18px 18px;border-radius:999px;background:#fff;border:1.5px solid #dde3e1;box-shadow:0 20px 50px rgba(0,0,0,.08)}
+  .comment .av{flex:none;width:64px;height:64px;border-radius:50%;background:#000;display:grid;place-items:center}
+  .comment .av img{height:32px}
+  .comment .txt{font:800 34px/1 'Inter';letter-spacing:.06em}
+  .comment .send{margin-left:auto;font:700 24px/1 'Inter';color:#fff;background:var(--green);padding:18px 26px;border-radius:999px}
+  .hint{font:400 26px/1.3 'Inter';color:#4a545c;margin:18px 0 0 8px}
+  .pros{display:flex;gap:14px;margin-top:34px}
+  .pros .chip{background:#fff;border:1.5px solid #dde3e1;font-size:24px;padding:14px 20px}
 </style>
 </head>
 <body>
 
-<!-- 01 · CAPA (sem logo: gancho puro) -->
+<!-- 01 · CAPA — visual-conceito escuro + título em faixa verde -->
 <section class="slide cover" id="s1">
-  <div class="beam"></div><div class="floor"></div>
-  <div class="copy">
-    <div class="brands"><span>Apple</span><span>JBL</span><span>Red Bull</span></div>
-    <div class="lead">A+ Premium não é mais só para Apple, JBL e Red&nbsp;Bull.</div>
-    <h1 class="punch">Marcas registradas podem vender até 33% mais.</h1>
-  </div>
-  <div class="swipe">Arrasta pro lado →</div>
-  <div class="grain"></div>
-</section>
-
-<!-- 02 · O QUE MUDOU -->
-<section class="slide" id="s2">
-  <div class="beam soft"></div>
-  <div class="top"><span>A+ Premium</span><span>02 / 08</span></div>
-  <div class="copy" style="bottom:300px">
-    <div class="kicker">O que mudou</div>
-    <h2>O Premium saiu do clube das gigantes.</h2>
-    <p>Durante anos, esse formato só aparecia no anúncio de marca grande. Agora ele está liberado pra quem tem <strong>marca registrada na Amazon</strong> (Brand&nbsp;Registry).</p>
-  </div>
-  <div class="copy"><p class="punch" style="font:800 40px/1.2 var(--sans)">O registro da marca é a chave.</p></div>
-  <div class="foot"><span><b>@waybrand.co</b></span><span>Arrasta →</span></div>
-  <div class="grain"></div>
-</section>
-
-<!-- 03 · BANNER EM TELA CHEIA -->
-<section class="slide" id="s3">
-  <div class="beam side"></div>
-  <div class="top"><span>A+ Premium</span><span>03 / 08</span></div>
-  <div class="art">
-    <div class="vs">
-      <div>
-        <div class="lbl">A+ básico</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i></div>
-          <div class="page"><div class="white" style="flex:1"></div><div class="blk" style="flex:3;border-radius:0"></div><div class="white" style="flex:1"></div></div></div>
-      </div>
-      <div>
-        <div class="lbl g">A+ Premium</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i></div>
-          <div class="page" style="padding:0"><div class="blk g" style="flex:1;border-radius:0"></div></div></div>
-      </div>
+  <!-- <img class="bgimg" src="assets/capa.png" alt=""> -->
+  <div class="spot"></div>
+  <div class="floorglow"></div>
+  <div class="laptop"><div class="lid"><div class="screen"><div class="hero"></div><div class="mods"><i></i><i></i><i></i></div></div></div><div class="base"></div></div>
+  <div class="owners"><span>Apple</span><span>JBL</span><span>Red Bull</span></div>
+  <div class="cover-copy">
+    <p class="apoio">O <b>A+ Premium</b> não é mais só para<br>Apple, JBL e Red Bull.</p>
+    <div class="band">
+      <div class="l1">Marcas registradas <b>podem vender</b></div>
+      <div class="l2">até 33% mais.</div>
     </div>
   </div>
-  <div class="copy">
-    <div class="kicker">01 · Banner em tela cheia</div>
-    <h2>A largura toda é sua.</h2>
-    <p>No computador, o A+ básico fica espremido no meio, com faixa branca dos lados. O Premium ocupa a tela inteira.</p>
-  </div>
-  <div class="foot"><span><b>@waybrand.co</b></span><span>Arrasta →</span></div>
-  <div class="grain"></div>
-</section>
-
-<!-- 04 · VÍDEO -->
-<section class="slide" id="s4">
-  <div class="beam soft"></div>
-  <div class="top"><span>A+ Premium</span><span>04 / 08</span></div>
-  <div class="art"><div class="win player"><div class="bar"><i></i><i></i><i></i></div><div class="screen"></div><div class="play"></div><div class="scrub"></div></div></div>
-  <div class="copy">
-    <div class="kicker">02 · Vídeo dentro da descrição</div>
-    <h2>Quem assiste, fica.</h2>
-    <p>O cliente passa mais tempo na sua página. E a <strong>Amazon lê isso como interesse</strong>.</p>
-  </div>
-  <div class="foot"><span><b>@waybrand.co</b></span><span>Arrasta →</span></div>
-  <div class="grain"></div>
-</section>
-
-<!-- 05 · INTERATIVO + CARROSSEL -->
-<section class="slide" id="s5">
-  <div class="beam side"></div>
-  <div class="top"><span>A+ Premium</span><span>05 / 08</span></div>
-  <div class="art"><div class="win hot"><div class="bar"><i></i><i></i><i></i></div><div class="img"></div>
-    <div class="prod"></div>
-    <div class="dot" style="left:39%;top:30%"></div>
-    <div class="dot" style="left:31%;top:62%;opacity:.55"></div>
-    <div class="tip"><b>Tampa com trava</b><span>Não vaza na bolsa.</span></div>
-    <div class="pager"><i class="on"></i><i></i><i></i><i></i></div></div></div>
-  <div class="copy">
-    <div class="kicker">03 · Imagem interativa e carrossel</div>
-    <h2>O produto se explica sozinho.</h2>
-    <p>O cliente passa o mouse e vê os detalhes, ou desliza o passo a passo de uso.</p>
-  </div>
-  <div class="foot"><span><b>@waybrand.co</b></span><span>Arrasta →</span></div>
-  <div class="grain"></div>
-</section>
-
-<!-- 06 · PERGUNTAS E RESPOSTAS -->
-<section class="slide" id="s6">
-  <div class="beam soft"></div>
-  <div class="top"><span>A+ Premium</span><span>06 / 08</span></div>
-  <div class="art"><div class="qa">
-    <div class="q"><b>Serve no modelo que eu tenho?</b><span>Sim. Compatível com as versões de 2022 em diante.</span></div>
-    <div class="q"><b>Pode lavar na máquina?</b><span>Pode. Ciclo delicado, água fria.</span></div>
-    <div class="q dim"><b>Vem com garantia?</b><span>12 meses direto com a marca.</span></div>
-  </div></div>
-  <div class="copy">
-    <div class="kicker">04 · Perguntas e respostas</div>
-    <h2>Responda antes de virar avaliação.</h2>
-    <p>A dúvida que hoje vira nota baixa pode ser respondida <strong>antes da compra</strong>.</p>
-  </div>
-  <div class="foot"><span><b>@waybrand.co</b></span><span>Arrasta →</span></div>
-  <div class="grain"></div>
-</section>
-
-<!-- 07 · COMPARATIVO DA LINHA -->
-<section class="slide" id="s7">
-  <div class="beam side"></div>
-  <div class="top"><span>A+ Premium</span><span>07 / 08</span></div>
-  <div class="art"><div class="grid">
-    <div class="card"><div class="tag">Linha 1</div><div class="ph"></div><div class="row"><i class="y"></i><em></em></div><div class="row"><i></i><em></em></div><div class="row"><i></i><em></em></div></div>
-    <div class="card on"><div class="tag">Você está aqui</div><div class="ph"></div><div class="row"><i class="y"></i><em></em></div><div class="row"><i class="y"></i><em></em></div><div class="row"><i></i><em></em></div></div>
-    <div class="card"><div class="tag">Linha 3</div><div class="ph"></div><div class="row"><i class="y"></i><em></em></div><div class="row"><i class="y"></i><em></em></div><div class="row"><i class="y"></i><em></em></div></div>
-  </div></div>
-  <div class="copy">
-    <div class="kicker">05 · Comparativo da linha</div>
-    <h2>O próximo clique é seu.</h2>
-    <p>Mostra seus outros produtos e leva o cliente pra eles. <strong>Não pro concorrente.</strong></p>
-  </div>
-  <div class="foot"><span><b>@waybrand.co</b></span><span>Arrasta →</span></div>
-  <div class="grain"></div>
-</section>
-
-<!-- 08 · FECHAMENTO (a marca entra aqui) -->
-<section class="slide end" id="s8">
-  <div class="beam"></div><div class="floor"></div>
-  <div class="top"><span>A+ Premium</span><span>08 / 08</span></div>
-  <div class="copy" style="bottom:210px">
-    <h1>É gratuito.<br><span class="punch">E quase ninguém usa.</span></h1>
-    <div class="lbl" style="margin-bottom:20px">Onde fica</div>
-    <div class="path"><span>Seller Central</span><em>→</em><span>Publicidade</span><em>→</em><span>Gerenciar conteúdo A+</span></div>
-    <p class="cta">Quer saber se a sua marca já pode usar?<br>Mande <span class="kw">PREMIUM</span> no direct.</p>
-  </div>
   <img class="logo" src="assets/logo-waybrand-claro.png" alt="WayBrand">
-  <div class="grain"></div>
+</section>
+
+<!-- 02 · O QUE MUDOU — verde sólido -->
+<section class="slide solid" id="s2"><div class="pad">
+  <span class="pill onsolid">O que mudou</span>
+  <h2>O Premium era<br><em>clube fechado.</em></h2>
+  <p class="lead">Durante anos, só as gigantes tinham esse formato no anúncio. Hoje ele está disponível pra quem tem <b>marca registrada na Amazon</b> (Brand&nbsp;Registry).</p>
+  </div>
+  <div class="compare">
+    <div class="card"><div class="tag">Antes</div><div class="big"><span class="x">✕</span>Só marcas gigantes</div><small>Por convite, com volume alto de vendas.</small></div>
+    <div class="card now"><div class="tag">Agora</div><div class="big"><span class="ok">✓</span>Marcas registradas</div><small>A chave é o registro da marca.</small></div>
+  </div>
+  <span class="handle">@waybrand.co</span>
+</section>
+
+<!-- 03 · A DIFERENÇA — branco, antes/depois com divisor -->
+<section class="slide white" id="s3"><div class="pad">
+  <span class="pill onwhite">A diferença</span>
+  <h2>Mesmo anúncio.<br><em>Outra página.</em></h2>
+  <p class="lead">O A+ básico fica espremido no meio da tela. O Premium vira uma <b>página de vendas</b> dentro da Amazon.</p>
+  </div>
+  <div class="ba">
+    <div class="side before"><div class="t">A+ básico</div><div class="row"><div class="w"></div><div class="c"></div><div class="w"></div></div><div class="line" style="width:80%"></div><div class="line" style="width:65%"></div><div class="row" style="height:90px"><div class="w"></div><div class="c"></div><div class="w"></div></div></div>
+    <div class="side after"><div class="t">A+ Premium</div><div class="hero2"></div><div class="g"><i></i><i></i><i></i></div><div class="qa"></div></div>
+    <div class="divider"></div><div class="knob">‹›</div>
+  </div>
+  <div class="checks">
+    <span class="chip"><span class="ok">✓</span>Banner na largura toda da tela</span>
+    <span class="chip"><span class="ok">✓</span>Vídeo, carrossel e interação na descrição</span>
+  </div>
+  <span class="handle">@waybrand.co</span>
+</section>
+
+<!-- 04 · O QUE LIBERA — escuro -->
+<section class="slide dark2" id="s4"><div class="pad">
+  <span class="pill ondark">O que o Premium libera</span>
+  <h2>5 recursos que<br><em>vendem por você.</em></h2>
+  </div>
+  <div class="mlist">
+    <div class="m"><div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div><div><b>Banner em tela cheia</b><span>Ocupa a largura toda, sem faixa branca.</span></div></div>
+    <div class="m"><div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg></div><div><b>Vídeo na descrição</b><span>Mais tempo na página, mais sinal de interesse.</span></div></div>
+    <div class="m"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 3l6 16 2-6 6-2z"/></svg></div><div><b>Imagem interativa e carrossel</b><span>O cliente explora detalhes e o passo a passo.</span></div></div>
+    <div class="m"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5M12 16.5h0"/></svg></div><div><b>Perguntas e respostas</b><span>A dúvida resolvida antes de virar nota baixa.</span></div></div>
+    <div class="m"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="16" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/></svg></div><div><b>Comparativo da linha</b><span>Leva o cliente pros seus produtos, não pro concorrente.</span></div></div>
+  </div>
+  <span class="handle">@waybrand.co</span>
+</section>
+
+<!-- 05 · POR QUE VENDE MAIS — claro, com notificações -->
+<section class="slide light" id="s5"><div class="pad">
+  <span class="pill onwhite">Por que vende mais</span>
+  <h2>O cliente fica.<br><em>E a Amazon percebe.</em></h2>
+  <p class="lead">Mais tempo na página e menos dúvida na hora da compra. É assim que <b>visita vira pedido</b>.</p>
+  </div>
+  <div class="notifs">
+    <div class="n"><div class="ic"><img src="assets/simbolo-claro.png" alt=""></div><div><b>Nova venda na Amazon</b><span>Seu produto · 1 unidade</span></div><time>agora</time></div>
+    <div class="n"><div class="ic"><img src="assets/simbolo-claro.png" alt=""></div><div><b>Nova venda na Amazon</b><span>Kit da linha · 2 unidades</span></div><time>3 min</time></div>
+    <div class="n fade"><div class="ic"><img src="assets/simbolo-claro.png" alt=""></div><div><b>Nova venda na Amazon</b><span>Seu produto · 1 unidade</span></div><time>8 min</time></div>
+  </div>
+  <div class="why">
+    <span class="chip"><span class="ok">✓</span>Mais tempo na página</span>
+    <span class="chip"><span class="ok">✓</span>Menos avaliação negativa</span>
+    <span class="chip"><span class="ok">✓</span>Cliente fica na sua marca</span>
+  </div>
+  <span class="handle">@waybrand.co</span>
+</section>
+
+<!-- 06 · FECHAMENTO + CTA — claro, barra de comentário -->
+<section class="slide light" id="s6"><div class="pad" style="display:flex;flex-direction:column;justify-content:center;padding-bottom:150px">
+  <span class="pill onwhite" style="align-self:flex-start">A verdade</span>
+  <p class="myth"><s>"A+ Premium é coisa de marca grande."</s></p>
+  <p class="answer">É gratuito pra marca registrada.<br><em>E quase ninguém usa.</em></p>
+  <div class="tag" style="opacity:.6;color:#000">Onde fica</div>
+  <div class="where"><span>Seller Central</span><em>→</em><span>Publicidade</span><em>→</em><span>Gerenciar conteúdo A+</span></div>
+  <div class="comment"><div class="av"><img src="assets/simbolo-claro.png" alt=""></div><span class="txt">PREMIUM</span><span class="send">Publicar</span></div>
+  <p class="hint">Comente <b>PREMIUM</b> e a gente avalia se a sua marca já pode usar.</p>
+  <div class="pros">
+    <span class="chip"><span class="ok">✓</span>Gratuito</span>
+    <span class="chip"><span class="ok">✓</span>Marca registrada</span>
+    <span class="chip"><span class="ok">✓</span>Pouca concorrência</span>
+  </div>
+  </div>
+  <img class="logo" src="assets/logo-waybrand-escuro.png" alt="WayBrand">
+  <span class="handle">@waybrand.co</span>
 </section>
 
 </body>
