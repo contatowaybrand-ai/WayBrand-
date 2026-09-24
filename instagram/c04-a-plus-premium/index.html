@@ -118,14 +118,17 @@
   .ba .before .row .w{flex:.5;background:#fff}
   .ba .before .row .c{flex:2;background:#c9cfcd}
   .ba .line{height:14px;border-radius:7px;background:#d3d8d6}
-  .ba .after{background:#0C1818}
+  .ba .after{background:#0C1818;flex:1.35}
+  .ba .after .scrollwin{position:relative;flex:1;border-radius:10px;overflow:hidden;background:#fff}
+  .ba .after .scrollwin img{position:absolute;left:0;top:0;width:100%;height:auto;transform:translateY(calc(var(--p,0) * (var(--winh,0px) - var(--imgh,0px))))}
+  .ba .after .scrollwin:after{content:"";position:absolute;left:0;right:0;bottom:0;height:40px;background:linear-gradient(transparent,rgba(0,0,0,.18))}
   .ba .after .hero2{height:150px;border-radius:10px;background:linear-gradient(120deg,#007a62,#00B490 55%,#6CE8C8);position:relative}
   .ba .after .hero2:after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;box-shadow:inset 0 0 0 3px #fff;background:rgba(0,0,0,.3)}
   .ba .after .g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;height:110px}
   .ba .after .g i{border-radius:8px;background:#16322b;border:1.5px solid #1f4a3f}
   .ba .after .qa{height:60px;border-radius:8px;background:#122420;border:1.5px solid #1f4a3f}
-  .divider{position:absolute;left:50%;top:0;bottom:0;width:4px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(0,0,0,.06)}
-  .knob{position:absolute;left:50%;top:50%;width:64px;height:64px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 8px 24px rgba(0,0,0,.25);display:grid;place-items:center;font:800 24px/1 'Inter';color:#000}
+  .divider{position:absolute;left:42.5%;top:0;bottom:0;width:4px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+  .knob{position:absolute;left:42.5%;top:50%;width:64px;height:64px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 8px 24px rgba(0,0,0,.25);display:grid;place-items:center;font:800 24px/1 'Inter';color:#000}
   .checks{position:absolute;left:88px;right:88px;bottom:150px;display:flex;flex-direction:column;gap:16px}
   .checks .chip{background:#EEF2F1;color:#000;font-weight:600}
 
@@ -207,7 +210,7 @@
   </div>
   <div class="ba">
     <div class="side before"><div class="t">A+ básico</div><div class="row"><div class="w"></div><div class="c"></div><div class="w"></div></div><div class="line" style="width:80%"></div><div class="line" style="width:65%"></div><div class="row" style="height:90px"><div class="w"></div><div class="c"></div><div class="w"></div></div></div>
-    <div class="side after"><div class="t">A+ Premium</div><div class="hero2"></div><div class="g"><i></i><i></i><i></i></div><div class="qa"></div></div>
+    <div class="side after"><div class="t">A+ Premium</div><div class="scrollwin"><img id="aplus" src="assets/jbl-aplus.png" alt="" onerror="this.src='assets/_placeholder-aplus.png'"></div></div>
     <div class="divider"></div><div class="knob">‹›</div>
   </div>
   <div class="checks">
