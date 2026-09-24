@@ -133,6 +133,11 @@
   .checks .chip{background:#EEF2F1;color:#000;font-weight:600}
 
   /* ---------- 04 módulos ---------- */
+  /* slide 4: página A+ em perspectiva, com pouca opacidade */
+  .s4bg:before{content:"";position:absolute;inset:0;background:url(assets/slide4-fundo.png) center/cover;opacity:.32}
+  .s4bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(24,36,30,.75) 0%,rgba(24,36,30,.2) 70%)}
+  .s4bg .mlist,.s4bg .handle{z-index:2}
+  .s4bg .m{background:rgba(24,36,30,.72);backdrop-filter:blur(4px)}
   .mlist{position:absolute;left:88px;right:88px;top:450px;display:flex;flex-direction:column;gap:18px}
   .m{display:flex;align-items:center;gap:28px;padding:30px 32px;border-radius:22px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09)}
   .m .ic{flex:none;width:72px;height:72px;border-radius:18px;background:rgba(0,180,144,.14);border:1.5px solid rgba(0,180,144,.45);display:grid;place-items:center}
@@ -221,7 +226,7 @@
 </section>
 
 <!-- 04 · O QUE LIBERA — escuro -->
-<section class="slide dark2" id="s4"><div class="pad">
+<section class="slide dark2 s4bg" id="s4"><div class="pad" style="z-index:2">
   <span class="pill ondark">O que o Premium libera</span>
   <h2>5 recursos que<br><em>vendem por você.</em></h2>
   </div>
