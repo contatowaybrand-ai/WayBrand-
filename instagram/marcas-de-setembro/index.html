@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Marcas de setembro · capa</title>
+<style>
+  @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  :root{--green:#00B490;--ink:#0b0b0b;--paper:#F1EFEA}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;padding:40px}
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:#0a0a0a}
+  /* grão fino no fundo preto */
+  .slide:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+  .logo{position:absolute;top:92px;left:50%;transform:translateX(-50%);height:50px}
+
+  /* bloco verde com o título gigante cortado por trás */
+  .block{position:absolute;left:180px;top:258px;width:666px;height:820px;background:var(--green);overflow:hidden}
+  .block .ghost{position:absolute;left:28px;top:44px;font:900 150px/.86 'Inter';letter-spacing:-.05em;color:#0a0a0a;text-transform:uppercase;white-space:nowrap}
+
+  /* fotos (post-its) em preto e branco com retícula */
+  .photo{position:absolute;background:var(--paper);padding:14px;box-shadow:0 30px 60px rgba(0,0,0,.55)}
+  .photo .img{width:100%;height:100%;background-size:cover;background-position:center;position:relative;filter:contrast(1.08)}
+  .photo .img:after{content:"";position:absolute;inset:0;mix-blend-mode:multiply;opacity:.35;
+    background-image:radial-gradient(circle at center,#000 32%,transparent 36%);background-size:6px 6px}
+  .p1{left:520px;top:200px;width:300px;height:330px;transform:rotate(5deg)}
+  .p1 .img{background-image:url(assets/coolcatz-pb.jpg);background-size:190%;background-position:48% 40%}
+  .p3{left:600px;top:560px;width:330px;height:560px;transform:rotate(8deg)}
+  .p3 .img{background-image:url(assets/repeat-pb.jpg);background-size:auto 115%;background-position:32% 60%}
+  .p2{left:370px;top:330px;width:520px;height:640px;transform:rotate(4deg)}
+  .p2 .img{background-image:url(assets/cafe-pb.jpg)}
+
+  /* card branco com a frase */
+  .card{position:absolute;left:80px;top:470px;width:560px;height:400px;background:var(--paper);transform:rotate(-3deg);
+    padding:54px 46px;box-shadow:0 30px 70px rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:center}
+  .card p{font:900 84px/.95 'Inter';letter-spacing:-.045em;color:var(--ink);text-transform:uppercase}
+  .card p .br{font-weight:300;letter-spacing:-.03em}
+  .card p u{text-decoration-thickness:6px;text-underline-offset:10px}
+
+  /* rodapé em grade, texto miúdo */
+  .foot{position:absolute;left:96px;right:96px;bottom:74px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
+    font:500 17px/1.5 'Inter';letter-spacing:.06em;text-transform:uppercase;color:#e9e7e2}
+  .foot div:nth-child(2),.foot div:nth-child(3),.foot div:nth-child(4){text-align:center}
+  .foot div:last-child{text-align:right}
+  .foot i{font-style:normal;color:var(--green)}
+</style>
+</head>
+<body>
+<section class="slide" id="capa">
+  <img class="logo" src="assets/logo-waybrand-claro.png" alt="WayBrand">
+  <div class="block"><div class="ghost">Marcas<br>de set<br>embro<br>2026</div></div>
+  <div class="photo p1"><div class="img"></div></div>
+  <div class="photo p3"><div class="img"></div></div>
+  <div class="photo p2"><div class="img"></div></div>
+  <div class="card"><p>Marcas<br>de<br><span class="br">[</span><u>setembro</u><span class="br">]</span></p></div>
+  <div class="foot">
+    <div>—<br>Branding<br>Amazon</div>
+    <div>Projetos<br><i>·</i><br>WayBrand</div>
+    <div>Marca<br><i>·</i><br>Própria</div>
+    <div>Setembro<br><i>·</i><br>2026</div>
+    <div>Arrasta<br>pro<br>lado →</div>
+  </div>
+</section>
+</body>
+</html>
