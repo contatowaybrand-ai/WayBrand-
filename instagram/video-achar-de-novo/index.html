@@ -3,75 +3,108 @@
 <head>
 <meta charset="utf-8">
 <title>Como o cliente vai te achar de novo?</title>
-<!-- Vídeo em loop de 5 s. Cada quadro é desenhado por setT(t), com t de 0 a 5. Abrir no navegador toca em tempo real. -->
+<!-- Vídeo em loop de 10 s. Cada quadro é desenhado por setT(t), t de 0 a 10. Abrir no navegador toca em tempo real.
+     Roteiro: fileiras de carrinhos passam → 3,0 s um produto chamativo cai num carrinho → o cursor corre até ele →
+     "Finalizar compra" → compra finalizada → o carrinho some → as fileiras seguem e o loop fecha sem emenda. -->
 <style>
   @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
   @font-face{font-family:'Inter';font-style:italic;font-weight:300 900;src:url(assets/fonts/Inter-italic.woff2) format('woff2')}
-  :root{--green:#00B490;--dark:#0C1818;--gray:#84909C;--yellow:#FCD800}
+  :root{--green:#00B490;--dark:#0C1818;--yellow:#FCD800}
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:#222}
   #v{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
      background:radial-gradient(ellipse 80% 60% at 50% 58%,#12302a 0%,#0C1818 55%,#060c0b 100%)}
-  h1{position:absolute;top:104px;left:0;right:0;text-align:center;color:#fff;font:900 76px/1.02 'Inter';letter-spacing:-.035em;z-index:5}
+  h1{position:absolute;top:104px;left:0;right:0;text-align:center;color:#fff;font:900 76px/1.02 'Inter';letter-spacing:-.035em;z-index:8}
   h1 em{font-style:italic;font-weight:800;color:var(--green)}
-  #field{position:absolute;left:0;right:0;top:360px;height:860px;
-     -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%)}
-  .cart{position:absolute;width:138px;height:120px;margin:-60px 0 0 -69px}
-  .cart svg{width:100%;height:100%;overflow:visible}
-  .cart path,.cart circle{fill:none;stroke:#4a585d;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
-  #hero{position:absolute;left:540px;top:770px;width:210px;height:182px;margin:-91px 0 0 -105px;z-index:3}
-  #hero svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 28px rgba(0,180,144,.75))}
-  #hero path,#hero circle{fill:none;stroke:var(--green);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round}
-  #hero .basket{fill:rgba(0,180,144,.16)}
-  #hero img{position:absolute;left:72px;top:30px;width:52px}
-  #glow{position:absolute;left:540px;top:790px;width:520px;height:360px;margin:-180px 0 0 -260px;border-radius:50%;
-     background:radial-gradient(ellipse,rgba(0,180,144,.35),transparent 65%);z-index:2}
-  #btn{position:absolute;left:540px;top:915px;transform:translateX(-50%);z-index:4;white-space:nowrap;
-     background:var(--yellow);color:#0f1111;font:700 30px/1 'Inter';padding:20px 38px;border-radius:999px;box-shadow:0 14px 34px rgba(0,0,0,.45)}
-  #cursor{position:absolute;width:56px;height:56px;z-index:6;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
-  #logo{position:absolute;bottom:64px;left:50%;transform:translateX(-50%);height:44px;z-index:5}
+  #field{position:absolute;left:0;right:0;top:0;bottom:0;z-index:2;
+     -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%)}
+  .cart{position:absolute;width:200px;height:184px;margin:-92px 0 0 -100px}
+  .cart img.c{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+  /* produto chamativo dentro da cesta */
+  .prod{position:absolute;left:58px;top:18px;width:96px;height:78px;z-index:1;border-radius:10px;
+     background:linear-gradient(145deg,#39f0c4 0%,#00B490 45%,#007a62 100%);box-shadow:0 0 0 3px rgba(255,255,255,.9) inset,0 0 50px 10px rgba(0,180,144,.75)}
+  .prod img{position:absolute;left:50%;top:50%;width:40px;transform:translate(-50%,-50%)}
+  .prod:after{content:"";position:absolute;left:10px;right:10px;top:8px;height:8px;border-radius:4px;background:rgba(255,255,255,.55)}
+  .rays{position:absolute;left:106px;top:40px;width:340px;height:340px;margin:-170px 0 0 -170px;z-index:0;border-radius:50%;
+     background:repeating-conic-gradient(from 0deg,rgba(0,180,144,.22) 0 8deg,transparent 8deg 24deg);
+     -webkit-mask-image:radial-gradient(circle,#000 20%,transparent 68%)}
+  #btn{position:absolute;z-index:7;white-space:nowrap;transform-origin:50% 50%;
+     font:700 30px/1 'Inter';padding:20px 36px;border-radius:999px;box-shadow:0 14px 34px rgba(0,0,0,.45)}
+  #btn.buy{background:var(--yellow);color:#0f1111}
+  #btn.done{background:var(--green);color:#fff}
+  #cursor{position:absolute;width:58px;height:58px;z-index:9;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+  #logo{position:absolute;bottom:64px;left:50%;transform:translateX(-50%);height:44px;z-index:8}
 </style>
 </head>
 <body>
 <div id="v">
   <h1>Como o cliente vai<br>te achar <em>de novo?</em></h1>
   <div id="field"></div>
-  <div id="glow"></div>
-  <div id="hero">
-    <svg viewBox="0 0 150 130"><path class="basket" d="M30 22 L138 22 L124 78 L44 78 Z"/><path d="M6 8 L24 8 L46 92 L128 92"/><path d="M30 22 L138 22 L124 78 L44 78"/><circle cx="56" cy="112" r="10"/><circle cx="116" cy="112" r="10"/></svg>
-    <img src="assets/simbolo-claro.png" alt="">
-  </div>
-  <div id="btn">Comprar novamente</div>
+  <div id="btn" class="buy">Finalizar compra</div>
   <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2 L4 20 L9 15.5 L12.5 22.5 L15.5 21 L12 14.2 L18.5 14.2 Z" fill="#fff" stroke="#0C1818" stroke-width="1.4" stroke-linejoin="round"/></svg>
   <img id="logo" src="assets/logo-waybrand-claro.png" alt="WayBrand">
 </div>
 <script>
-const CART='<svg viewBox="0 0 150 130"><path d="M6 8 L24 8 L46 92 L128 92"/><path d="M30 22 L138 22 L124 78 L44 78 Z"/><circle cx="56" cy="112" r="10"/><circle cx="116" cy="112" r="10"/></svg>';
-const SP=190, ROWS=[60,235,410,585,760], CX=540, DUR=5, STOP=3.2;   // y relativo ao #field; linha do meio passa pelo herói
-const field=document.getElementById('field'); const rows=[];
-ROWS.forEach((y,ri)=>{ const r=[]; for(let k=-4;k<=4;k++){ const d=document.createElement('div'); d.className='cart'; d.innerHTML=CART; field.appendChild(d); r.push({el:d,k}); } rows.push({y,r,dir:ri%2?-1:1}); });
+const DUR=10, SP=250, N=7, L=SP*N, V=L/DUR;          // cada fileira anda exatamente uma volta (L) em 10 s → loop perfeito
+const XMIN=540-L/2;                                   // faixa de posições: [-335, 1415)
+const ROWS=[450,660,870,1080];                        // y absoluto das fileiras
+const TR=1, TK=0;                                     // fileira e carrinho que recebem o produto
+const field=document.getElementById('field'); const carts=[];
+ROWS.forEach((y,ri)=>{ for(let k=0;k<N;k++){
+  const d=document.createElement('div'); d.className='cart';
+  d.innerHTML='<img class="c" src="assets/carrinho-verde.png" alt="">'+(ri===TR&&k===TK?'<div class="rays"></div><div class="prod"><img src="assets/simbolo-claro.png" alt=""></div>':'');
+  field.appendChild(d); carts.push({el:d,ri,k,y,dir:ri%2?1:-1,base:k*SP+(ri%2?110:0)});
+}});
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const easeOut=t=>1-Math.pow(1-t,3);
 const lerp=(a,b,t)=>a+(b-a)*t;
-// trajetória do cursor (começa e termina no mesmo ponto)
-const P=[[0,[930,1180]],[1.0,[300,720]],[1.9,[760,560]],[2.6,[380,960]],[3.2,[560,790]],[4.4,[560,790]],[5.0,[930,1180]]];
-function cursorAt(t){ for(let i=0;i<P.length-1;i++){ const[t0,a]=P[i],[t1,b]=P[i+1]; if(t>=t0&&t<=t1){ const u=ease((t-t0)/(t1-t0)); return[lerp(a[0],b[0],u),lerp(a[1],b[1],u)]; } } return P[0][1]; }
+const mod=(a,m)=>((a%m)+m)%m;
+function cartX(c,t){ return XMIN+mod(c.base+c.dir*V*t - XMIN - 0 + 0, L) + 0; }
+// posição x ajustada para que o carrinho-alvo esteja em ~x=380 aos 3,0 s
+const target=carts.find(c=>c.ri===TR&&c.k===TK);
+target.base += (380 - cartX(target,3.0));
+carts.filter(c=>c.ri===TR).forEach(c=>{ c.base = target.base + c.k*SP; });
+// ---- tempos do roteiro
+const T_PROD=3.0, T_DASH=3.45, T_ARRIVE=3.85, T_CLICK=4.45, T_DONE=4.6, T_VANISH=5.3, T_GONE=5.8;
+const WRAP_T = T_PROD + (XMIN+L - 380)/V;            // quando o alvo cruza a borda (escondido pela máscara) e volta vazio
+// cursor ocioso: passeia devagar e volta ao mesmo ponto no fim
+const IDLE=[[0,[900,1230]],[1.4,[330,760]],[2.6,[700,560]],[3.45,[600,980]],[6.4,[760,720]],[8.3,[300,1010]],[10,[900,1230]]];
+function idleAt(t){ for(let i=0;i<IDLE.length-1;i++){ const[t0,a]=IDLE[i],[t1,b]=IDLE[i+1]; if(t>=t0&&t<=t1){ const u=ease((t-t0)/(t1-t0)); return[lerp(a[0],b[0],u),lerp(a[1],b[1],u)]; } } return IDLE[0][1]; }
 window.setT=function(t){
-  t=((t%DUR)+DUR)%DUR;
-  const move=SP*ease(clamp(t/STOP));                     // desliza exatamente 1 espaço e para (loop sem emenda)
-  const on=clamp((t-STOP)/.35)*(1-clamp((t-4.55)/.35));   // destaque: acende 3.2 s, apaga até 4.9 s
-  rows.forEach((row,ri)=>{ row.r.forEach(c=>{
-    const x=CX+c.k*SP+row.dir*move-row.dir*SP;            // em repouso, um carrinho cai exato no centro
-    c.el.style.left=x+'px'; c.el.style.top=row.y+'px';
-    const centre = ri===2 && Math.abs(x-CX)<2;
-    c.el.style.opacity = centre ? 1-on : (1-.55*on);
-  }); });
-  const hero=document.getElementById('hero'); hero.style.opacity=on; hero.style.transform=`scale(${.85+.15*on})`;
-  document.getElementById('glow').style.opacity=on;
-  const b=clamp((t-3.55)/.3)*(1-clamp((t-4.55)/.3));
-  const btn=document.getElementById('btn'); btn.style.opacity=b; btn.style.transform=`translateX(-50%) translateY(${(1-b)*18}px)`;
-  const [cx,cy]=cursorAt(t); const click = t>3.2&&t<3.45 ? .85 : 1;
+  t=mod(t,DUR);
+  const prodIn = t>=T_PROD && t<T_GONE ? easeOut(clamp((t-T_PROD)/.35)) : 0;
+  const vanish = clamp((t-T_VANISH)/(T_GONE-T_VANISH));
+  const focus = clamp((t-T_PROD)/.4)*(1-clamp((t-T_VANISH)/.6));      // escurece os outros enquanto o produto brilha
+  carts.forEach(c=>{
+    const x=cartX(c,t); c.el.style.left=x+'px'; c.el.style.top=c.y+'px';
+    if(c===target){
+      const hidden = t>=T_GONE && t<WRAP_T;
+      c.el.style.opacity = hidden?0:(1-vanish);
+      c.el.style.transform = `scale(${1+.08*focus-.35*vanish}) translateY(${-60*vanish}px)`;
+      c.el.style.zIndex=5;
+      const pr=c.el.querySelector('.prod'), ra=c.el.querySelector('.rays');
+      const show = t>=T_PROD && t<T_GONE;
+      pr.style.opacity = show?1:0; ra.style.opacity = show?prodIn*.9:0;
+      pr.style.transform = `translateY(${(1-prodIn)*-120}px) scale(${1+.06*Math.sin(t*9)*focus})`;
+      ra.style.transform = `rotate(${t*40}deg)`;
+    } else { c.el.style.opacity = 1-.55*focus; c.el.style.transform='none'; c.el.style.zIndex=1; }
+  });
+  // cursor: ocioso → corre até o alvo → acompanha → volta ao passeio
+  const tx=cartX(target,t)+10, ty=target.y-10;
+  let [cx,cy]=idleAt(t);
+  if(t>=T_DASH && t<T_ARRIVE){ const u=easeOut((t-T_DASH)/(T_ARRIVE-T_DASH)); const[ix,iy]=idleAt(T_DASH); cx=lerp(ix,tx,u); cy=lerp(iy,ty,u); }
+  else if(t>=T_ARRIVE && t<T_VANISH){ const bx=tx+10, by=ty+118; const toBtn=easeOut(clamp((t-(T_ARRIVE+.15))/.35)); cx=lerp(tx,bx,toBtn); cy=lerp(ty,by,toBtn); }
+  else if(t>=T_VANISH && t<6.4){ const u=ease((t-T_VANISH)/(6.4-T_VANISH)); const bx=cartX(target,T_VANISH)+20, by=target.y+108; const[ix,iy]=idleAt(6.4); cx=lerp(bx,ix,u); cy=lerp(by,iy,u); }
+  const click = (t>T_CLICK-.05&&t<T_CLICK+.15)?.82:1;
   const cur=document.getElementById('cursor'); cur.style.left=(cx-8)+'px'; cur.style.top=(cy-4)+'px'; cur.style.transform=`scale(${click})`;
+  // botão: "Finalizar compra" → "✓ Compra finalizada"
+  const btn=document.getElementById('btn');
+  const bIn=clamp((t-T_ARRIVE)/.25)*(1-clamp((t-T_VANISH)/.4));
+  const done=t>=T_DONE;
+  btn.className= done?'done':'buy'; btn.textContent= done?'✓ Compra finalizada':'Finalizar compra';
+  btn.style.opacity=bIn; btn.style.left=(cartX(target,t))+'px'; btn.style.top=(target.y+108)+'px';
+  btn.style.transform=`translate(-50%,-50%) scale(${(.9+.1*bIn)*(t>T_CLICK-.05&&t<T_CLICK+.15?.94:1)})`;
 };
 if(!window.__render){ const s=performance.now(); (function tick(){ setT((performance.now()-s)/1000); requestAnimationFrame(tick); })(); } else setT(0);
 </script>
