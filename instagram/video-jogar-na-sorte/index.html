@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Anunciar sem estrutura é jogar na sorte</title>
+<!-- Vídeo em loop de 8 s (E04 da Pauta dos Hotseats). Cada quadro é desenhado por setT(t), t de 0 a 8. Abrir no navegador toca em tempo real.
+     Roteiro: máquina parada com imagem · A+ · vídeo alinhados (capa) → 0,4 s puxa a alavanca → os rolos param em $ · ? · $ (sorte, deu errado)
+     → 3,0 s puxa de novo → param em imagem · A+ · vídeo, os símbolos ficam verdes, as luzes piscam e saem moedas → volta à capa e o loop fecha. -->
+<style>
+  @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:italic;font-weight:300 900;src:url(assets/fonts/Inter-italic.woff2) format('woff2')}
+  :root{--green:#00B490;--dark:#0C1818;--ink:#0C1818;--cream:#F0EFEA;--red:#E5484D}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222}
+  #v{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#060b0a}
+  /* cortina de veludo + feixe de luz vindo de cima */
+  #bg{position:absolute;inset:0;
+     background:
+       radial-gradient(ellipse 46% 60% at 30% 30%,rgba(0,180,144,.20) 0%,rgba(0,180,144,.06) 45%,transparent 70%),
+       repeating-linear-gradient(90deg,rgba(0,0,0,.55) 0 18px,rgba(255,255,255,.035) 38px,rgba(0,0,0,.25) 62px,rgba(0,0,0,.55) 84px),
+       linear-gradient(180deg,#0f2521 0%,#0C1818 55%,#050909 100%)}
+  #beam{position:absolute;left:-120px;top:-60px;width:820px;height:1400px;pointer-events:none;
+     background:linear-gradient(180deg,rgba(210,255,240,.16),rgba(210,255,240,.04) 60%,transparent);
+     clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);filter:blur(34px);mix-blend-mode:screen}
+  #vig{position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 40% 40%,transparent 50%,rgba(0,0,0,.65) 100%);pointer-events:none}
+  #machine{position:absolute;left:0;top:0;width:1080px;height:1350px;transform-origin:300px 1350px}
+  #machine > svg{position:absolute;left:0;top:0}
+  /* rolos */
+  .reel{position:absolute;top:312px;width:112px;height:240px;overflow:hidden;border-radius:6px;background:var(--cream)}
+  .reel .sym{position:absolute;left:0;top:0;width:112px;height:112px;display:grid;place-items:center;transform-origin:50% 50%}
+  .reel .sym svg{width:78px;height:78px;overflow:visible}
+  .reel .shade{position:absolute;inset:0;pointer-events:none;
+     background:linear-gradient(180deg,rgba(6,20,17,.92) 0%,rgba(6,20,17,.35) 22%,rgba(255,255,255,.18) 46%,rgba(255,255,255,0) 56%,rgba(6,20,17,.35) 78%,rgba(6,20,17,.92) 100%),
+                linear-gradient(90deg,rgba(0,0,0,.28),transparent 18%,transparent 82%,rgba(0,0,0,.28))}
+  #glass{position:absolute;left:114px;top:308px;width:372px;height:244px;border-radius:10px;pointer-events:none;
+     background:linear-gradient(115deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 22%,transparent 23%,transparent 70%,rgba(255,255,255,.06) 71%,transparent 80%);
+     box-shadow:inset 0 10px 22px rgba(0,0,0,.65),inset 0 -8px 18px rgba(0,0,0,.5)}
+  #payline{position:absolute;left:108px;top:428px;width:384px;height:6px;border-radius:3px;opacity:0;pointer-events:none}
+  #winglow{position:absolute;left:96px;top:290px;width:408px;height:280px;border-radius:22px;pointer-events:none;opacity:0;
+     box-shadow:0 0 70px 18px rgba(0,200,160,.8),0 0 0 6px rgba(47,224,176,.9),inset 0 0 50px rgba(0,255,190,.28)}
+  .bulb{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%}
+  .coin{position:absolute;width:88px;height:88px;margin:-44px 0 0 -44px;border-radius:50%;
+     background:radial-gradient(circle at 35% 30%,#ffffff 0%,#dfe4e3 25%,#9aa3a1 60%,#6d7573 100%);
+     box-shadow:inset 0 0 0 6px #00B490,inset 0 0 0 10px #cfd6d4,0 6px 14px rgba(0,0,0,.5)}
+  .coin img{position:absolute;left:50%;top:50%;width:34px;transform:translate(-50%,-50%);filter:brightness(0) saturate(100%) invert(47%) sepia(83%) saturate(2400%) hue-rotate(137deg) brightness(92%) contrast(101%)}
+  /* texto */
+  #txt{position:absolute;right:40px;bottom:96px;width:530px;z-index:10}
+  h1{color:#fff;font:900 82px/.98 'Inter';letter-spacing:-.035em;text-shadow:0 6px 30px rgba(0,0,0,.6)}
+  h1 .band{display:inline-block;width:fit-content;margin-top:16px;padding:8px 24px 16px 20px;background:var(--green);color:var(--ink);
+     transform-origin:0 50%;box-shadow:0 14px 36px rgba(0,180,144,.35);text-shadow:none;border-radius:4px}
+  #sub{margin-top:34px;color:#dfe7e4;font:500 44px/1.15 'Inter';letter-spacing:-.02em}
+  #sub b{font-weight:800;color:#fff}
+</style>
+</head>
+<body>
+<div id="v">
+  <div id="bg"></div>
+  <div id="beam"></div>
+
+  <div id="machine">
+    <svg width="1080" height="1350" viewBox="0 0 1080 1350">
+      <defs>
+        <linearGradient id="lacq" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#003f33"/><stop offset=".07" stop-color="#008a6e"/><stop offset=".2" stop-color="#3fe0bf"/>
+          <stop offset=".27" stop-color="#00B490"/><stop offset=".72" stop-color="#00a483"/><stop offset=".9" stop-color="#007259"/><stop offset="1" stop-color="#003a2f"/>
+        </linearGradient>
+        <linearGradient id="lacqV" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".08" stop-color="#fff" stop-opacity="0"/>
+          <stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/>
+        </linearGradient>
+        <linearGradient id="chrome" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#fbfbfb"/><stop offset=".3" stop-color="#9ea5a4"/><stop offset=".48" stop-color="#e9ecec"/>
+          <stop offset=".62" stop-color="#5e6665"/><stop offset=".85" stop-color="#c9cfce"/><stop offset="1" stop-color="#7c8483"/>
+        </linearGradient>
+        <linearGradient id="chromeH" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#6f7776"/><stop offset=".25" stop-color="#f4f6f6"/><stop offset=".45" stop-color="#a7aead"/>
+          <stop offset=".7" stop-color="#e3e7e6"/><stop offset="1" stop-color="#555d5c"/>
+        </linearGradient>
+        <radialGradient id="ball" cx=".35" cy=".3" r=".75">
+          <stop offset="0" stop-color="#ffffff"/><stop offset=".12" stop-color="#4a5553"/><stop offset=".55" stop-color="#101716"/><stop offset="1" stop-color="#000"/>
+        </radialGradient>
+        <linearGradient id="shaft" x1="0" x2="1">
+          <stop offset="0" stop-color="#6f7776"/><stop offset=".35" stop-color="#ffffff"/><stop offset=".6" stop-color="#9aa2a1"/><stop offset="1" stop-color="#4b5352"/>
+        </linearGradient>
+        <linearGradient id="panel" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#006e57"/><stop offset=".04" stop-color="#009a7b"/><stop offset="1" stop-color="#00735b"/>
+        </linearGradient>
+        <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter>
+      </defs>
+
+      <!-- sombra no fundo -->
+      <ellipse cx="310" cy="1330" rx="330" ry="60" fill="#000" opacity=".6" filter="url(#soft)"/>
+
+      <!-- cubo da alavanca (atrás do corpo) -->
+      <rect x="520" y="560" width="78" height="92" rx="14" fill="url(#chrome)"/>
+      <rect x="532" y="574" width="60" height="64" rx="30" fill="url(#chromeH)" stroke="#4b5352" stroke-width="2"/>
+
+      <!-- corpo -->
+      <path d="M60 1350 L60 250 Q60 120 190 120 L410 120 Q540 120 540 250 L540 1350 Z" fill="url(#lacq)"/>
+      <path d="M60 1350 L60 250 Q60 120 190 120 L410 120 Q540 120 540 250 L540 1350 Z" fill="url(#lacqV)"/>
+      <!-- brilho da laca no topo -->
+      <path d="M110 238 Q112 150 200 142 L400 142 Q480 146 500 200" fill="none" stroke="#bfffee" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"/>
+
+      <!-- placa com o logo -->
+      <rect x="150" y="186" width="300" height="78" rx="14" fill="#07120f" stroke="url(#chrome)" stroke-width="5"/>
+      <rect x="156" y="192" width="288" height="20" rx="10" fill="#fff" opacity=".05"/>
+      <image href="assets/logo-waybrand-claro.png" x="190" y="204" width="220" height="58" preserveAspectRatio="xMidYMid meet"/>
+
+      <!-- moldura da janela -->
+      <rect x="92" y="286" width="416" height="288" rx="22" fill="#003b30" opacity=".6" transform="translate(0,6)"/>
+      <rect x="92" y="286" width="416" height="288" rx="22" fill="url(#chrome)"/>
+      <rect x="104" y="298" width="392" height="264" rx="14" fill="#0a0f0e"/>
+      <rect x="114" y="308" width="372" height="244" rx="10" fill="#141c1a"/>
+
+      <!-- prateleira -->
+      <rect x="60" y="588" width="480" height="18" fill="#006b55"/>
+      <rect x="60" y="604" width="480" height="4" fill="#3fe0bf" opacity=".6"/>
+
+      <!-- botões -->
+      <g id="btns">
+        <rect x="100" y="636" width="56" height="42" rx="6" fill="#004d3e" transform="translate(0,5)"/>
+        <rect x="100" y="636" width="56" height="42" rx="6" fill="url(#chrome)"/>
+        <rect x="168" y="636" width="56" height="42" rx="6" fill="#004d3e" transform="translate(0,5)"/>
+        <rect x="168" y="636" width="56" height="42" rx="6" fill="url(#chrome)"/>
+        <rect x="236" y="636" width="56" height="42" rx="6" fill="#004d3e" transform="translate(0,5)"/>
+        <rect x="236" y="636" width="56" height="42" rx="6" fill="url(#chrome)"/>
+        <rect x="304" y="636" width="56" height="42" rx="6" fill="#004d3e" transform="translate(0,5)"/>
+        <rect x="304" y="636" width="56" height="42" rx="6" fill="url(#chrome)"/>
+        <circle cx="400" cy="658" r="17" fill="url(#chrome)" stroke="#004d3e" stroke-width="3"/>
+        <circle cx="400" cy="656" r="9" fill="#e9ecec"/>
+        <circle cx="468" cy="658" r="31" fill="#004d3e"/>
+        <circle cx="468" cy="656" r="28" fill="url(#chrome)"/>
+        <circle cx="468" cy="652" r="19" fill="url(#chromeH)"/>
+      </g>
+
+      <!-- divisória e gabinete de baixo -->
+      <rect x="60" y="722" width="480" height="10" fill="#003f33"/>
+      <rect x="60" y="732" width="480" height="3" fill="#3fe0bf" opacity=".45"/>
+      <rect x="96" y="770" width="408" height="600" rx="16" fill="url(#panel)" stroke="#005a47" stroke-width="3"/>
+      <rect x="96" y="770" width="408" height="600" rx="16" fill="url(#lacqV)" opacity=".6"/>
+      <!-- bandeja de moedas -->
+      <rect x="196" y="990" width="208" height="70" rx="10" fill="url(#chrome)"/>
+      <rect x="212" y="1004" width="176" height="36" rx="6" fill="#050909"/>
+      <rect x="212" y="1004" width="176" height="8" rx="4" fill="#000"/>
+
+      <!-- alavanca (desenhada por setT) -->
+      <g id="lever">
+        <rect id="shaftR" x="556" width="18" rx="9" fill="url(#shaft)"/>
+        <circle id="ballC" cx="565" r="34" fill="url(#ball)"/>
+      </g>
+    </svg>
+
+    <div class="reel" id="r0" style="left:120px"></div>
+    <div class="reel" id="r1" style="left:244px"></div>
+    <div class="reel" id="r2" style="left:368px"></div>
+    <div id="payline"></div>
+    <div id="glass"></div>
+    <div id="winglow"></div>
+    <div id="bulbs"></div>
+    <div id="coins"></div>
+  </div>
+
+  <div id="vig"></div>
+
+  <div id="txt">
+    <h1>Anunciar sem estrutura é <span class="band" id="band">jogar na<br>sorte.</span></h1>
+    <p id="sub"><b>Estrutura</b> não é gasto.</p>
+  </div>
+</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="vb0" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur id="vb0s" stdDeviation="0 0"/></filter>
+    <filter id="vb1" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur id="vb1s" stdDeviation="0 0"/></filter>
+    <filter id="vb2" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur id="vb2s" stdDeviation="0 0"/></filter>
+  </defs>
+</svg>
+
+<script>
+const DUR=8;
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const mod=(a,m)=>((a%m)+m)%m;
+const easeOut=t=>1-Math.pow(1-t,3);
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+
+// ---- símbolos (preto sobre creme; o verde entra no prêmio)
+const SYM={
+  img:c=>`<svg viewBox="0 0 80 80"><rect x="6" y="12" width="68" height="56" rx="10" fill="none" stroke="${c}" stroke-width="7"/><circle cx="54" cy="30" r="7" fill="${c}"/><path d="M12 62 L32 38 L46 54 L54 46 L70 62 Z" fill="${c}"/></svg>`,
+  aplus:c=>`<svg viewBox="0 0 80 80"><text x="40" y="60" text-anchor="middle" font-family="Inter" font-weight="900" font-size="58" letter-spacing="-3" fill="${c}">A+</text></svg>`,
+  play:c=>`<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="${c}" stroke-width="7"/><path d="M32 24 L58 40 L32 56 Z" fill="${c}"/></svg>`,
+  cash:c=>`<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="${c}" stroke-width="7" stroke-dasharray="7 5"/><text x="40" y="58" text-anchor="middle" font-family="Inter" font-weight="900" font-size="50" fill="${c}">$</text></svg>`,
+  ask:c=>`<svg viewBox="0 0 80 80"><text x="40" y="66" text-anchor="middle" font-family="Inter" font-weight="900" font-size="74" fill="${c}">?</text></svg>`,
+};
+// cada rolo tem sua ordem, pra girar diferente
+const STRIPS=[['img','cash','aplus','ask','play'],['aplus','ask','img','cash','play'],['play','cash','ask','img','aplus']];
+const N=5, TH=.62, R=150, CY=120;                    // ângulo por símbolo, raio do cilindro, centro do rolo
+const WIN=['img','aplus','play'], LOSE=['cash','ask','cash'];
+const reels=[0,1,2].map(r=>{
+  const el=document.getElementById('r'+r); const syms=[];
+  const holder=document.createElement('div'); holder.style.cssText='position:absolute;inset:0;filter:url(#vb'+r+')'; el.appendChild(holder);
+  for(let k=0;k<5;k++){ const d=document.createElement('div'); d.className='sym'; holder.appendChild(d); syms.push(d); }
+  const sh=document.createElement('div'); sh.className='shade'; el.appendChild(sh);
+  return {el,syms,blur:document.getElementById('vb'+r+'s'),strip:STRIPS[r]};
+});
+
+// ---- roteiro
+const PULL=[0.4,3.0];                                   // puxadas da alavanca
+const SPINS=[
+  {start:0.62, stops:[1.55,1.95,2.35], result:LOSE},
+  {start:3.22, stops:[4.15,4.6,5.05], result:WIN},
+];
+const T_FAIL=2.35, T_WIN=5.05, T_WIN_END=7.3;
+
+// posição de cada rolo (índice contínuo no strip) ao longo do tempo
+const idx=(r,name)=>STRIPS[r].indexOf(name);
+// perfil de velocidade: acelera rápido, gira constante, freia no fim
+const PROF=(()=>{ const n=1000, a=[0]; let s=0; for(let i=1;i<=n;i++){ const u=i/n; const w=Math.min(1,u/.12)*(u>.55?Math.pow((1-u)/.45,2):1); s+=w; a.push(s);} return a.map(x=>x/s); })();
+const G=u=>{ const f=clamp(u)*1000, i=Math.floor(f); return i>=1000?1:lerp(PROF[i],PROF[i+1],f-i); };
+const plan=[0,1,2].map(r=>{
+  let p=idx(r,WIN[r]); const segs=[];
+  SPINS.forEach(s=>{ const te=s.stops[r], dur=te-s.start, minD=Math.round(dur*14); let D=minD; while(mod(p+D,N)!==idx(r,s.result[r])) D++; segs.push({ts:s.start,te,p0:p,D}); p+=D; });
+  return segs;
+});
+function reelPos(r,t){
+  const segs=plan[r]; let p=segs[0].p0, vel=0;
+  for(const s of segs){
+    if(t<s.ts) break;
+    if(t<s.te){ const u=(t-s.ts)/(s.te-s.ts); p=s.p0+s.D*G(u); vel=s.D*(G(u+.004)-G(u))/(.004*(s.te-s.ts)); return {p,vel}; }
+    p=s.p0+s.D; const k=(t-s.te)/.32; if(k<1) p+=.14*Math.sin(Math.PI*k)*(1-k);   // tranco da parada
+  }
+  return {p,vel};
+}
+
+// ---- lâmpadas no topo
+const bulbs=[]; const BX=[118,160,202,244,286,328,370,412,454,496];
+BX.forEach((x,i)=>{ const b=document.createElement('div'); b.className='bulb'; const y=150+Math.pow((x-307)/190,2)*28; b.style.left=x+'px'; b.style.top=(y+10)+'px'; document.getElementById('bulbs').appendChild(b); bulbs.push(b); });
+function setBulb(b,on,col){ const c=col==='g'?'0,230,180':col==='r'?'229,72,77':'255,248,225';
+  b.style.background=`radial-gradient(circle at 40% 35%,#fff 0%,rgba(${c},${.35+.65*on}) 45%,rgba(${c},${.12+.4*on}) 100%)`;
+  b.style.boxShadow=`0 0 ${4+22*on}px ${1+6*on}px rgba(${c},${.15+.7*on}), inset 0 -2px 3px rgba(0,0,0,.35)`; }
+
+// ---- moedas (sementes fixas, pra render ser sempre igual)
+let seed=7; const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const coins=[...Array(22)].map((_,i)=>{ const d=document.createElement('div'); d.className='coin'; d.innerHTML='<img src="assets/simbolo-claro.png" alt="">'; document.getElementById('coins').appendChild(d);
+  return {el:d,t0:T_WIN+.05+i*.06,vx:-380+rnd()*700,vy:-(950+rnd()*500),spin:6+rnd()*10,ph:rnd()*6}; });
+
+// ---- alavanca: 0 = em pé, 1 = puxada até embaixo
+function leverAmt(t){ for(const tp of PULL){ const d=t-tp; if(d>=0&&d<.2) return easeOut(d/.2); if(d>=.2&&d<.28) return 1; if(d>=.28&&d<.8){ const k=(d-.28)/.52; return Math.max(-.08,(1-easeOut(k))-.08*Math.sin(Math.PI*k)); } } return 0; }
+
+window.setT=function(t){
+  t=mod(t,DUR);
+  // alavanca
+  const a=leverAmt(t), ang=a*1.3, PX=565, PY=606, L=380;
+  const by=PY-L*Math.cos(ang), bs=1+.35*Math.sin(Math.max(0,ang));
+  const sr=document.getElementById('shaftR'); sr.setAttribute('y',Math.min(by,PY)); sr.setAttribute('height',Math.abs(PY-by)+2); sr.setAttribute('x',PX-9*bs); sr.setAttribute('width',18*bs);
+  const bc=document.getElementById('ballC'); bc.setAttribute('cy',by); bc.setAttribute('r',34*bs);
+
+  // estados
+  const win = t>=T_WIN && t<T_WIN_END ? 1 : 0;
+  const winK = t>=T_WIN ? clamp((t-T_WIN)/.15)*(1-clamp((t-(T_WIN_END-.5))/.7)) : 0;   // acende e apaga suave antes do loop
+  const failK = t>=T_FAIL && t<3.0 ? clamp((t-T_FAIL)/.08)*(1-clamp((t-2.8)/.2)) : 0;
+
+  // rolos
+  reels.forEach((rl,r)=>{
+    const st=reelPos(r,t);
+    const pos=st.p, v=Math.abs(st.vel);
+    rl.blur.setAttribute('stdDeviation','0 '+Math.min(16,v*.9).toFixed(2));
+    const base=Math.floor(pos);
+    rl.syms.forEach((d,k)=>{
+      const i=base-2+k, aAng=(pos-i)*TH;                    // p cresce → símbolo desce
+      const vis=Math.abs(aAng)<Math.PI/2;
+      d.style.opacity=vis?1:0;
+      const name=rl.strip[mod(i,N)];
+      const green = winK>.01 && Math.abs(pos-i)<.5 && name===WIN[r];
+      const col = green ? '#00B490' : '#0C1818';
+      const key=name+col; if(d._k!==key){ d.innerHTML=SYM[name](col); d._k=key; }
+      const y=CY+R*Math.sin(aAng)-56, sc=Math.max(0,Math.cos(aAng));
+      const pop = green ? 1+.12*Math.sin(Math.PI*clamp((t-T_WIN)/.35)) : 1;
+      d.style.transform=`translateY(${y}px) scale(${pop},${sc*pop})`;
+    });
+    // tremidinha de "errou"
+    rl.el.style.transform = failK>0 ? `translateX(${Math.sin(t*90+r)*4*failK}px)` : 'none';
+  });
+
+  // linha de pagamento e brilho
+  const pl=document.getElementById('payline');
+  if(failK>0){ pl.style.opacity=failK; pl.style.background='#E5484D'; pl.style.boxShadow='0 0 18px 4px rgba(229,72,77,.7)'; }
+  else if(winK>0){ pl.style.opacity=winK*(.75+.25*Math.sin(t*14)); pl.style.background='#2FE0B0'; pl.style.boxShadow='0 0 22px 6px rgba(0,180,144,.85)'; }
+  else pl.style.opacity=0;
+  document.getElementById('winglow').style.opacity=winK*(.7+.3*Math.sin(t*10));
+
+  // lâmpadas: perseguição lenta parada, vermelho no erro, verde piscando no prêmio
+  bulbs.forEach((b,i)=>{
+    if(winK>.01) setBulb(b, (Math.floor(t*10)+i)%2 ? winK : .25*winK, 'g');
+    else if(failK>0) setBulb(b, failK, 'r');
+    else { const ch=Math.pow(.5+.5*Math.cos((t*2.2-i*.55)*Math.PI*.9),3); setBulb(b,.25+.6*ch,'w'); }
+  });
+
+  // moedas
+  const G2=2200;
+  coins.forEach(c=>{
+    const d=t-c.t0;
+    if(d<0||t>=T_WIN_END+.6){ c.el.style.opacity=0; return; }
+    const x=300+c.vx*d, y=1022+c.vy*d+.5*G2*d*d;
+    c.el.style.opacity= y>1420?0:1;
+    c.el.style.left=x+'px'; c.el.style.top=y+'px';
+    c.el.style.transform=`scale(${Math.min(1,d/.12)}) scaleX(${Math.cos(c.ph+d*c.spin)}) rotate(${d*120}deg)`;
+    c.el.style.zIndex= c.vy*d+.5*G2*d*d < -40 ? 5 : 1;
+  });
+
+  // tranco na máquina ao puxar e no prêmio
+  const kick = Math.max(...PULL.map(tp=>{ const d=t-tp-.18; return d>0&&d<.3 ? Math.sin(d*60)*(1-d/.3) : 0; }));
+  const wob = winK>0 && t<T_WIN+.6 ? Math.sin((t-T_WIN)*40)*(1-(t-T_WIN)/.6) : 0;
+  document.getElementById('machine').style.transform=`translateX(-44px) translateY(${kick*3}px) rotate(${wob*.35}deg)`;
+
+  // faixa "jogar na sorte." balança no erro e pulsa no prêmio
+  const band=document.getElementById('band');
+  const jig = failK>0 ? Math.sin(t*70)*2.2*failK : 0;
+  const puls = winK>0 ? 1+.04*Math.sin(Math.PI*clamp((t-T_WIN)/.3)) : 1;
+  band.style.transform=`rotate(${-3+jig}deg) scale(${puls})`;
+};
+if(!window.__render){ const s=performance.now(); (function tick(){ setT((performance.now()-s)/1000); requestAnimationFrame(tick); })(); } else setT(0);
+</script>
+</body>
+</html>
