@@ -11,7 +11,7 @@ Cores da Way:
 Pastas: Pinati, Bevi Pro, Eleve Life, Premium Lindoia e 2026.
 
 ## Opções de fonte (`index.html#a` … `#d`)
-| Versão | Título "Portfolio" | Abas e "Compilation Vol. 1" |
+| Versão | Título "Portfolio" | Abas |
 |---|---|---|
 | a | Instrument Serif (Port reto + *folio* itálico) | Space Mono Bold |
 | b | Syne ExtraBold + Medium | Syne Bold |
@@ -19,3 +19,5 @@ Pastas: Pinati, Bevi Pro, Eleve Life, Premium Lindoia e 2026.
 | d | Unbounded Medium + ExtraLight | Unbounded SemiBold |
 
 Para renderizar as 4 versões: `node render.mjs`, que salva em `png/portfolio-2026-<letra>-<fonte>.png`.
+
+**Escolhida: B (Syne).** O texto "Compilation Vol. 1" foi removido. O arquivo final é `png/portfolio-2026-final.png`.
