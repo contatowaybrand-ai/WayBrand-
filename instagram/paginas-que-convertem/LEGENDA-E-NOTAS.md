@@ -2,7 +2,7 @@
 
 Referência: pôster "make room for better ideas", com texto creme sobre faixas pretas e recortes coloridos.
 Adaptado para a Way: o laranja virou o verde `#00B490`, o preto virou `#0C1818` e o creme ficou `#F0EDE4`.
-Fonte Outfit ExtraBold, a geométrica gratuita mais parecida com a da referência. No recorte verde ao lado do "e" entra o símbolo oficial da Way (8 raios, `assets/simbolo-way.svg`), desenhado em SVG no lugar das setas da referência.
+Fonte Outfit ExtraBold, a geométrica gratuita mais parecida com a da referência. No recorte verde ao lado do "e" entra o símbolo oficial da Way (`assets/simbolo-way-oficial.png`, recolorido em preto em `assets/simbolo-way-preto.png`) no lugar das setas da referência.
 
 Para renderizar: `node render.mjs`. O texto das linhas fica no array `LINES` do `index.html`.
 

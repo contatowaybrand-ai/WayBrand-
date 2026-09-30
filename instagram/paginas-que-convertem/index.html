@@ -19,7 +19,7 @@
     font-weight:800;font-size:var(--fs);letter-spacing:-.05em;line-height:1;color:var(--paper);filter:url(#rough)}
 
   /* símbolo da Way no recorte verde */
-  .mark{position:absolute}
+  .mark{position:absolute;width:190px;height:190px}
 
   /* rodapé */
   .foot{position:absolute;right:64px;bottom:54px;border-right:3px solid var(--ink);padding-right:22px;text-align:right;
@@ -58,10 +58,8 @@
   <!-- as linhas são posicionadas pelo script abaixo -->
   <div id="rows"></div>
 
-  <svg class="mark" id="mark" width="164" height="164" viewBox="60 60 960 960" fill="#0C1818">
-    <!-- símbolo oficial da Way (8 raios), cópia em assets/simbolo-way.svg -->
-    <path d="M540 539L355 72L644 72ZM540 539L767 187L864 284ZM540 539L1006 355L1006 644ZM540 539L870 634L769 734ZM540 539L644 1006L355 1006ZM540 539L284 736L186 639ZM540 539L72 644L72 355ZM540 539L176 305L277 177Z"/>
-  </svg>
+  <img class="mark" id="mark" src="assets/simbolo-way-preto.png" alt="">
+  <!-- símbolo oficial da Way (assets/simbolo-way-oficial.png) recolorido em preto -->
 
   <div class="foot">cada pixel trabalha<br>pela sua venda</div>
   <div class="handle"><img src="assets/logo-waybrand-escuro.png" alt="Way Brand">@waybrand.co</div>
@@ -96,7 +94,7 @@
       bar.style.left = l.from + 'px'; bar.style.width = (right - l.from) + 'px';
       if (l.mark) {
         const a = document.getElementById('mark');
-        a.style.left = ((right + 1080) / 2 - 82) + 'px'; a.style.top = (TOP + i*H + (H - 164) / 2) + 'px';
+        a.style.left = ((right + 1080) / 2 - 95) + 'px'; a.style.top = (TOP + i*H + (H - 190) / 2) + 'px';
       }
     });
     // faixa preta contínua acima da primeira linha, como na referência
