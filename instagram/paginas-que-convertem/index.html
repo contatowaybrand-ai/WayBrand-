@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Páginas que convertem · post</title>
+<style>
+  @font-face{font-family:'Outfit';font-weight:100 900;src:url(assets/fonts/Outfit.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  :root{--green:#00B490;--ink:#0C1818;--paper:#F0EDE4}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222;padding:40px;-webkit-font-smoothing:antialiased}
+
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--green);font-family:'Outfit',sans-serif}
+
+  /* faixas pretas, uma por linha, com recortes verdes como na referência */
+  .row{position:absolute;left:0;right:0;height:var(--h)}
+  .row .bar{position:absolute;top:0;bottom:0;background:var(--ink)}
+  .row .t{position:absolute;top:50%;transform:translateY(-54%);white-space:nowrap;
+    font-weight:800;font-size:var(--fs);letter-spacing:-.05em;line-height:1;color:var(--paper);filter:url(#rough)}
+
+  /* setas rabiscadas no bloco verde */
+  .arrows{position:absolute;filter:url(#brush)}
+
+  /* rodapé */
+  .foot{position:absolute;left:64px;bottom:54px;border-left:3px solid var(--ink);padding-left:22px;
+    font:600 30px/1.18 'Outfit';color:var(--ink);letter-spacing:-.01em}
+  .handle{position:absolute;right:64px;bottom:54px;text-align:right;font:800 26px/1 'Inter';color:var(--ink);letter-spacing:-.01em}
+  .handle img{display:block;height:44px;margin:0 0 16px auto}
+
+  /* textura: grão + manchas, igual ao papel impresso da referência */
+  .grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.3}
+  .speck{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.16}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- desgaste leve nas letras -->
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/>
+      <feComponentTransfer result="g"><feFuncA type="identity"/></feComponentTransfer>
+      <feTurbulence type="fractalNoise" baseFrequency=".35" numOctaves="4" seed="3" result="m"/>
+      <feColorMatrix in="m" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -22 16" result="holes"/>
+      <feComposite in="g" in2="holes" operator="in"/>
+    </filter>
+    <!-- traço de pincel nas setas -->
+    <filter id="brush" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="slide" id="post">
+
+  <!-- as linhas são posicionadas pelo script abaixo -->
+  <div id="rows"></div>
+
+  <svg class="arrows" id="arrows" width="620" height="182" viewBox="-10 -10 380 215" preserveAspectRatio="xMidYMid meet" fill="none" stroke="#0C1818" stroke-linecap="round" stroke-linejoin="round">
+    <!-- seta 1 -->
+    <path d="M30 150 L92 72" stroke-width="11"/>
+    <path d="M62 70 L94 68 L90 100" stroke-width="11"/>
+    <!-- seta 2 (maior) -->
+    <path d="M110 176 L250 40" stroke-width="13"/>
+    <path d="M208 38 L254 34 L252 80" stroke-width="13"/>
+    <!-- seta 3 -->
+    <path d="M150 190 L300 150" stroke-width="11"/>
+    <path d="M268 138 L304 148 L282 176" stroke-width="11"/>
+  </svg>
+
+  <div class="foot">cada pixel trabalha<br>pela sua venda</div>
+  <div class="handle"><img src="assets/logo-waybrand-escuro.png" alt="Way Brand">@waybrand.co</div>
+
+  <svg class="grain" width="1080" height="1350"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="2"/><feColorMatrix values="0 0 0 0 .05  0 0 0 0 .09  0 0 0 0 .09  0 0 0 .55 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+  <svg class="speck" width="1080" height="1350"><filter id="s"><feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="9"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -14 9"/></filter><rect width="100%" height="100%" filter="url(#s)"/></svg>
+</div>
+
+<script>
+  // Cada linha: texto, onde começa a faixa preta, onde termina, e o recuo do texto.
+  // end:'text' = a faixa acaba logo depois da palavra (deixa um recorte verde à direita).
+  const FS = 192, H = 186, TOP = 64;
+  const LINES = [
+    { t:'Páginas',     from:0,   end:'text', pad:34 },
+    { t:'de produto',  from:150, end:1080,   pad:30 },
+    { t:'que contam',  from:0,   end:1080,   pad:34 },
+    { t:'histórias',   from:0,   end:'text', pad:34, extra:70 },
+    { t:'e',           from:0,   end:'text', pad:34, extra:40, arrows:true },
+    { t:'convertem',   from:96,  end:1080,   pad:26 },
+  ];
+  const wrap = document.getElementById('rows');
+  document.fonts.ready.then(() => {
+    LINES.forEach((l, i) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.style.cssText = `--h:${H}px;--fs:${FS}px;top:${TOP + i*H}px`;
+      const bar = document.createElement('div'); bar.className = 'bar';
+      const t = document.createElement('div'); t.className = 't'; t.textContent = l.t;
+      t.style.left = (l.from + l.pad) + 'px';
+      row.append(bar, t); wrap.append(row);
+      const right = l.end === 'text' ? l.from + l.pad + t.getBoundingClientRect().width + (l.extra || 40) : l.end;
+      bar.style.left = l.from + 'px'; bar.style.width = (right - l.from) + 'px';
+      if (l.arrows) {
+        const a = document.getElementById('arrows');
+        a.style.left = (right + 30) + 'px'; a.style.top = (TOP + i*H + 2) + 'px';
+      }
+    });
+    // faixa preta contínua acima da primeira linha, como na referência
+    const cap = document.createElement('div');
+    cap.style.cssText = `position:absolute;left:0;top:${TOP-22}px;height:22px;width:${wrap.firstChild.querySelector('.bar').style.width};background:var(--ink)`;
+    wrap.prepend(cap);
+    document.body.dataset.ready = '1';
+  });
+</script>
+</body>
+</html>
