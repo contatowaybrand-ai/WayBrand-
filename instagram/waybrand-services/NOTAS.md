@@ -9,3 +9,7 @@ Adaptação para a paleta da Way:
 - Fonte Inter Black e ExtraBold.
 
 Para renderizar: `node render.mjs`. O título se ajusta sozinho à largura, e as pílulas ficam em `.pills` no `index.html`.
+
+## Versão clara
+
+`png/waybrand-services-claro.png`, gerada a partir de `index.html#claro`. O fundo é branco, a grade continua verde e um pouco mais visível, e os textos e o título ficam no escuro `#0C1818`. O `render.mjs` gera as duas versões.

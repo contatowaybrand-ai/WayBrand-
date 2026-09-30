@@ -37,6 +37,14 @@
   .foot{position:absolute;left:110px;right:110px;bottom:100px;display:flex;justify-content:space-between;
     font:700 28px/1 'Inter';letter-spacing:-.01em;color:var(--green);text-transform:uppercase;
     text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+
+  /* versão clara (index.html#claro): fundo branco, grade verde mais visível, texto escuro */
+  .claro .slide{background:#FFFFFF}
+  .claro .grid{opacity:.28}
+  .claro .grain{mix-blend-mode:multiply;opacity:.06}
+  .claro .title{color:var(--ink)}
+  .claro .cta,.claro .foot{color:var(--ink);text-decoration-color:var(--green)}
+  .claro .pill{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -44,7 +52,7 @@
   <div class="grid"></div>
   <div class="in">
     <div class="top">
-      <img src="assets/logo-waybrand-claro.png" alt="Way Brand">
+      <img id="logo" src="assets/logo-waybrand-claro.png" alt="Way Brand">
       <div class="go"><svg width="44" height="30" viewBox="0 0 44 30" fill="none" stroke="#0C1818" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15H40M27 3l13 12-13 12"/></svg></div>
     </div>
 
@@ -66,6 +74,7 @@
 </div>
 <script>
   // "WAYBRAND" ocupa a largura toda; "SERVICES" usa o mesmo tamanho e divide a linha com o CTA.
+  if (location.hash === '#claro') { document.body.classList.add('claro'); document.getElementById('logo').src = 'assets/logo-waybrand-escuro.png'; }
   document.fonts.ready.then(() => {
     const t = document.getElementById('title'), w1 = document.getElementById('w1');
     let fs = 200; t.style.fontSize = fs + 'px';
