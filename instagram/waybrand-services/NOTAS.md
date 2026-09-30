@@ -13,3 +13,19 @@ Para renderizar: `node render.mjs`. O título se ajusta sozinho à largura, e as
 ## Versão clara
 
 `png/waybrand-services-claro.png`, gerada a partir de `index.html#claro`. O fundo é branco, a grade continua verde e um pouco mais visível, e os textos e o título ficam no escuro `#0C1818`. O `render.mjs` gera as duas versões.
+
+## Carrossel (capa clara + 6 slides)
+
+Os slides ficam em `slides.html` e são gerados com `node render-slides.mjs`, que salva em `png/slide-0N-*.png`. A capa é `png/slide-01-capa.png`, cópia da versão clara.
+
+Cada slide usa a cor do botão correspondente na capa clara:
+- Botão cheio vira slide verde: Identidade visual, Store oficial e Brand registry.
+- Botão de contorno vira slide branco com detalhes verdes: Conteúdo A+, Ads e escala e Suporte.
+
+Estrutura de cada slide:
+- Número gigante vazado no fundo.
+- O botão da capa ampliado, com um cursor "clicando" nele.
+- Frase de efeito, texto curto e chips com o que está incluído.
+- Seta no rodapé. O último slide leva o site e o @ no rodapé.
+
+Para mudar os textos, edite o array `S` em `slides.html`.

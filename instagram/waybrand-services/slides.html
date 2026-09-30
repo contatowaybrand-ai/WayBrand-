@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Waybrand services · slides</title>
+<style>
+  @font-face{font-family:'Inter';font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  :root{--green:#00B490;--ink:#0C1818;--white:#FFFFFF}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222;padding:40px;display:flex;flex-direction:column;gap:40px;-webkit-font-smoothing:antialiased;font-family:'Inter',sans-serif}
+
+  /* cada slide herda a cor do botão da capa:
+     .verde  = botão cheio (fundo verde, texto escuro)
+     .branco = botão de contorno (fundo branco, contorno verde, texto escuro) */
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;color:var(--ink)}
+  .verde{background:var(--green);--line:var(--ink);--accent:var(--ink)}
+  .branco{background:var(--white);--line:var(--green);--accent:var(--green)}
+
+  .grid{position:absolute;inset:0;
+    background-image:linear-gradient(var(--line) 2px,transparent 2px),linear-gradient(90deg,var(--line) 2px,transparent 2px);
+    background-size:195px 195px;background-position:-50px 90px}
+  .verde .grid{opacity:.13}
+  .branco .grid{opacity:.28}
+  .grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.06}
+
+  /* número gigante vazado ao fundo */
+  .num{position:absolute;right:-50px;top:150px;font:900 500px/1 'Inter';letter-spacing:-.06em;color:transparent;
+    -webkit-text-stroke:3px var(--accent);opacity:.9}
+
+  .top{position:absolute;left:110px;right:110px;top:130px;display:flex;justify-content:space-between;align-items:center}
+  .top img{height:52px}
+  .count{font:800 28px/1 'Inter';letter-spacing:.02em}
+  .count span{opacity:.45}
+
+  /* o botão da capa, ampliado e "clicado" */
+  .btn{position:absolute;left:110px;top:400px;height:128px;padding:0 64px;border-radius:64px;display:flex;align-items:center;
+    font:800 44px/1 'Inter';letter-spacing:-.01em;word-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+  .verde .btn{background:var(--ink);color:var(--green)}
+  .branco .btn{background:var(--white);border:4px solid var(--green);color:var(--ink)}
+  .cursor{position:absolute;width:74px;height:84px}
+
+  .h{position:absolute;left:110px;right:110px;top:600px;font:900 92px/.98 'Inter';letter-spacing:-.045em}
+  .p{position:absolute;left:110px;width:720px;font:400 33px/1.4 'Inter';letter-spacing:-.01em}
+  .p b{font-weight:800}
+
+  .chips{position:absolute;left:110px;right:110px;display:flex;flex-wrap:wrap;gap:14px}
+  .chip{height:56px;padding:0 26px;border-radius:28px;border:2.5px solid var(--ink);display:flex;align-items:center;
+    font:700 22px/1 'Inter';letter-spacing:.02em;text-transform:uppercase}
+  .branco .chip{border-color:var(--green)}
+
+  .foot{position:absolute;left:110px;right:110px;bottom:100px;display:flex;justify-content:space-between;align-items:center;
+    font:700 28px/1 'Inter';text-transform:uppercase;text-decoration:underline;text-decoration-color:var(--accent);
+    text-decoration-thickness:2px;text-underline-offset:6px}
+  .go{width:92px;height:92px;border-radius:50%;display:grid;place-items:center}
+  .verde .go{background:var(--ink)}
+  .branco .go{background:var(--green)}
+</style>
+</head>
+<body>
+<div id="deck"></div>
+<script>
+  // Cor de cada slide = cor do botão na capa (versão branca).
+  const S = [
+    { k:'verde',  b:'Identidade visual', h:'Cara de marca,<br>não de genérico.',
+      p:'Logo, paleta, tipografia e tom de voz pensados pra sua marca ser <b>reconhecida na primeira olhada.</b> Na Amazon, quem parece marca vende como marca.',
+      c:['Logo','Paleta','Tipografia','Embalagem'] },
+    { k:'branco', b:'Conteúdo A+', h:'A página que<br>conta a história.',
+      p:'Módulos, imagens e comparativos que mostram o produto em uso e <b>respondem a dúvida antes dela virar devolução.</b>',
+      c:['A+ básico','A+ Premium','Imagens','Copy'] },
+    { k:'branco', b:'Ads e escala', h:'Anúncio que<br>se paga.',
+      p:'Campanhas de Sponsored Products, Brands e Display ajustadas toda semana. <b>Menos gasto no clique errado,</b> mais venda com o ACOS sob controle.',
+      c:['Sponsored Ads','ACOS','Palavras-chave','Relatórios'] },
+    { k:'verde',  b:'Store oficial', h:'Sua loja dentro<br>da Amazon.',
+      p:'Uma vitrine com a sua cara e toda a sua linha num lugar só. O cliente entra por um produto e <b>sai conhecendo a marca.</b>',
+      c:['Brand Store','Vitrine','Coleções'] },
+    { k:'verde',  b:'Brand registry', h:'Sua marca,<br>protegida.',
+      p:'Registro da marca na Amazon para <b>proteger seus anúncios,</b> liberar o A+ e a Store e barrar quem tenta pegar carona no seu produto.',
+      c:['Proteção','A+ liberado','Denúncias'] },
+    { k:'branco', b:'Suporte', h:'Gente de verdade<br>do seu lado.',
+      p:'Um time que acompanha a sua conta de perto. Caso aberto, anúncio bloqueado, dúvida no Seller Central: <b>você fala com gente, não com robô.</b>',
+      c:['Seller Central','Casos','Acompanhamento'] },
+  ];
+  const arrow = c => `<svg width="44" height="30" viewBox="0 0 44 30" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15H40M27 3l13 12-13 12"/></svg>`;
+  const cursor = (fill, stroke) => `<svg class="cursor" viewBox="0 0 74 84"><path d="M6 4 L6 66 L22 52 L34 80 L46 74 L34 47 L56 47 Z" fill="${fill}" stroke="${stroke}" stroke-width="5" stroke-linejoin="round"/></svg>`;
+  const deck = document.getElementById('deck');
+  S.forEach((s, i) => {
+    const n = String(i + 1).padStart(2, '0'), last = i === S.length - 1, verde = s.k === 'verde';
+    deck.insertAdjacentHTML('beforeend', `
+    <div class="slide ${s.k}" id="s${i + 2}">
+      <div class="grid"></div>
+      <div class="num">${n}</div>
+      <div class="top"><img src="assets/logo-waybrand-escuro.png" alt="Way Brand"><div class="count">${n} <span>/ 06</span></div></div>
+      <div class="btn">${s.b}</div>
+      ${cursor(verde ? '#FFFFFF' : '#0C1818', verde ? '#0C1818' : '#FFFFFF')}
+      <div class="h">${s.h}</div>
+      <div class="p">${s.p}</div>
+      <div class="chips">${s.c.map(c => `<span class="chip">${c}</span>`).join('')}</div>
+      <div class="foot"><span>${last ? 'www.waybrand.com.br' : '@waybrand.co'}</span>
+        ${last ? '<span>@waybrand.co</span>' : `<div class="go">${arrow(verde ? '#00B490' : '#0C1818')}</div>`}</div>
+      <svg class="grain" width="1080" height="1350"><filter id="g${i}"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="${4 + i}"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .7 0"/></filter><rect width="100%" height="100%" filter="url(#g${i})"/></svg>
+    </div>`);
+  });
+  document.fonts.ready.then(() => {
+    document.querySelectorAll('.slide').forEach(sl => {
+      const btn = sl.querySelector('.btn'), cur = sl.querySelector('.cursor'), h = sl.querySelector('.h'),
+            p = sl.querySelector('.p'), chips = sl.querySelector('.chips');
+      // cursor clicando no canto direito do botão
+      cur.style.left = (110 + btn.offsetWidth - 70) + 'px'; cur.style.top = (400 + btn.offsetHeight - 40) + 'px';
+      const hb = h.offsetTop + h.offsetHeight;
+      p.style.top = (hb + 44) + 'px';
+      chips.style.top = (hb + 44 + p.offsetHeight + 48) + 'px';
+    });
+    document.body.dataset.ready = '1';
+  });
+</script>
+</body>
+</html>
