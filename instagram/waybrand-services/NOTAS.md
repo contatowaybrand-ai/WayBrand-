@@ -19,7 +19,7 @@ Para renderizar: `node render.mjs`. O título se ajusta sozinho à largura, e as
 Os slides ficam em `slides.html` e são gerados com `node render-slides.mjs`, que salva em `png/slide-0N-*.png`. A capa é `png/slide-01-capa.png`, cópia da versão clara.
 
 Cada slide de serviço usa a cor do botão correspondente na capa clara:
-- Botão cheio vira slide verde com texto branco: Identidade visual, Store oficial e Brand registry.
+- Botão cheio vira slide verde: Identidade visual, Store oficial e Brand registry. Nesses slides, a frase, o botão e os chips ficam em branco, e o texto de apoio fica em preto.
 - Botão de contorno vira slide branco com detalhes verdes e texto escuro: Conteúdo A+, Ads e escala e Suporte.
 
 Estrutura dos slides de serviço:
