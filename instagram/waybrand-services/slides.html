@@ -110,7 +110,6 @@
     <div class="slide ${s.k}" id="s${i + 2}">
       <div class="grid"></div>
       <div class="num">${n}</div>
-      <div class="top"><div class="count">${n} <span>/ 06</span></div></div>
       <div class="btn">${s.b}</div>
       ${cursor(verde ? '#FFFFFF' : '#0C1818', verde ? '#0C1818' : '#FFFFFF')}
       <div class="h">${s.h}</div>
@@ -133,9 +132,9 @@
         chips.style.top = (hb + 44 + p.offsetHeight + 48) + 'px';
         return chips.offsetTop + chips.offsetHeight;
       };
-      // centraliza o bloco entre o contador e a base do slide; o número vazado acompanha
+      // centraliza o bloco na altura do slide; o número vazado acompanha
       const block = place(0);
-      const top = Math.round((190 + 1260 - block) / 2);
+      const top = Math.round((1350 - block) / 2);
       place(top); sl.querySelector('.num').style.top = (top - 185) + 'px';
     });
     document.body.dataset.ready = '1';

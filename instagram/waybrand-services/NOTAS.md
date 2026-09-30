@@ -23,7 +23,7 @@ Cada slide de serviço usa a cor do botão correspondente na capa clara:
 - Botão de contorno vira slide branco com detalhes verdes e texto escuro: Conteúdo A+, Ads e escala e Suporte.
 
 Estrutura dos slides de serviço:
-- Só o contador "0N / 06" no topo, sem logo, site, @ ou seta.
+- Sem contador, logo, site, @ ou seta.
 - Número gigante vazado no fundo.
 - O botão da capa ampliado, com um cursor "clicando" nele.
 - Frase de efeito, texto curto e chips com o que está incluído.
