@@ -58,9 +58,9 @@
   <!-- as linhas são posicionadas pelo script abaixo -->
   <div id="rows"></div>
 
-  <svg class="mark" id="mark" width="200" height="200" viewBox="-104 -104 208 208" fill="#0C1818">
-    <!-- símbolo da Way (12 raios) no lugar das setas -->
-    <path d="M0 0L-14.8 -98.9L14.8 -98.9ZM0 0L36.7 -93.0L62.3 -78.3ZM0 0L78.3 -62.3L93.0 -36.7ZM0 0L98.9 -14.8L98.9 14.8ZM0 0L93.0 36.7L78.3 62.3ZM0 0L62.3 78.3L36.7 93.0ZM0 0L14.8 98.9L-14.8 98.9ZM0 0L-36.7 93.0L-62.3 78.3ZM0 0L-78.3 62.3L-93.0 36.7ZM0 0L-98.9 14.8L-98.9 -14.8ZM0 0L-93.0 -36.7L-78.3 -62.3ZM0 0L-62.3 -78.3L-36.7 -93.0Z"/>
+  <svg class="mark" id="mark" width="164" height="164" viewBox="60 60 960 960" fill="#0C1818">
+    <!-- símbolo oficial da Way (8 raios), cópia em assets/simbolo-way.svg -->
+    <path d="M540 539L355 72L644 72ZM540 539L767 187L864 284ZM540 539L1006 355L1006 644ZM540 539L870 634L769 734ZM540 539L644 1006L355 1006ZM540 539L284 736L186 639ZM540 539L72 644L72 355ZM540 539L176 305L277 177Z"/>
   </svg>
 
   <div class="foot">cada pixel trabalha<br>pela sua venda</div>
@@ -96,7 +96,7 @@
       bar.style.left = l.from + 'px'; bar.style.width = (right - l.from) + 'px';
       if (l.mark) {
         const a = document.getElementById('mark');
-        a.style.left = ((right + 1080) / 2 - 100) + 'px'; a.style.top = (TOP + i*H + (H - 200) / 2) + 'px';
+        a.style.left = ((right + 1080) / 2 - 82) + 'px'; a.style.top = (TOP + i*H + (H - 164) / 2) + 'px';
       }
     });
     // faixa preta contínua acima da primeira linha, como na referência
