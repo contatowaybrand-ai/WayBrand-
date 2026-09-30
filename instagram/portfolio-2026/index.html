@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Portfolio 2026 · post</title>
+<style>
+  @font-face{font-family:'Inter';font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  @font-face{font-family:'Instrument Serif';font-style:normal;src:url(assets/fonts/InstrumentSerif-normal-400.woff2) format('woff2')}
+  @font-face{font-family:'Instrument Serif';font-style:italic;src:url(assets/fonts/InstrumentSerif-italic-400.woff2) format('woff2')}
+  @font-face{font-family:'Space Mono';font-weight:700;src:url(assets/fonts/SpaceMono-normal-700.woff2) format('woff2')}
+  @font-face{font-family:'Syne';font-weight:400 800;src:url(assets/fonts/Syne.woff2) format('woff2')}
+  @font-face{font-family:'Bricolage';font-weight:200 800;src:url(assets/fonts/Bricolage.woff2) format('woff2')}
+  @font-face{font-family:'Unbounded';font-weight:200 900;src:url(assets/fonts/Unbounded.woff2) format('woff2')}
+
+  :root{--bg:#0C1818;--green:#00B490;--light:#E6E8E6;--ink:#0C1818;--white:#FFFFFF}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222;padding:40px;-webkit-font-smoothing:antialiased}
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--bg)}
+  svg.folders{position:absolute;left:0;top:0}
+  .lbl{position:absolute;white-space:nowrap;color:var(--ink);font-size:var(--lfs);letter-spacing:var(--lls);font-family:var(--lf);font-weight:var(--lw);text-transform:uppercase}
+  .lbl.year{color:var(--white)}
+
+  .sym{position:absolute;right:100px;top:800px;width:118px;height:118px}
+  .vol{position:absolute;left:100px;top:806px;color:var(--white);font-family:var(--lf);font-weight:var(--lw);
+    font-size:calc(var(--lfs) * 1.25);line-height:1.2;letter-spacing:var(--lls);text-transform:uppercase}
+  .title{position:absolute;right:96px;bottom:118px;color:var(--white);white-space:nowrap;line-height:1}
+
+  .grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.06}
+
+  /* opções de fonte: index.html#a, #b, #c, #d */
+  .fa{--lf:'Space Mono';--lw:700;--lfs:25px;--lls:.02em}
+  .fa .title{font:400 250px/1 'Instrument Serif';letter-spacing:-.02em}
+  .fa .title i{font-style:italic}
+
+  .fb{--lf:'Syne';--lw:700;--lfs:27px;--lls:.02em}
+  .fb .title{font:800 142px/1 'Syne';letter-spacing:-.04em}
+  .fb .title i{font-style:normal;font-weight:500}
+
+  .fc{--lf:'Bricolage';--lw:700;--lfs:28px;--lls:.01em}
+  .fc .title{font:700 214px/1 'Bricolage';font-variation-settings:'opsz' 96;letter-spacing:-.05em}
+  .fc .title i{font-style:normal;font-weight:300;margin-left:.03em}
+
+  .fd{--lf:'Unbounded';--lw:600;--lfs:22px;--lls:.02em}
+  .fd .title{font:500 150px/1 'Unbounded';letter-spacing:-.04em}
+  .fd .title i{font-style:normal;font-weight:250}
+</style>
+</head>
+<body>
+<div class="slide" id="post">
+  <svg class="folders" id="folders" width="1080" height="1350"></svg>
+  <div id="labels"></div>
+
+  <div class="vol">Compilation<br>Vol. 1</div>
+  <img class="sym" src="assets/simbolo-way-oficial.png" alt="Way Brand">
+  <div class="title">Port<i>folio</i></div>
+
+  <svg class="grain" width="1080" height="1350"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="5"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .7 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+</div>
+<script>
+  // Pastas empilhadas (de trás para a frente), espelhadas em relação à referência.
+  // tab: [esquerda, direita, topo]; body: [esquerda, direita, topo]
+  const F = [
+    { c:'light', tab:[70, 470, 170],  body:[0, 470, 250],   t:'Pinati' },
+    { c:'green', tab:[380, 770, 240], body:[0, 770, 320],   t:'Bevi Pro' },
+    { c:'light', tab:[690, 1080, 312], body:[0, 1080, 392], t:'Eleve Life' },
+    { c:'green', tab:[290, 700, 462], body:[0, 700, 542],   t:'Premium Lindoia' },
+    { c:'bg',    tab:[700, 1060, 530], body:[0, 1080, 610], t:'2026', year:true },
+  ];
+  const COL = { light:'#E6E8E6', green:'#00B490', bg:'#0C1818' };
+  const R = 26, FL = 22; // raio do canto da aba e curva da base da aba
+  // contorno de uma pasta: corpo + aba com cantos arredondados e base curva
+  function path(f, bottom) {
+    const [tl, tr, tt] = f.tab, [bl, br, bt] = f.body;
+    const a = Math.max(tl, bl), b = Math.min(tr, br);
+    let d = `M${bl} ${bottom} L${bl} ${bt}`;
+    d += a - FL > bl ? ` L${a - FL} ${bt} Q${a} ${bt} ${a} ${bt - FL}` : ` L${a} ${bt}`;
+    d += ` L${a} ${tt + R} Q${a} ${tt} ${a + R} ${tt} L${b - R} ${tt} Q${b} ${tt} ${b} ${tt + R} L${b} ${bt - FL}`;
+    d += b + FL < br ? ` Q${b} ${bt} ${b + FL} ${bt} L${br} ${bt}` : ` L${b} ${bt} L${br} ${bt}`;
+    return d + ` L${br} ${bottom} Z`;
+  }
+  const svg = document.getElementById('folders'), labels = document.getElementById('labels');
+  let html = `<defs><filter id="sh" x="-5%" y="-20%" width="110%" height="140%"><feDropShadow dx="0" dy="-6" stdDeviation="8" flood-color="#000" flood-opacity=".28"/></filter></defs>`;
+  F.forEach((f, i) => {
+    const last = i === F.length - 1, bottom = last ? 1350 : 720;
+    html += `<path d="${path(f, bottom)}" fill="${COL[f.c]}" filter="url(#sh)"/>`;
+    if (!last) { // vincos do papel, como na referência
+      const [bl, br, bt] = f.body;
+      html += `<path d="M${bl} ${bt + 38}H${br}M${bl} ${bt + 46}H${br}" stroke="#000" stroke-opacity=".10" stroke-width="2"/>`;
+    }
+    labels.insertAdjacentHTML('beforeend',
+      `<div class="lbl${f.year ? ' year' : ''}" style="left:${f.tab[0] + 46}px;top:${f.tab[2] + 26}px">( ${f.t} )</div>`);
+  });
+  svg.innerHTML = html;
+  const v = (location.hash || '#a').slice(1);
+  document.getElementById('post').classList.add('f' + v);
+  document.fonts.ready.then(() => { document.body.dataset.ready = '1'; });
+</script>
+</body>
+</html>
