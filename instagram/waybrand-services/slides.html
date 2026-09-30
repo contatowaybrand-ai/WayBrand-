@@ -68,8 +68,8 @@
       p:'Módulos, imagens e comparativos que mostram o produto em uso e <b>respondem a dúvida antes dela virar devolução.</b>',
       c:['A+ básico','A+ Premium','Imagens','Copy'] },
     { k:'branco', b:'Ads e escala', h:'Anúncio que<br>se paga.',
-      p:'Campanhas de Sponsored Products, Brands e Display ajustadas toda semana. <b>Menos gasto no clique errado,</b> mais venda com o ACOS sob controle.',
-      c:['Sponsored Ads','ACOS','Palavras-chave','Relatórios'] },
+      p:'Sponsored Products, Brands e Display ajustados toda semana. <b>Menos gasto no clique errado,</b> mais venda com o ACOS sob controle.',
+      c:['Sponsored Ads','ACOS','Relatórios'] },
     { k:'verde',  b:'Store oficial', h:'Sua loja dentro<br>da Amazon.',
       p:'Uma vitrine com a sua cara e toda a sua linha num lugar só. O cliente entra por um produto e <b>sai conhecendo a marca.</b>',
       c:['Brand Store','Vitrine','Coleções'] },
@@ -104,11 +104,18 @@
     document.querySelectorAll('.slide').forEach(sl => {
       const btn = sl.querySelector('.btn'), cur = sl.querySelector('.cursor'), h = sl.querySelector('.h'),
             p = sl.querySelector('.p'), chips = sl.querySelector('.chips');
-      // cursor clicando no canto direito do botão
-      cur.style.left = (110 + btn.offsetWidth - 70) + 'px'; cur.style.top = (400 + btn.offsetHeight - 40) + 'px';
-      const hb = h.offsetTop + h.offsetHeight;
-      p.style.top = (hb + 44) + 'px';
-      chips.style.top = (hb + 44 + p.offsetHeight + 48) + 'px';
+      // empilha botão, frase, texto e chips; se os chips chegarem perto do rodapé, sobe o bloco todo
+      const foot = sl.querySelector('.foot'), gap = 110;
+      const place = top => {
+        btn.style.top = top + 'px'; h.style.top = (top + 200) + 'px';
+        cur.style.left = (110 + btn.offsetWidth - 70) + 'px'; cur.style.top = (top + btn.offsetHeight - 40) + 'px';
+        const hb = h.offsetTop + h.offsetHeight;
+        p.style.top = (hb + 44) + 'px';
+        chips.style.top = (hb + 44 + p.offsetHeight + 48) + 'px';
+        return chips.offsetTop + chips.offsetHeight;
+      };
+      const over = place(335) - (foot.offsetTop - gap);
+      if (over > 0) place(335 - over);
     });
     document.body.dataset.ready = '1';
   });
