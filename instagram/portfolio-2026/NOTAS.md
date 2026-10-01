@@ -21,3 +21,11 @@ Pastas: Pinati, Bevi Pro, Eleve Life, Premium Lindoia e 2026.
 Para renderizar as 4 versões: `node render.mjs`, que salva em `png/portfolio-2026-<letra>-<fonte>.png`.
 
 **Escolhida: B (Syne).** O texto "Compilation Vol. 1" foi removido. O arquivo final é `png/portfolio-2026-final.png`.
+
+## Versão animada
+
+`png/portfolio-2026-animado.mp4` tem 8 s (2 voltas) e é a versão para postar no Instagram. `png/portfolio-2026-animado.gif` tem 1 volta, em 720 px.
+
+As 4 pastas das marcas sobem uma de cada vez e voltam, como se alguém folheasse o arquivo. A volta dura 4 s e emenda sem corte.
+
+Para gerar: `FFMPEG=/caminho/ffmpeg node render-video.mjs`. O ffmpeg pode vir de `pip install imageio-ffmpeg`.
