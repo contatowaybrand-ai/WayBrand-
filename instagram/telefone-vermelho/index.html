@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Telefone tocando 2</title>
-<!-- Loop de 4 s, 1080x1350, fundo branco. Cada quadro é desenhado por setT(t). Abrir no navegador toca em tempo real.
+<!-- Loop de 4 s, 1080x1350, fundo branco, foto espelhada. Título: Bricolage Grotesque 800 + Instrument Serif itálico. Cada quadro é desenhado por setT(t). Abrir no navegador toca em tempo real.
      Roteiro: o telefone na mesa toca duas vezes (trim-trim) e pula, enquanto a mão segura o fone. Pausa, repete. -->
 <style>
   @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
@@ -13,36 +13,52 @@
   body{background:#222}
   #v{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
      background:radial-gradient(ellipse 75% 60% at 60% 66%,#ffffff 0%,#f6f8f7 55%,#e6ecea 100%)}
-  #rays{position:absolute;left:644px;top:930px;width:1700px;height:1700px;margin:-850px 0 0 -850px;border-radius:50%;
+  @font-face{font-family:'Bricolage';font-weight:800;src:url(assets/fonts/Bricolage-800.woff2) format('woff2')}
+  @font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;src:url(assets/fonts/InstrumentSerif-italic.woff2) format('woff2')}
+  #rays{position:absolute;left:522px;top:1075px;width:1700px;height:1700px;margin:-850px 0 0 -850px;border-radius:50%;
      background:repeating-conic-gradient(from 0deg,rgba(0,180,144,.14) 0 7deg,transparent 7deg 22deg);
      -webkit-mask-image:radial-gradient(circle,#000 6%,transparent 60%)}
-  .lay{position:absolute;left:0;top:0;width:846px;height:1185px}
+  /* cena espelhada: a foto inteira vira (braço entra pela direita, telefone fica à esquerda). Coordenadas internas = foto original 736x1031 */
+  #scene{position:absolute;left:344px;top:260px;width:736px;height:1031px;transform:scaleX(-1)}
+  .lay{position:absolute;left:0;top:0;width:736px;height:1031px}
   .lay img{width:100%;height:100%}
   #arm img{filter:drop-shadow(14px 22px 24px rgba(0,60,40,.18))}
-  #base{transform-origin:76.1% 93.6%}
-  #shadow{position:absolute;left:475px;top:1088px;width:340px;height:40px;border-radius:50%;
+  #ext{position:absolute;left:0;top:0;overflow:visible}
+  #base{transform-origin:558px 965px}
+  #dial{position:absolute;left:461px;top:721px;width:182px;height:148px;border-radius:50%;overflow:hidden;transform:scaleX(-1)}
+  #dial img{position:absolute;left:-461px;top:-721px;width:736px;height:1031px}
+  #shadow{position:absolute;left:408px;top:946px;width:300px;height:36px;border-radius:50%;
      background:radial-gradient(ellipse,rgba(0,50,35,.35) 0%,rgba(0,50,35,0) 70%)}
-  #ring{position:absolute;left:0;top:0;width:1080px;height:1350px;overflow:visible}
-  #ring path{fill:none;stroke:var(--green);stroke-width:12;stroke-linecap:round}
-  #txt{position:absolute;left:560px;top:520px;width:500px;color:var(--dark)}
-  #txt p{font:300 36px/1.15 'Inter';letter-spacing:-.02em;margin-bottom:12px}
-  #txt h1{font:900 62px/1 'Inter';letter-spacing:-.045em}
-  #txt h1 em{font-style:italic;color:var(--green)}
-  #logo{position:absolute;bottom:62px;left:72px;height:42px}
-  #at{position:absolute;bottom:72px;left:258px;padding-left:20px;border-left:3px solid var(--dark);font:800 26px/1 'Inter';color:var(--dark)}
+  #ring{position:absolute;left:0;top:0;overflow:visible}
+  #ring path{fill:none;stroke:var(--green);stroke-width:11;stroke-linecap:round}
+  #txt{position:absolute;left:72px;top:78px;color:var(--dark)}
+  #txt p{font:300 40px/1.15 'Inter';letter-spacing:-.01em;margin-bottom:6px}
+  #txt h1{font-weight:400}
+  #txt h1 .a{display:block;font:800 124px/.92 'Bricolage';letter-spacing:-.04em}
+  #txt h1 .b{display:block;font:italic 400 136px/.92 'Instrument Serif';letter-spacing:-.015em;color:var(--green);margin-left:4px}
+  #logo{position:absolute;bottom:62px;right:300px;height:42px}
+  #at{position:absolute;bottom:72px;right:72px;padding-left:20px;border-left:3px solid var(--dark);font:800 26px/1 'Inter';color:var(--dark)}
 </style>
 </head>
 <body>
 <div id="v">
   <div id="rays"></div>
-  <div id="shadow"></div>
-  <div class="lay" id="arm"><img src="assets/mao-fone.png" alt=""></div>
-  <div class="lay" id="base"><img src="assets/base.png" alt=""></div>
-  <svg id="ring" viewBox="0 0 1080 1350">
-    <g id="rl"><path d="M455 860 Q430 915 455 970"/><path d="M415 835 Q380 915 415 995"/></g>
-    <g id="rr"><path d="M845 860 Q870 915 845 970"/><path d="M885 835 Q920 915 885 995"/></g>
-  </svg>
-  <div id="txt"><p>Chamada de:</p><h1>sua marca no<br><em>topo da Amazon.</em></h1></div>
+  <div id="scene">
+    <div id="shadow"></div>
+    <div class="lay" id="arm">
+      <!-- manga continua para fora do quadro (a foto corta no topo) -->
+      <svg id="ext" width="736" height="1031"><polygon points="100,14 -420,-345 -420,-73 4,151" fill="#242625"/></svg>
+      <img src="assets/mao-fone.png" alt="">
+    </div>
+    <div class="lay" id="base"><img src="assets/base.png" alt="">
+      <!-- disco desvirado: os números ficam legíveis mesmo com a cena espelhada -->
+      <div id="dial"><img src="assets/base.png" alt=""></div></div>
+    <svg id="ring" width="736" height="1031">
+      <g id="rl"><path d="M392 760 Q370 808 392 856"/><path d="M356 738 Q326 808 356 878"/></g>
+      <g id="rr"><path d="M726 760 Q748 808 726 856"/><path d="M762 738 Q792 808 762 878"/></g>
+    </svg>
+  </div>
+  <div id="txt"><p>Chamada de:</p><h1><span class="a">sua marca no</span><span class="b">topo da Amazon.</span></h1></div>
   <img id="logo" src="assets/logo-waybrand-escuro.png" alt="WayBrand">
   <div id="at">@waybrand.co</div>
 </div>
@@ -59,7 +75,7 @@ window.setT=function(t){
   $('base').style.transform=`translate(${3*sh}px,${-9*hop}px) rotate(${2.4*sh}deg)`;
   $('shadow').style.transform=`scaleX(${1-.12*hop})`; $('shadow').style.opacity=1-.35*hop;
   // a mão sente o puxão do fio: balança bem pouco
-  $('arm').style.transform=`rotate(${.25*Math.sin(t*2*Math.PI/DUR*2)+.3*sh}deg)`; $('arm').style.transformOrigin='0% 0%';
+  $('arm').style.transform=`rotate(${.25*Math.sin(t*2*Math.PI/DUR*2)+.3*sh}deg)`; $('arm').style.transformOrigin='0% 15%';
   const on=k>0?(Math.floor(tb*13)%2?1:.35):0;
   $('rl').style.opacity=on*k; $('rr').style.opacity=on*k;
   $('rl').style.transform=`translate(${-8*k}px,0)`; $('rr').style.transform=`translate(${8*k}px,0)`;
