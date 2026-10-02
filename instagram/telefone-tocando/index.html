@@ -13,9 +13,8 @@
   body{background:#222}
   #v{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
      background:radial-gradient(ellipse 70% 55% at 62% 52%,#0a7454 0%,var(--bg) 58%,#003a29 100%)}
-  #rays{position:absolute;left:600px;top:640px;width:1500px;height:1500px;margin:-750px 0 0 -750px;z-index:0;border-radius:50%;
-     background:repeating-conic-gradient(from 0deg,rgba(0,180,144,.30) 0 7deg,transparent 7deg 22deg);
-     -webkit-mask-image:radial-gradient(circle,#000 8%,transparent 62%)}
+  /* símbolo WayBrand girando: 8 raios iguais, gira 45° por loop → fim encaixa no começo sem salto */
+  #rays{position:absolute;left:600px;top:640px;width:1300px;height:1300px;margin:-650px 0 0 -650px;z-index:0;opacity:.22}
   #txt{position:absolute;top:96px;left:72px;right:72px;z-index:8;color:#fff}
   #txt p{font:300 44px/1.15 'Inter';letter-spacing:-.02em;margin-bottom:18px}
   #txt p b{font-weight:800}
@@ -38,7 +37,7 @@
   #at{position:absolute;bottom:72px;left:258px;padding-left:20px;border-left:3px solid #fff;z-index:8;font:800 26px/1 'Inter';color:#fff}
   /* tema claro (?tema=claro): fundo branco, raios e destaque verdes, card verde-escuro */
   #v.claro{background:radial-gradient(ellipse 70% 55% at 62% 52%,#ffffff 0%,#f6f8f7 55%,#e6ecea 100%)}
-  #v.claro #rays{background:repeating-conic-gradient(from 0deg,rgba(0,180,144,.16) 0 7deg,transparent 7deg 22deg)}
+  #v.claro #rays{opacity:.13}
   #v.claro #txt{color:var(--dark)}
   #v.claro #txt h1 em{color:var(--green)}
   #v.claro #hand img{filter:drop-shadow(18px 28px 30px rgba(0,60,40,.22))}
@@ -53,7 +52,7 @@
 </head>
 <body>
 <div id="v">
-  <div id="rays"></div>
+  <svg id="rays" viewBox="-500 -500 1000 1000"><g fill="#00B490"><polygon transform="rotate(0)" points="0,0 -100,-466.5 100,-466.5"/><polygon transform="rotate(45)" points="0,0 -100,-466.5 100,-466.5"/><polygon transform="rotate(90)" points="0,0 -100,-466.5 100,-466.5"/><polygon transform="rotate(135)" points="0,0 -100,-466.5 100,-466.5"/><polygon transform="rotate(180)" points="0,0 -100,-466.5 100,-466.5"/><polygon transform="rotate(225)" points="0,0 -100,-466.5 100,-466.5"/><polygon transform="rotate(270)" points="0,0 -100,-466.5 100,-466.5"/><polygon transform="rotate(315)" points="0,0 -100,-466.5 100,-466.5"/></g></svg>
   <div id="txt"><p id="sup"></p><h1 id="tit"></h1></div>
   <div id="hand">
     <img src="assets/mao-telefone.png" alt="">
@@ -102,8 +101,7 @@ window.setT=function(t){
   $('rl').style.opacity=on*k; $('rr').style.opacity=on*k;
   $('rl').style.transform=`translate(${-10*k}px,0)`; $('rr').style.transform=`translate(${8*k}px,${-8*k}px)`;
   // raios girando devagar e respirando com o toque (volta inteira de 30° em 4 s fecha o loop)
-  $('rays').style.transform=`rotate(${t/DUR*22}deg) scale(${1+.04*k})`;
-  $('rays').style.opacity=.75+.25*k;
+  $('rays').style.transform=`rotate(${t/DUR*45}deg) scale(${1+.03*k})`;
   // card de chamada: entra no 1º toque e fica; pulsa junto
   const cin=easeOut(clamp((t-.2)/.35));
   const cout=clamp((t-3.55)/.35);                      // sai antes do loop recomeçar

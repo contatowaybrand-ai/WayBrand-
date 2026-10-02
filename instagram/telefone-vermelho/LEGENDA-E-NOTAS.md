@@ -9,3 +9,5 @@ Referência: `referencia.jpg` (telefone de disco vermelho, manga listrada, fundo
 - O telefone toca duas vezes (trim-trim), pula e treme com traços verdes dos lados. Símbolo WayBrand (8 raios) girando bem claro no fundo: gira 45° por loop, então o fim encaixa no começo sem salto.
 - `out/telefone-tocando-2.mp4` para postar (loop 3x, 12 s), `.gif` 720px, `-quadro.png` estático.
 - Gerar de novo: `node render.mjs` (Playwright + ffmpeg).
+
+- **Som:** os MP4 têm toque de telefone antigo sincronizado com os dois toques da animação (`../som-telefone/gerar.py` → `toque-12s.wav`). O GIF não tem som.
