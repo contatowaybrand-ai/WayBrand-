@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Telefone tocando</title>
 <!-- Loop de 4 s, 1080x1350. Cada quadro é desenhado por setT(t). Abrir no navegador toca em tempo real.
-     Texto: index.html?v=a | b | c (ver TEXTOS). Roteiro: o telefone toca duas vezes (trim-trim), a chamada da WayBrand aparece e pulsa, pausa, repete. -->
+     Texto: index.html?v=a | b | c | d (ver TEXTOS). Fundo branco: &tema=claro. Roteiro: o telefone toca duas vezes (trim-trim), a chamada da WayBrand aparece e pulsa, pausa, repete. -->
 <style>
   @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
   @font-face{font-family:'Inter';font-style:italic;font-weight:300 900;src:url(assets/fonts/Inter-italic.woff2) format('woff2')}
@@ -36,6 +36,19 @@
   #halo{position:absolute;inset:-14px;border-radius:50%;border:4px solid var(--green)}
   #logo{position:absolute;bottom:62px;left:72px;height:42px;z-index:8}
   #at{position:absolute;bottom:72px;left:258px;padding-left:20px;border-left:3px solid #fff;z-index:8;font:800 26px/1 'Inter';color:#fff}
+  /* tema claro (?tema=claro): fundo branco, raios e destaque verdes, card verde-escuro */
+  #v.claro{background:radial-gradient(ellipse 70% 55% at 62% 52%,#ffffff 0%,#f6f8f7 55%,#e6ecea 100%)}
+  #v.claro #rays{background:repeating-conic-gradient(from 0deg,rgba(0,180,144,.16) 0 7deg,transparent 7deg 22deg)}
+  #v.claro #txt{color:var(--dark)}
+  #v.claro #txt h1 em{color:var(--green)}
+  #v.claro #hand img{filter:drop-shadow(18px 28px 30px rgba(0,60,40,.22))}
+  #v.claro #ring path{stroke:var(--green)}
+  #v.claro #call{background:var(--bg);box-shadow:0 22px 50px rgba(0,82,58,.3)}
+  #v.claro #call .ic{background:#fff}
+  #v.claro #call .ic img{filter:none}
+  #v.claro #call .who{color:#fff}
+  #v.claro #call .st{color:#bfe3d8}
+  #v.claro #at{color:var(--dark);border-left-color:var(--dark)}
 </style>
 </head>
 <body>
@@ -67,7 +80,8 @@ const TEXTOS={
   d:{sup:'Chamada de:', tit:'sua marca no<br><em>topo da Amazon.</em>'},
   c:{sup:'Do outro lado da linha:', tit:'a marca que a gente<br>vai <em>construir junto.</em>'},
 };
-const v=new URLSearchParams(location.search).get('v')||'d';
+const Q=new URLSearchParams(location.search), v=Q.get('v')||'d';
+if(Q.get('tema')==='claro'){ document.getElementById('v').classList.add('claro'); document.getElementById('logo').src='assets/logo-waybrand-escuro.png'; }
 document.getElementById('sup').innerHTML=TEXTOS[v].sup; document.getElementById('tit').innerHTML=TEXTOS[v].tit;
 
 const DUR=4;
