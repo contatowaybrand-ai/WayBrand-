@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Telefone tocando 2</title>
+<!-- Loop de 4 s, 1080x1350, fundo branco. Cada quadro é desenhado por setT(t). Abrir no navegador toca em tempo real.
+     Roteiro: o telefone na mesa toca duas vezes (trim-trim) e pula, enquanto a mão segura o fone. Pausa, repete. -->
+<style>
+  @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:italic;font-weight:300 900;src:url(assets/fonts/Inter-italic.woff2) format('woff2')}
+  :root{--green:#00B490;--deep:#00523A;--dark:#0C1818}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222}
+  #v{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
+     background:radial-gradient(ellipse 75% 60% at 60% 66%,#ffffff 0%,#f6f8f7 55%,#e6ecea 100%)}
+  #rays{position:absolute;left:644px;top:930px;width:1700px;height:1700px;margin:-850px 0 0 -850px;border-radius:50%;
+     background:repeating-conic-gradient(from 0deg,rgba(0,180,144,.14) 0 7deg,transparent 7deg 22deg);
+     -webkit-mask-image:radial-gradient(circle,#000 6%,transparent 60%)}
+  .lay{position:absolute;left:0;top:0;width:846px;height:1185px}
+  .lay img{width:100%;height:100%}
+  #arm img{filter:drop-shadow(14px 22px 24px rgba(0,60,40,.18))}
+  #base{transform-origin:76.1% 93.6%}
+  #shadow{position:absolute;left:475px;top:1088px;width:340px;height:40px;border-radius:50%;
+     background:radial-gradient(ellipse,rgba(0,50,35,.35) 0%,rgba(0,50,35,0) 70%)}
+  #ring{position:absolute;left:0;top:0;width:1080px;height:1350px;overflow:visible}
+  #ring path{fill:none;stroke:var(--green);stroke-width:12;stroke-linecap:round}
+  #txt{position:absolute;left:560px;top:520px;width:500px;color:var(--dark)}
+  #txt p{font:300 36px/1.15 'Inter';letter-spacing:-.02em;margin-bottom:12px}
+  #txt h1{font:900 62px/1 'Inter';letter-spacing:-.045em}
+  #txt h1 em{font-style:italic;color:var(--green)}
+  #logo{position:absolute;bottom:62px;left:72px;height:42px}
+  #at{position:absolute;bottom:72px;left:258px;padding-left:20px;border-left:3px solid var(--dark);font:800 26px/1 'Inter';color:var(--dark)}
+</style>
+</head>
+<body>
+<div id="v">
+  <div id="rays"></div>
+  <div id="shadow"></div>
+  <div class="lay" id="arm"><img src="assets/mao-fone.png" alt=""></div>
+  <div class="lay" id="base"><img src="assets/base.png" alt=""></div>
+  <svg id="ring" viewBox="0 0 1080 1350">
+    <g id="rl"><path d="M455 860 Q430 915 455 970"/><path d="M415 835 Q380 915 415 995"/></g>
+    <g id="rr"><path d="M845 860 Q870 915 845 970"/><path d="M885 835 Q920 915 885 995"/></g>
+  </svg>
+  <div id="txt"><p>Chamada de:</p><h1>sua marca no<br><em>topo da Amazon.</em></h1></div>
+  <img id="logo" src="assets/logo-waybrand-escuro.png" alt="WayBrand">
+  <div id="at">@waybrand.co</div>
+</div>
+<script>
+const DUR=4, BURSTS=[[0.15,1.0],[1.35,2.2]];
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const mod=(a,m)=>((a%m)+m)%m;
+const $=id=>document.getElementById(id);
+window.setT=function(t){
+  t=mod(t,DUR);
+  let k=0, tb=0;
+  for(const[a,b] of BURSTS) if(t>=a&&t<b){ k=Math.min(clamp((t-a)/.08),clamp((b-t)/.12)); tb=t-a; }
+  const sh=Math.sin(tb*2*Math.PI*13)*k, hop=Math.abs(Math.sin(tb*2*Math.PI*6.5))*k;
+  $('base').style.transform=`translate(${3*sh}px,${-9*hop}px) rotate(${2.4*sh}deg)`;
+  $('shadow').style.transform=`scaleX(${1-.12*hop})`; $('shadow').style.opacity=1-.35*hop;
+  // a mão sente o puxão do fio: balança bem pouco
+  $('arm').style.transform=`rotate(${.25*Math.sin(t*2*Math.PI/DUR*2)+.3*sh}deg)`; $('arm').style.transformOrigin='0% 0%';
+  const on=k>0?(Math.floor(tb*13)%2?1:.35):0;
+  $('rl').style.opacity=on*k; $('rr').style.opacity=on*k;
+  $('rl').style.transform=`translate(${-8*k}px,0)`; $('rr').style.transform=`translate(${8*k}px,0)`;
+  $('rays').style.transform=`rotate(${t/DUR*22}deg) scale(${1+.04*k})`; $('rays').style.opacity=.75+.25*k;
+};
+if(!window.__render){ const s=performance.now(); (function tick(){ setT((performance.now()-s)/1000); requestAnimationFrame(tick); })(); } else setT(0);
+</script>
+</body>
+</html>
