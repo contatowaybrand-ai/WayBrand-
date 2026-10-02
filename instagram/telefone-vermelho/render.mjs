@@ -2,7 +2,7 @@
 // Uso: node render.mjs   (precisa do Playwright e do ffmpeg)
 import { chromium } from 'playwright'; import { fileURLToPath } from 'url'; import path from 'path'; import fs from 'fs'; import { execFileSync } from 'child_process';
 const dir = path.dirname(fileURLToPath(import.meta.url)); const FFMPEG = process.env.FFMPEG || 'ffmpeg';
-const AUDIO = path.join(dir, '..', 'som-telefone', 'toque-12s.wav');   // toque de telefone (gerado por som-telefone/gerar.py)
+const AUDIO = path.join(dir, '..', 'som-telefone', 'toque-antigo-12s.wav');   // toque nostálgico (gerado por som-telefone/gerar-antigo.py)
 const fps = 30, dur = 4, tmp = fs.mkdtempSync(path.join(dir, '.frames-'));
 const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1080, height: 1350 } });
 await p.addInitScript(() => { window.__render = true; });

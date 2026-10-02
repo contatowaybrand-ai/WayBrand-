@@ -10,4 +10,4 @@ Referência: `referencia.jpg` (telefone de disco vermelho, manga listrada, fundo
 - `out/telefone-tocando-2.mp4` para postar (loop 3x, 12 s), `.gif` 720px, `-quadro.png` estático.
 - Gerar de novo: `node render.mjs` (Playwright + ffmpeg).
 
-- **Som:** os MP4 têm toque de telefone antigo sincronizado com os dois toques da animação (`../som-telefone/gerar.py` → `toque-12s.wav`). O GIF não tem som.
+- **Som:** o MP4 tem toque nostálgico de telefone de disco sincronizado com os dois toques da animação (`../som-telefone/gerar-antigo.py` → `toque-antigo-12s.wav`: gongo grave, eco de sala, banda de alto-falante velho, chiado de vinil). O GIF não tem som.
