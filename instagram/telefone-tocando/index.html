@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Telefone tocando</title>
+<!-- Loop de 4 s, 1080x1350. Cada quadro é desenhado por setT(t). Abrir no navegador toca em tempo real.
+     Texto: index.html?v=a | b | c (ver TEXTOS). Roteiro: o telefone toca duas vezes (trim-trim), a chamada da WayBrand aparece e pulsa, pausa, repete. -->
+<style>
+  @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:italic;font-weight:300 900;src:url(assets/fonts/Inter-italic.woff2) format('woff2')}
+  :root{--green:#00B490;--solid:#00A884;--dark:#0C1818;--ray:#6CC6B4}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222}
+  #v{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
+     background:radial-gradient(ellipse 70% 55% at 62% 50%,#13c39d 0%,var(--solid) 60%,#009675 100%)}
+  #rays{position:absolute;left:600px;top:640px;width:1500px;height:1500px;margin:-750px 0 0 -750px;z-index:0;border-radius:50%;
+     background:repeating-conic-gradient(from 0deg,rgba(108,198,180,.55) 0 7deg,transparent 7deg 22deg);
+     -webkit-mask-image:radial-gradient(circle,#000 8%,transparent 62%)}
+  #txt{position:absolute;top:96px;left:72px;right:72px;z-index:8;color:var(--dark)}
+  #txt p{font:300 44px/1.15 'Inter';letter-spacing:-.02em;margin-bottom:18px}
+  #txt p b{font-weight:800}
+  #txt h1{font:900 92px/.98 'Inter';letter-spacing:-.045em}
+  #txt h1 em{font-style:italic;font-weight:900;color:#fff}
+  #hand{position:absolute;left:340px;top:420px;width:733px;height:1100px;z-index:3;transform-origin:45% 72%}
+  #hand img{width:100%;height:100%;filter:drop-shadow(18px 28px 30px rgba(0,40,30,.35))}
+  #ring{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;z-index:4}
+  #ring path{fill:none;stroke:var(--dark);stroke-width:13;stroke-linecap:round}
+  #call{position:absolute;left:72px;top:1040px;z-index:7;display:flex;align-items:center;gap:22px;
+     background:#fff;border-radius:34px;padding:22px 26px 22px 22px;box-shadow:0 22px 50px rgba(0,40,30,.35);transform-origin:20% 50%}
+  #call .ic{width:76px;height:76px;border-radius:22px;background:var(--dark);display:grid;place-items:center}
+  #call .ic img{width:40px;filter:invert(1)}
+  #call .who{font:800 32px/1.1 'Inter';color:var(--dark);letter-spacing:-.02em}
+  #call .st{font:400 24px/1.3 'Inter';color:#4b5a57}
+  #call .ok{width:72px;height:72px;border-radius:50%;background:var(--green);display:grid;place-items:center;margin-left:14px}
+  #call .ok svg{width:36px}
+  #halo{position:absolute;inset:-14px;border-radius:50%;border:4px solid var(--green)}
+  #logo{position:absolute;bottom:62px;left:72px;height:42px;z-index:8}
+  #at{position:absolute;bottom:72px;left:258px;padding-left:20px;border-left:3px solid var(--dark);z-index:8;font:800 26px/1 'Inter';color:var(--dark)}
+</style>
+</head>
+<body>
+<div id="v">
+  <div id="rays"></div>
+  <div id="txt"><p id="sup"></p><h1 id="tit"></h1></div>
+  <div id="hand">
+    <img src="assets/mao-telefone.png" alt="">
+    <!-- traços de "tocando" ao redor do fone (coordenadas no espaço 733x1100 da mão) -->
+    <svg id="ring" viewBox="0 0 733 1100">
+      <g id="rl"><path d="M150 230 Q120 300 150 370"/><path d="M105 200 Q60 300 105 400"/><path d="M60 170 Q0 300 60 430"/></g>
+      <g id="rr"><path d="M430 140 Q480 170 495 230"/><path d="M455 85 Q530 125 550 210"/></g>
+    </svg>
+  </div>
+  <div id="call">
+    <div class="ic"><img src="assets/simbolo-escuro.png" alt=""></div>
+    <div><div class="who">WayBrand</div><div class="st" id="st">chamada recebida</div></div>
+    <div class="ok" style="position:relative"><div id="halo"></div>
+      <svg viewBox="0 0 24 24"><path fill="#fff" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+    </div>
+  </div>
+  <img id="logo" src="assets/logo-waybrand-escuro.png" alt="WayBrand">
+  <div id="at">@waybrand.co</div>
+</div>
+<script>
+const TEXTOS={
+  a:{sup:'Alô, é da <b>WayBrand?</b>', tit:'Minha marca<br>quer <em>escalar.</em>'},
+  b:{sup:'Atende, é a <b>sua marca</b> ligando.', tit:'Ela quer<br><em>jogar grande.</em>'},
+  c:{sup:'Do outro lado da linha:', tit:'a marca que a gente<br>vai <em>construir junto.</em>'},
+};
+const v=new URLSearchParams(location.search).get('v')||'a';
+document.getElementById('sup').innerHTML=TEXTOS[v].sup; document.getElementById('tit').innerHTML=TEXTOS[v].tit;
+
+const DUR=4;
+const BURSTS=[[0.15,1.0],[1.35,2.2]];                 // trim... trim... depois silêncio até 4 s
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const easeOut=t=>1-Math.pow(1-t,3);
+const mod=(a,m)=>((a%m)+m)%m;
+const $=id=>document.getElementById(id);
+window.setT=function(t){
+  t=mod(t,DUR);
+  // intensidade do toque: sobe e desce rápido nas bordas de cada rajada
+  let k=0, tb=0;
+  for(const[a,b] of BURSTS) if(t>=a&&t<b){ k=Math.min(clamp((t-a)/.08),clamp((b-t)/.12)); tb=t-a; }
+  const shake=Math.sin(tb*2*Math.PI*13)*k;
+  $('hand').style.transform=`rotate(${3.2*shake}deg) translate(${5*shake}px,${-4*k}px)`;
+  // traços: piscam alternados durante a rajada
+  const on=k>0? (Math.floor(tb*13)%2?1:.35):0;
+  $('rl').style.opacity=on*k; $('rr').style.opacity=on*k;
+  $('rl').style.transform=`translate(${-10*k}px,0)`; $('rr').style.transform=`translate(${8*k}px,${-8*k}px)`;
+  // raios girando devagar e respirando com o toque (volta inteira de 30° em 4 s fecha o loop)
+  $('rays').style.transform=`rotate(${t/DUR*22}deg) scale(${1+.04*k})`;
+  $('rays').style.opacity=.75+.25*k;
+  // card de chamada: entra no 1º toque e fica; pulsa junto
+  const cin=easeOut(clamp((t-.2)/.35));
+  const cout=clamp((t-3.55)/.35);                      // sai antes do loop recomeçar
+  const c=$('call'); c.style.opacity=cin*(1-cout);
+  c.style.transform=`translateY(${40*(1-cin)+20*cout}px) scale(${.92+.08*cin}) rotate(${.8*shake}deg)`;
+  const hp=mod(t*1.4,1); $('halo').style.transform=`scale(${1+.3*hp})`; $('halo').style.opacity=(1-hp)*(k>0||t<2.6?1:.5);
+  $('st').textContent='chamada recebida'+'.'.repeat(1+Math.floor(t*2.5)%3);
+};
+if(!window.__render){ const s=performance.now(); (function tick(){ setT((performance.now()-s)/1000); requestAnimationFrame(tick); })(); } else setT(0);
+</script>
+</body>
+</html>
