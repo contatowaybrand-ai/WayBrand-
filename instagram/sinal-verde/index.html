@@ -2,19 +2,21 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Sinal verde · post</title>
+<title>Sinal verde · carrossel</title>
 <style>
-  @font-face{font-family:'Poppins';font-weight:200;src:url(assets/fonts/Poppins-200.woff2) format('woff2')}
-  @font-face{font-family:'Poppins';font-weight:300;src:url(assets/fonts/Poppins-300.woff2) format('woff2')}
-  @font-face{font-family:'Poppins';font-weight:400;src:url(assets/fonts/Poppins-400.woff2) format('woff2')}
-  @font-face{font-family:'Poppins';font-weight:500;src:url(assets/fonts/Poppins-500.woff2) format('woff2')}
-  @font-face{font-family:'Poppins';font-weight:600;src:url(assets/fonts/Poppins-600.woff2) format('woff2')}
-  :root{--green:#00B490;--ink:#0b1714;--white:#fff}
+  /* Fonte: RF Dewi. Basta colocar os arquivos RFDewi-*.woff2 (ou .otf, ajustando aqui) em assets/fonts.
+     Enquanto eles não existem, o navegador cai na Onest, que tem o mesmo desenho geométrico. */
+  @font-face{font-family:'Dewi';font-weight:300;src:local('RF Dewi Light'),url(assets/fonts/RFDewi-Light.woff2) format('woff2'),url(assets/fonts/Onest-300.woff2) format('woff2')}
+  @font-face{font-family:'Dewi';font-weight:400;src:local('RF Dewi Regular'),url(assets/fonts/RFDewi-Regular.woff2) format('woff2'),url(assets/fonts/Onest-400.woff2) format('woff2')}
+  @font-face{font-family:'Dewi';font-weight:500;src:local('RF Dewi Medium'),url(assets/fonts/RFDewi-Medium.woff2) format('woff2'),url(assets/fonts/Onest-500.woff2) format('woff2')}
+  @font-face{font-family:'Dewi';font-weight:600;src:local('RF Dewi Semibold'),url(assets/fonts/RFDewi-Semibold.woff2) format('woff2'),url(assets/fonts/Onest-600.woff2) format('woff2')}
+  :root{--green:#00B490;--ink:#0b1714;--white:#fff;--sky:linear-gradient(180deg,#9fe9fe 0%,#a6edfe 14%,#cdf8fe 50%,#e6fdff 80%,#f3ffff 100%)}
   *{margin:0;padding:0;box-sizing:border-box}
-  body{background:#222;font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased;padding:40px}
+  body{background:#222;font-family:'Dewi',sans-serif;-webkit-font-smoothing:antialiased;padding:40px;display:flex;flex-direction:column;gap:40px}
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--sky);color:var(--ink)}
+
+  /* ---------- capa ---------- */
   /* céu contínuo: o fundo repete o degradê do céu da foto, que entra com borda esfumada */
-  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;
-    background:linear-gradient(180deg,#9fe9fe 0%,#a6edfe 14%,#cdf8fe 50%,#e6fdff 80%,#f3ffff 100%)}
   .photo{position:absolute;right:0;bottom:0;width:883px;height:1218px;
     background:url(assets/semaforo-ref.jpg) center/cover no-repeat;
     -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 260px),linear-gradient(180deg,transparent 0,#000 120px);
@@ -23,38 +25,82 @@
   .photo.off{background-image:url(assets/semaforo-apagado.jpg);opacity:0}
   body.apagado .photo.off{opacity:1}
 
-  /* topo: título em duas linhas, fino com uma palavra em negrito */
-  .title{position:absolute;left:66px;top:62px;font:300 104px/1.0 'Poppins';letter-spacing:-.01em;color:var(--ink);text-transform:uppercase}
+  .title{position:absolute;left:66px;top:62px;font:300 104px/1.0 'Dewi';letter-spacing:-.02em;text-transform:uppercase}
   .title b{font-weight:600}
-
   .logo{position:absolute;right:66px;top:76px;height:36px}
 
-  /* rótulos soltos com marcador quadrado */
-  .tag{position:absolute;font:300 22px/1 'Poppins';letter-spacing:.04em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:10px}
-  .tag:before{content:"";width:7px;height:7px;background:currentColor}
-  .tag.w{color:var(--white)}
+  /* rótulos: uma coluna só, numerada, presa num fio vertical (o "caminho" do pedestre) */
+  .route{position:absolute;left:66px;top:400px;height:560px;display:flex;flex-direction:column;justify-content:space-between;
+    padding-left:26px;border-left:1.5px solid rgba(11,23,20,.35)}
+  .route div{position:relative;display:flex;align-items:baseline;gap:16px;font:400 22px/1 'Dewi';letter-spacing:.14em;text-transform:uppercase}
+  .route div:before{content:"";position:absolute;left:-31px;top:50%;width:8px;height:8px;margin-top:-5px;background:var(--ink)}
+  .route div:last-child:before{background:var(--green)}
+  .route small{font:300 15px/1 'Dewi';letter-spacing:.1em;opacity:.55;width:24px;font-variant-numeric:tabular-nums}
 
-  /* rodapé: linha curta + frase grande */
-  .end{position:absolute;left:66px;bottom:66px;color:var(--ink);text-transform:uppercase}
-  .end .s{font:300 72px/1 'Poppins';letter-spacing:-.01em}
-  .end .l{font:500 118px/1 'Poppins';letter-spacing:-.02em;margin-top:6px}
+  .end{position:absolute;left:66px;bottom:66px;text-transform:uppercase}
+  .end .s{font:300 72px/1 'Dewi';letter-spacing:-.02em}
+  .end .l{font:500 118px/1 'Dewi';letter-spacing:-.03em;margin-top:6px}
   .end .l i{font-style:normal;color:var(--green)}
+
+  /* ---------- slides internos: mesma foto, inteira e com opacidade ---------- */
+  .bg{position:absolute;inset:0;background:url(assets/semaforo-ref.jpg) 70% 60%/cover no-repeat;opacity:.22}
+  .num{position:absolute;right:66px;top:70px;font:300 26px/1 'Dewi';letter-spacing:.1em}
+  .logo-s{position:absolute;left:66px;bottom:70px;height:30px}
+  .check{position:absolute;left:66px;top:70px;display:flex;align-items:center;gap:12px;font:400 22px/1 'Dewi';letter-spacing:.14em;text-transform:uppercase}
+  .check:before{content:"";width:8px;height:8px;background:var(--green)}
+  .check.q:before{background:var(--ink)}
+  .big{position:absolute;left:66px;right:66px;font:300 112px/1.02 'Dewi';letter-spacing:-.03em;text-transform:uppercase}
+  .big b{font-weight:600}
+  .big.m{font-size:84px;line-height:1.04}
+  .big i{font-style:normal;color:var(--green)}
+  .next{position:absolute;right:66px;bottom:70px;font:400 20px/1 'Dewi';letter-spacing:.14em;text-transform:uppercase}
 </style>
 </head>
 <body>
-<section class="slide" id="post">
+
+<!-- 01 · capa -->
+<section class="slide" id="s1">
   <div class="photo"></div>
   <div class="photo off"></div>
-
   <h1 class="title">Sinal verde<br>pra sua <b>marca</b></h1>
   <img class="logo" src="assets/logo-waybrand-escuro.png" alt="WayBrand">
-
-  <div class="tag" style="left:70px;top:420px">Branding</div>
-  <div class="tag w" style="left:640px;top:520px">Posicionamento</div>
-  <div class="tag" style="left:150px;top:740px">Anúncios</div>
-  <div class="tag w" style="left:860px;top:1010px">Resultado</div>
-
+  <div class="route">
+    <div><small>01</small>Branding</div>
+    <div><small>02</small>Posicionamento</div>
+    <div><small>03</small>Anúncios</div>
+    <div><small>04</small>Resultado</div>
+  </div>
   <div class="end"><div class="s">Agora é</div><div class="l">sua vez<i>.</i></div></div>
 </section>
+
+<!-- 02 -->
+<section class="slide" id="s2">
+  <div class="bg"></div>
+  <div class="check">Marca registrada</div>
+  <div class="num">02</div>
+  <p class="big" style="top:520px">Se você já tem<br>a marca<br><b>registrada</b><i>,</i></p>
+  <img class="logo-s" src="assets/logo-waybrand-escuro.png" alt="WayBrand">
+  <div class="next">Arrasta →</div>
+</section>
+
+<!-- 03 -->
+<section class="slide" id="s3">
+  <div class="bg"></div>
+  <div class="check">Produto validado</div>
+  <div class="num">03</div>
+  <p class="big" style="top:600px">produto<br><b>validado</b><i>,</i></p>
+  <img class="logo-s" src="assets/logo-waybrand-escuro.png" alt="WayBrand">
+  <div class="next">Arrasta →</div>
+</section>
+
+<!-- 04 -->
+<section class="slide" id="s4">
+  <div class="bg"></div>
+  <div class="check q">Posicionamento?</div>
+  <div class="num">04</div>
+  <p class="big m" style="top:400px">por que sua marca<br>ainda não está<br><b>bem posicionada</b><br>dentro da Amazon<i>?</i></p>
+  <img class="logo-s" src="assets/logo-waybrand-escuro.png" alt="WayBrand">
+</section>
+
 </body>
 </html>
