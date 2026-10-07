@@ -9,10 +9,10 @@
 Slides 2 a 4 usam a mesma foto do semáforo, inteira, com 22% de opacidade.
 
 ## Fonte
-RF Dewi Extended Light + Regular (Russian Fonts, paga). O arquivo **não vai pro git** porque o repositório é público
-(`.gitignore` ignora `assets/fonts/RFDewi*`). Pra renderizar de novo, coloque `RFDewiExtended-Light.ttf` e `RFDewiExtended-Regular.ttf`
+RF Dewi Extended Light + Regular + Semibold (Russian Fonts, paga). O arquivo **não vai pro git** porque o repositório é público
+(`.gitignore` ignora `assets/fonts/RFDewi*`). Pra renderizar de novo, coloque `RFDewiExtended-Light.ttf`, `-Regular.ttf` e `-Semibold.ttf`
 em `assets/fonts` e rode `node render.mjs`. Sem ele, a arte sai com a Onest.
-Texto em Light; palavras em destaque em Regular.
+Texto em Light; palavras em destaque em Semibold.
 
 # Texto da capa
 

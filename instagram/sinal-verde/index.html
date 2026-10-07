@@ -5,13 +5,14 @@
 <title>Sinal verde · carrossel</title>
 <style>
   /* Fonte: RF Dewi Extended Light (paga: o arquivo fica só local, fora do git; ver LEGENDA-E-NOTAS.md).
-     Texto corrido em Light; destaques (b) e rótulos em Regular.
+     Texto em Light, destaques (b) e "SUA VEZ" em Semibold; Regular fica disponível no peso 400.
      Sem os arquivos, cai na Onest. */
   @font-face{font-family:'Dewi';font-weight:100 349;src:local('RF Dewi Extended Light'),url(assets/fonts/RFDewiExtended-Light.ttf) format('truetype'),url(assets/fonts/Onest-300.woff2) format('woff2')}
-  @font-face{font-family:'Dewi';font-weight:350 900;src:local('RF Dewi Extended Regular'),url(assets/fonts/RFDewiExtended-Regular.ttf) format('truetype'),url(assets/fonts/Onest-600.woff2) format('woff2')}
+  @font-face{font-family:'Dewi';font-weight:350 499;src:local('RF Dewi Extended Regular'),url(assets/fonts/RFDewiExtended-Regular.ttf) format('truetype'),url(assets/fonts/Onest-400.woff2) format('woff2')}
+  @font-face{font-family:'Dewi';font-weight:500 900;src:local('RF Dewi Extended Semibold'),url(assets/fonts/RFDewiExtended-Semibold.ttf) format('truetype'),url(assets/fonts/Onest-600.woff2) format('woff2')}
   :root{--green:#00B490;--ink:#0b1714;--white:#fff;--sky:linear-gradient(180deg,#9fe9fe 0%,#a6edfe 14%,#cdf8fe 50%,#e6fdff 80%,#f3ffff 100%)}
   *{margin:0;padding:0;box-sizing:border-box}
-  b{font-weight:400}
+  b{font-weight:600}
   body{background:#222;font-family:'Dewi',sans-serif;-webkit-font-smoothing:antialiased;padding:40px;display:flex;flex-direction:column;gap:40px}
   .slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--sky);color:var(--ink)}
 
@@ -38,7 +39,7 @@
 
   .end{position:absolute;left:66px;bottom:66px;text-transform:uppercase}
   .end .s{font:300 72px/1 'Dewi';letter-spacing:-.02em}
-  .end .l{font:400 118px/1 'Dewi';letter-spacing:-.03em;margin-top:6px}
+  .end .l{font:600 118px/1 'Dewi';letter-spacing:-.03em;margin-top:6px}
   .end .l i{font-style:normal;color:var(--green)}
 
   /* ---------- slides internos: mesma foto, inteira e com opacidade ---------- */
