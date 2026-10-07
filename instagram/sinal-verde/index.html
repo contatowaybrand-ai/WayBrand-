@@ -5,12 +5,13 @@
 <title>Sinal verde · carrossel</title>
 <style>
   /* Fonte: RF Dewi Extended Light (paga: o arquivo fica só local, fora do git; ver LEGENDA-E-NOTAS.md).
-     Só existe o peso Light, então o "negrito" é o mesmo desenho engrossado com contorno (.b).
-     Sem o arquivo, cai na Onest. */
-  @font-face{font-family:'Dewi';font-weight:100 900;src:local('RF Dewi Extended Light'),url(assets/fonts/RFDewiExtended-Light.ttf) format('truetype'),url(assets/fonts/Onest-300.woff2) format('woff2')}
+     Texto corrido em Light; destaques (b) e rótulos em Regular.
+     Sem os arquivos, cai na Onest. */
+  @font-face{font-family:'Dewi';font-weight:100 349;src:local('RF Dewi Extended Light'),url(assets/fonts/RFDewiExtended-Light.ttf) format('truetype'),url(assets/fonts/Onest-300.woff2) format('woff2')}
+  @font-face{font-family:'Dewi';font-weight:350 900;src:local('RF Dewi Extended Regular'),url(assets/fonts/RFDewiExtended-Regular.ttf) format('truetype'),url(assets/fonts/Onest-600.woff2) format('woff2')}
   :root{--green:#00B490;--ink:#0b1714;--white:#fff;--sky:linear-gradient(180deg,#9fe9fe 0%,#a6edfe 14%,#cdf8fe 50%,#e6fdff 80%,#f3ffff 100%)}
   *{margin:0;padding:0;box-sizing:border-box}
-  b,.bold{font-weight:300;-webkit-text-stroke:.045em currentColor;paint-order:stroke fill}
+  b{font-weight:400}
   body{background:#222;font-family:'Dewi',sans-serif;-webkit-font-smoothing:antialiased;padding:40px;display:flex;flex-direction:column;gap:40px}
   .slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--sky);color:var(--ink)}
 
@@ -37,7 +38,7 @@
 
   .end{position:absolute;left:66px;bottom:66px;text-transform:uppercase}
   .end .s{font:300 72px/1 'Dewi';letter-spacing:-.02em}
-  .end .l{-webkit-text-stroke:.03em currentColor;font:300 118px/1 'Dewi';letter-spacing:-.03em;margin-top:6px}
+  .end .l{font:400 118px/1 'Dewi';letter-spacing:-.03em;margin-top:6px}
   .end .l i{font-style:normal;color:var(--green)}
 
   /* ---------- slides internos: mesma foto, inteira e com opacidade ---------- */
