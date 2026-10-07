@@ -19,6 +19,9 @@
     background:url(assets/semaforo-ref.jpg) center/cover no-repeat;
     -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 260px),linear-gradient(180deg,transparent 0,#000 120px);
     -webkit-mask-composite:source-in;mask-composite:intersect}
+  /* quadro do pisca: mesma foto com o bonequinho apagado por cima */
+  .photo.off{background-image:url(assets/semaforo-apagado.jpg);opacity:0}
+  body.apagado .photo.off{opacity:1}
 
   /* topo: título em duas linhas, fino com uma palavra em negrito */
   .title{position:absolute;left:66px;top:62px;font:300 104px/1.0 'Poppins';letter-spacing:-.01em;color:var(--ink);text-transform:uppercase}
@@ -41,6 +44,7 @@
 <body>
 <section class="slide" id="post">
   <div class="photo"></div>
+  <div class="photo off"></div>
 
   <h1 class="title">Sinal verde<br>pra sua <b>marca</b></h1>
   <img class="logo" src="assets/logo-waybrand-escuro.png" alt="WayBrand">

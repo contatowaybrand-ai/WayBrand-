@@ -21,4 +21,7 @@ Chama a gente no direct.
 ## Notas
 - Fonte: Poppins (a da referência Onye), arquivos em assets/fonts.
 - Foto: semáforo de referência, esfumada pra esquerda e pra cima num degradê que imita o céu, pra abrir espaço pro título.
-- Gerar o PNG: `node render.mjs` (sai em png/sinal-verde.png, 1080x1350).
+- Versão animada: o bonequinho pisca como na rua (0,5 s aceso / 0,5 s apagado, em loop).
+  - `png/sinal-verde-pisca.gif` (GIF em loop) e `png/sinal-verde-pisca.mp4` (6 s, pro Instagram, que não aceita GIF).
+  - A foto com o bonequinho apagado (`assets/semaforo-apagado.jpg`) sai de `python3 apagar-bonequinho.py`.
+- Gerar tudo: `node render.mjs` (PNG estático 1080x1350, quadro apagado, GIF e MP4).
