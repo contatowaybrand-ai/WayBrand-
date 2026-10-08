@@ -1,11 +1,12 @@
 # Post "Store" (loja oficial na Amazon)
 
-## Na arte (sacola)
-SUA LOJA OFICIAL NA AMAZON · STORE™ · BY WAYBRAND
+## Na arte
+- Sacola: SUA LOJA OFICIAL NA AMAZON · STORE™ · BY WAYBRAND
+- Céu, abaixo da logo: A gente cria a **Store** da sua marca: design profissional e estratégia.
 
 ## Legenda
 Sua loja oficial dentro da Amazon.
-A gente cria a Store da sua marca: design profissional e estratégia pra transformar visita em cliente fiel.
+Design profissional e estratégia de conversão pra transformar visita em cliente fiel.
 
 ## Notas
 - Foto: gerada no Magnific (sacola verde #00B490 contra o céu), referência AURA.
