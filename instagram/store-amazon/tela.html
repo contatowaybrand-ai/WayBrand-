@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Store · tela do tablet</title>
+<style>
+  /* RF Dewi Extended (paga): os .ttf ficam só local, fora do git */
+  @font-face{font-family:'Dewi';font-weight:300;src:url(assets/fonts/RFDewiExtended-Light.ttf) format('truetype')}
+  @font-face{font-family:'Dewi';font-weight:400;src:url(assets/fonts/RFDewiExtended-Regular.ttf) format('truetype')}
+  @font-face{font-family:'Dewi';font-weight:600;src:url(assets/fonts/RFDewiExtended-Semibold.ttf) format('truetype')}
+  :root{--green:#00B490;--ink:#0b0b0b;--paper:#F3F2EF;--line:#e2e0db;--mute:#8d8b86}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222;font-family:'Dewi',sans-serif;-webkit-font-smoothing:antialiased;padding:40px}
+  /* tela do tablet em pé de deitado (4:3) */
+  .tela{position:relative;width:1600px;height:1200px;overflow:hidden;background:var(--paper);color:var(--ink)}
+  .bar{position:absolute;left:0;right:0;top:0;height:64px;display:flex;align-items:center;justify-content:center;
+    font:400 17px/1 'Dewi';color:var(--mute);letter-spacing:.02em}
+  .bar .dots{position:absolute;left:36px;display:flex;gap:14px}
+  .bar .dots i{width:14px;height:14px;border:1.5px solid #bdbab4;border-radius:3px}
+  .bar .act{position:absolute;right:36px;display:flex;gap:22px;font-size:22px;color:#a9a6a0}
+  .tag{position:absolute;right:60px;top:110px;font:400 18px/1 'Dewi';color:var(--mute)}
+  h1{position:absolute;left:60px;top:470px;font:600 120px/1 'Dewi';letter-spacing:-.04em}
+  .card{position:absolute;border-radius:34px;overflow:hidden;color:#fff}
+  .card .t{position:absolute;left:36px;top:34px;font:400 22px/1 'Dewi'}
+  /* card verde: a loja */
+  .c1{left:430px;top:400px;width:560px;height:430px;background:radial-gradient(120% 90% at 30% 20%,#2fd3ae,var(--green) 45%,#007a61)}
+  .c1 .ghost{position:absolute;right:-40px;bottom:-30px;width:420px;height:420px;border-radius:50%;
+    background:url(assets/cafe-pb.jpg) center/cover;mix-blend-mode:multiply;opacity:.5;filter:blur(2px) contrast(1.1);-webkit-mask-image:radial-gradient(closest-side,#000 45%,transparent)}
+  .c1 .n{position:absolute;left:36px;bottom:40px;font:600 76px/1 'Dewi';letter-spacing:-.03em}
+  .c1 .n small{display:block;font:300 20px/1.3 'Dewi';letter-spacing:0;margin-top:14px;max-width:330px}
+  /* card escuro: vitrine */
+  .c2{left:1020px;top:130px;width:520px;height:430px;background:#141414}
+  .c2 .img{position:absolute;inset:0;background:url(assets/coolcatz-pb.jpg) 50% 35%/cover;opacity:.38;filter:grayscale(1) contrast(1.2)}
+  .c2 .pills{position:absolute;left:36px;bottom:40px;display:flex;flex-wrap:wrap;gap:12px;max-width:440px}
+  .c2 .pills span{font:400 19px/1 'Dewi';padding:12px 18px;border-radius:99px;background:rgba(255,255,255,.12);backdrop-filter:blur(6px)}
+  .c2 .pills span:first-child{background:var(--green)}
+  .c2 .bar2{position:absolute;right:36px;top:34px;width:150px;height:8px;border-radius:9px;background:rgba(255,255,255,.2)}
+  .c2 .bar2:after{content:"";position:absolute;inset:0;width:72%;border-radius:9px;background:var(--green)}
+  /* lista de páginas da loja */
+  .rows{position:absolute;left:430px;right:60px;top:880px}
+  .row{display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:22px 0;border-top:1.5px solid var(--line)}
+  .row b{font:400 24px/1 'Dewi';display:block}
+  .row small{font:300 17px/1 'Dewi';color:var(--mute);display:block;margin-top:8px}
+  .row .st{display:flex;align-items:center;gap:12px;font:400 20px/1 'Dewi'}
+  .row .st:before{content:"";width:12px;height:12px;border-radius:50%;background:var(--green)}
+  .row .st.w:before{background:#e3b341}
+  .dock{position:absolute;right:120px;top:640px;display:flex;gap:26px;padding:16px 26px;border-radius:99px;background:#111}
+  .dock i{width:18px;height:18px;border-radius:5px;background:#666}
+  .dock i:first-child{background:#fff;border-radius:50%}
+</style>
+</head>
+<body>
+<section class="tela" id="tela">
+  <div class="bar"><div class="dots"><i></i><i></i></div>amazon.com.br/stores/sua-marca<div class="act">⇪ ＋ ❐</div></div>
+  <div class="tag">Store · by WayBrand</div>
+  <h1>Store</h1>
+  <div class="card c1"><div class="ghost"></div><div class="t">Loja oficial</div>
+    <div class="n">Sua marca<small>Design profissional e estratégia de conversão.</small></div></div>
+  <div class="card c2"><div class="img"></div><div class="t">Vitrine</div><div class="bar2"></div>
+    <div class="pills"><span>Banner</span><span>Coleções</span><span>Vídeo</span><span>Mais vendidos</span></div></div>
+  <div class="dock"><i></i><i></i><i></i></div>
+  <div class="rows">
+    <div class="row"><div><b>Página inicial</b><small>Identidade e banner</small></div><div class="st">Publicada</div></div>
+    <div class="row"><div><b>Mais vendidos</b><small>Vitrine de produtos</small></div><div class="st">Publicada</div></div>
+    <div class="row"><div><b>Kits e combos</b><small>Ticket médio</small></div><div class="st w">Em revisão</div></div>
+  </div>
+</section>
+</body>
+</html>
