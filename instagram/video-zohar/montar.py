@@ -1,7 +1,7 @@
-# Monta out/zohar-identidade.mp4 (1080x1920, 30 fps, sem áudio) no ritmo do vídeo de referência:
+# Monta out/zohar-identidade-mudo.mp4 (1080x1920, 30 fps, sem áudio; o som entra com som.py) no ritmo do vídeo de referência:
 # cortes calmos -> acelera até piscar -> desacelera, duas vezes, e fecha no logo.
 # Cada imagem tem movimento (entra com zoom e assenta devagar); cortes longos ganham uma fusão curta.
-# Uso: node render-quadros.mjs && python3 montar.py
+# Uso: node render-quadros.mjs && python3 montar.py && python3 som.py
 import subprocess
 from PIL import Image
 
@@ -44,17 +44,18 @@ def quadro(p, f, n):
     x, y = (w - W) // 2, (h - H) // 2
     return big.crop((x, y, x + W, y + H))
 
-ff = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}',
-                       '-r', str(FPS), '-i', '-', '-c:v', 'libx264', '-crf', '17', '-preset', 'slow',
-                       '-pix_fmt', 'yuv420p', '-movflags', '+faststart', 'out/zohar-identidade.mp4'], stdin=subprocess.PIPE)
-FUSAO = 4  # quadros de fusão nos cortes de 10 quadros ou mais
-total = 0
-for k, (p, n) in enumerate(cortes):
-    for f in range(n):
-        im = quadro(p, f, n)
-        if k and n >= 10 and f < FUSAO:  # fusão: a imagem anterior continua o movimento e some
-            pp, pn = cortes[k - 1]
-            im = Image.blend(quadro(pp, pn + f, pn), im, (f + 1) / (FUSAO + 1))
-        ff.stdin.write(im.tobytes()); total += 1
-ff.stdin.close(); ff.wait()
-print(len(cortes), 'cortes,', round(total / FPS, 2), 's')
+if __name__ == '__main__':
+    ff = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}',
+                           '-r', str(FPS), '-i', '-', '-c:v', 'libx264', '-crf', '17', '-preset', 'slow',
+                           '-pix_fmt', 'yuv420p', '-movflags', '+faststart', 'out/zohar-identidade-mudo.mp4'], stdin=subprocess.PIPE)
+    FUSAO = 4  # quadros de fusão nos cortes de 10 quadros ou mais
+    total = 0
+    for k, (p, n) in enumerate(cortes):
+        for f in range(n):
+            im = quadro(p, f, n)
+            if k and n >= 10 and f < FUSAO:  # fusão: a imagem anterior continua o movimento e some
+                pp, pn = cortes[k - 1]
+                im = Image.blend(quadro(pp, pn + f, pn), im, (f + 1) / (FUSAO + 1))
+            ff.stdin.write(im.tobytes()); total += 1
+    ff.stdin.close(); ff.wait()
+    print(len(cortes), 'cortes,', round(total / FPS, 2), 's')
