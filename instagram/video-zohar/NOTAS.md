@@ -10,3 +10,5 @@ Cada imagem entra com zoom e assenta; cortes de 10+ quadros têm fusão de 4 qua
 - `assets/fotos/`: mockups (boné, chaveiro, ecobag, pasta, skate, capinha, vinil), cortados em 1080x1920.
 - Gerar: `node render-quadros.mjs && python3 montar.py` → `out/zohar-identidade.mp4`.
 - A ordem das imagens e o tempo de cada corte estão no topo de `montar.py` (`ABERTURA`, `RODIZIO`, `RITMO`, `FECHO`).
+- As frases pequenas impressas nos mockups (pasta, capinha, vinil) foram apagadas com `python3 apagar-frases.py`
+  (originais em `assets/fotos-com-texto/`).
