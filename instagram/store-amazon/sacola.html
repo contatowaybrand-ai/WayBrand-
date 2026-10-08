@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Store Amazon · post</title>
+<style>
+  /* RF Dewi Extended (paga): os .ttf ficam só local, fora do git */
+  @font-face{font-family:'Dewi';font-weight:300;src:url(assets/fonts/RFDewiExtended-Light.ttf) format('truetype')}
+  @font-face{font-family:'Dewi';font-weight:400;src:url(assets/fonts/RFDewiExtended-Regular.ttf) format('truetype')}
+  @font-face{font-family:'Dewi';font-weight:600;src:url(assets/fonts/RFDewiExtended-Semibold.ttf) format('truetype')}
+  :root{--green:#00B490;--ink:#0b0b0b}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222;font-family:'Dewi',sans-serif;-webkit-font-smoothing:antialiased;padding:40px}
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;background:url(assets/sacola.jpg) center/cover}
+  .bag{position:absolute;left:258px;width:530px;text-align:center;color:var(--ink);mix-blend-mode:multiply;text-transform:uppercase}
+  .bag.top{top:552px;font:400 13px/1 'Dewi';letter-spacing:.32em;opacity:.85}
+  .bag.big{top:760px;font:600 74px/1 'Dewi';letter-spacing:-.01em;opacity:.9}
+  .bag.big sup{font:400 14px/1 'Dewi';vertical-align:top;margin-left:6px;position:relative;top:4px}
+  .bag.sub{top:850px;font:300 12px/1 'Dewi';letter-spacing:.3em;opacity:.8}
+  .logo{position:absolute;left:64px;top:64px;height:44px}
+  .copy{position:absolute;left:66px;top:150px;color:#fff;font:300 25px/1.32 'Dewi';letter-spacing:-.01em}
+  .copy b{font-weight:600}
+</style>
+</head>
+<body>
+<section class="slide" id="post">
+  <div class="bag top">Sua loja oficial na Amazon</div>
+  <div class="bag big">Store<sup>™</sup></div>
+  <div class="bag sub">by WayBrand</div>
+  <img class="logo" src="assets/logo-waybrand-claro.png" alt="WayBrand">
+  <p class="copy">A gente cria a <b>Store</b><br>da sua marca: design<br>profissional e estratégia.</p>
+</section>
+</body>
+</html>
