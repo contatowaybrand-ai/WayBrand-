@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Zohar · quadros do vídeo</title>
+<style>
+  @font-face{font-family:'Bodoni Moda';font-weight:400 900;src:url(assets/fonts/BodoniModa-opsz.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-weight:300;src:url(assets/fonts/Inter-300.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-weight:400;src:url(assets/fonts/Inter-400.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-weight:500;src:url(assets/fonts/Inter-500.woff2) format('woff2')}
+  :root{--royal:#24518F;--mist:#8AA6BC;--navy:#2F4858;--sand:#C9B49B;--ivory:#F6F2EC;--ink:#0d1620}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;padding:40px;display:flex;flex-wrap:wrap;gap:40px}
+  .q{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--ink);color:var(--ivory)}
+  .serif{font-family:'Bodoni Moda',serif;font-variation-settings:'opsz' 28}
+  .micro{font:400 20px/1.4 'Inter';letter-spacing:.08em;text-transform:uppercase}
+
+  /* logotipo: Z + O com estrela + HAR */
+  .logo{display:inline-flex;align-items:baseline;font-family:'Bodoni Moda',serif;font-variation-settings:'opsz' 22;font-weight:600;line-height:1;letter-spacing:-.035em}
+  .logo .o{position:relative}
+  .logo .o svg{position:absolute;left:50%;top:52%;width:.26em;height:.44em;transform:translate(-50%,-50%)}
+  .logo .o svg{fill:var(--sand)}
+
+  /* 1 e 2 · tipografia + paleta (como o quadro "Aa" da referência) */
+  .tipo .head{position:absolute;left:56px;right:56px;top:60px;display:flex;justify-content:space-between}
+  .tipo .aa{position:absolute;left:40px;top:250px;font-size:620px;line-height:1;letter-spacing:-.03em}
+  .tipo .aa.sans{font:500 600px/1 'Inter';letter-spacing:-.05em;left:30px;top:270px}
+  .tipo .rows{position:absolute;left:0;right:0;bottom:0}
+  .tipo .row{height:150px;display:grid;grid-template-columns:1fr 1.2fr .6fr;align-items:center;padding:0 56px}
+  .tipo .row div:last-child{text-align:right}
+
+  /* 3 · ícones empilhados */
+  .tiles{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;background:#000}
+  .tile{width:250px;height:250px;border-radius:52px;display:grid;place-items:center}
+  .tile svg{width:110px;height:150px}
+
+  /* 4 · logo sobre luz azul desfocada */
+  .glow{background:#050b16}
+  .glow .light{position:absolute;inset:-200px;filter:blur(70px);
+    background:radial-gradient(60% 22% at 30% 38%,rgba(70,120,220,.95),transparent 70%),
+               radial-gradient(40% 16% at 72% 60%,rgba(36,81,143,.9),transparent 70%),
+               linear-gradient(115deg,transparent 35%,rgba(138,166,188,.55) 48%,transparent 60%)}
+  .glow .grid{position:absolute;left:50%;top:50%;width:900px;height:260px;transform:translate(-50%,-50%);
+    border-top:1px solid rgba(246,242,236,.22);border-bottom:1px solid rgba(246,242,236,.22)}
+  .glow .grid:before,.glow .grid:after{content:"";position:absolute;top:-70px;bottom:-70px;width:1px;background:rgba(246,242,236,.22)}
+  .glow .grid:before{left:60px}.glow .grid:after{right:60px}
+  .glow .mini{position:absolute;opacity:.35}
+  .center{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;justify-content:center}
+  .glow .top{position:absolute;top:180px;width:100%;text-align:center;opacity:.8}
+  .glow .bottom{position:absolute;bottom:260px;left:200px;right:200px;text-align:center;font:300 19px/1.5 'Inter';opacity:.7}
+
+  /* 5 · monograma ZO/HAR */
+  .mono{background:var(--royal)}
+  .mono .stack{position:absolute;left:120px;top:540px;font-size:330px;line-height:.92}
+
+  /* 6 · O com estrela */
+  .ozao{background:var(--mist);display:grid;place-items:center}
+  .ozao .O{position:relative;font-size:1100px;color:var(--navy);line-height:1}
+  .ozao .O svg{position:absolute;left:50%;top:53%;width:250px;height:420px;transform:translate(-50%,-50%)}
+  .ozao .O svg{fill:var(--ivory)}
+
+  /* 7 · estrela grande cortando o nome, no marfim */
+  .cruz{background:var(--ivory);color:var(--royal);display:grid;place-items:center}
+  .cruz svg.big{position:absolute;left:50%;top:50%;width:520px;height:1100px;transform:translate(-50%,-50%)}
+  .cruz svg.big{fill:var(--royal)}
+
+  /* 8 · fecho */
+  .fim{background:var(--royal)}
+  .fim .tag{position:absolute;left:0;right:0;top:calc(50% + 120px);text-align:center;font:400 30px/1 'Inter';letter-spacing:.32em}
+  .fim .est{position:absolute;left:0;right:0;top:calc(50% + 185px);text-align:center;font:400 22px/1 'Inter';letter-spacing:.28em;opacity:.8}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- estrela de 4 pontas da marca, braço vertical mais longo -->
+    <symbol id="st" viewBox="-1 -1.4 2 2.8"><path d="M0-1.4C.07-.32.2-.09 1 0 .2.09.07.32 0 1.4-.07.32-.2.09-1 0-.2-.09-.07-.32 0-1.4Z"/></symbol>
+  </defs>
+</svg>
+
+<!-- 1 · tipografia serifada -->
+<section class="q tipo" id="tipo-bodoni" style="background:var(--navy)">
+  <div class="head micro"><span>Bodoni Moda</span><span>Typography</span></div>
+  <div class="aa serif">Aa</div>
+  <div class="rows micro">
+    <div class="row" style="background:var(--ivory);color:var(--navy)"><div>Ivory</div><div>HEX #F6F2EC<br>RGB 246·242·236</div><div>Zohar</div></div>
+    <div class="row" style="background:var(--royal)"><div>Royal</div><div>HEX #24518F<br>RGB 36·81·143</div><div>Zohar</div></div>
+    <div class="row" style="background:var(--sand);color:var(--navy)"><div>Sand</div><div>HEX #C9B49B<br>RGB 201·180·155</div><div>Zohar</div></div>
+  </div>
+</section>
+
+<!-- 2 · tipografia sem serifa -->
+<section class="q tipo" id="tipo-inter" style="background:#000">
+  <div class="head micro"><span>Inter</span><span>Typography</span></div>
+  <div class="aa sans">Aa</div>
+  <div class="rows micro">
+    <div class="row" style="background:var(--mist);color:var(--navy)"><div>Mist</div><div>HEX #8AA6BC<br>RGB 138·166·188</div><div>Zohar</div></div>
+    <div class="row" style="background:var(--navy)"><div>Navy</div><div>HEX #2F4858<br>RGB 47·72·88</div><div>Zohar</div></div>
+    <div class="row" style="background:var(--royal)"><div>Royal</div><div>HEX #24518F<br>RGB 36·81·143</div><div>Zohar</div></div>
+  </div>
+</section>
+
+<!-- 3 · ícones -->
+<section class="q tiles" id="icones">
+  <div class="tile" style="background:var(--ivory)"><svg style="fill:var(--royal)"><use href="#st"/></svg></div>
+  <div class="tile" style="background:var(--royal)"><svg style="fill:var(--sand)"><use href="#st"/></svg></div>
+  <div class="tile" style="background:var(--navy)"><svg style="fill:var(--ivory)"><use href="#st"/></svg></div>
+</section>
+
+<!-- 4 · logo na luz -->
+<section class="q glow" id="logo-luz">
+  <div class="light"></div>
+  <div class="grid"></div>
+  <div class="top micro">Logo type</div>
+  <div class="center"><span class="logo" style="font-size:250px">Z<span class="o">O<svg class="star"><use href="#st"/></svg></span>HAR</span></div>
+  <div class="bottom">The primary logo is the main representation of the brand. A higher daily standard, made to be part of every day.</div>
+</section>
+
+<!-- 5 · monograma -->
+<section class="q mono" id="monograma">
+  <div class="stack"><span class="logo">Z<span class="o">O<svg class="star"><use href="#st"/></svg></span></span><br><span class="logo">HAR</span></div>
+  <div class="micro" style="position:absolute;left:126px;bottom:120px;opacity:.75">Est. 2024 · São Paulo</div>
+</section>
+
+<!-- 6 · O com estrela -->
+<section class="q ozao" id="o-estrela">
+  <div class="O serif" style="font-weight:600">O<svg><use href="#st"/></svg></div>
+</section>
+
+<!-- 7 · estrela cruzando o nome -->
+<section class="q cruz" id="estrela-nome">
+  <svg class="big"><use href="#st"/></svg>
+  <div class="center"><span class="logo" style="font-size:250px;color:var(--royal)">Z<span class="o">O</span>HAR</span></div>
+  <div class="center" style="inset:0;transform:none;align-items:center;clip-path:path('M540.0 410.0 C558.2 834.3 592.0 924.6 800.0 960.0 592.0 995.4 558.2 1085.7 540.0 1510.0 521.8 1085.7 488.0 995.4 280.0 960.0 488.0 924.6 521.8 834.3 540.0 410.0 Z')"><span class="logo" style="font-size:250px;color:var(--ivory)">Z<span class="o">O</span>HAR</span></div>
+</section>
+
+<!-- 8 · fecho -->
+<section class="q fim" id="fim">
+  <div class="center" style="margin-top:-40px"><span class="logo" style="font-size:230px">Z<span class="o">O<svg class="star"><use href="#st"/></svg></span>HAR</span></div>
+  <div class="tag">A HIGHER DAILY STANDARD</div>
+  <div class="est">EST. 2024 · SÃO PAULO</div>
+</section>
+</body>
+</html>
