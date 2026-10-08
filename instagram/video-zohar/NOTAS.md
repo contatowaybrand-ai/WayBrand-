@@ -5,7 +5,7 @@ O pisca percorre imagens diferentes (sem repetir em sequência) e o logo na luz 
 Cada imagem entra com zoom e assenta; cortes de 10+ quadros têm fusão de 4 quadros.
 ~13 s, 30 fps, **sem áudio** (música a escolher depois).
 
-- `quadros.html`: quadros gráficos (tipografia + paleta, ícones, logo na luz, monograma, O com estrela, estrela cruzando o nome, fecho).
+- `quadros.html`: quadros gráficos (tipografia + paleta, ícones, logo na luz, monograma, O com estrela, estrela cruzando o nome, fecho, só o logo).
   O logo é refeito em Bodoni Moda com a estrela de 4 pontas.
 - `assets/fotos/`: mockups (boné, chaveiro, ecobag, pasta, skate, capinha, vinil), cortados em 1080x1920.
 - Gerar: `node render-quadros.mjs && python3 montar.py` → `out/zohar-identidade.mp4`.
