@@ -31,3 +31,14 @@ Feliz Dia das Crianças.
 
 - Segue o padrão do feed (`instagram/ANALISE-FEED.md`): frases curtas, sem hashtags nem emojis.
 - Para engajar, dá para trocar a última linha por: "Comenta quem você acha que mudou menos."
+
+## Stories
+
+essa é a nossa mini turma 🤏🏻
+
+Outras:
+- conheça a WayBrand versão mini 🤏🏻
+- o time de hoje, só que em miniatura 🤏🏻
+- adivinha quem é quem 👀 (com enquete ou caixinha)
+- nossos mini founders 🧸
+- vem ver o post novo, tá fofo demais 🤏🏻 (para repostar o carrossel)
