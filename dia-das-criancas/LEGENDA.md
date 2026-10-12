@@ -4,13 +4,14 @@ Cards finais em `nome-e-cargo/`, na ordem de 01 a 09.
 
 ## Legenda curta (escolhida, no estilo da referência)
 
-desde pequenos com cara de marca registrada ®️
+a embalagem mudou, o produto continua o mesmo 📦
 
 Outras no mesmo estilo:
-- já éramos 5 estrelas antes da Amazon ⭐️
-- posicionamento de marca? a gente tinha desde o berço 🍼
-- crianças com potencial de buy box 📦
-- o primeiro produto que a gente lançou foi a gente mesmo 🧸
+- a gente não cresceu, só ganhou escala 📈
+- pedido feito nos anos 2000, entregue na WayBrand 📦
+- foto de produto original, sem tratamento de imagem 📸
+- lançamento antigo, avaliação 5 estrelas até hoje ⭐️
+- time v1.0, antes das atualizações 🛠️
 
 ## Legenda longa (alternativa)
 
