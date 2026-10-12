@@ -4,14 +4,12 @@ Cards finais em `nome-e-cargo/`, na ordem de 01 a 09.
 
 ## Legenda curta (escolhida, no estilo da referência)
 
-a embalagem mudou, o produto continua o mesmo 📦
+o time WayBrand, versão mini 💚
 
 Outras no mesmo estilo:
-- a gente não cresceu, só ganhou escala 📈
-- pedido feito nos anos 2000, entregue na WayBrand 📦
-- foto de produto original, sem tratamento de imagem 📸
-- lançamento antigo, avaliação 5 estrelas até hoje ⭐️
-- time v1.0, antes das atualizações 🛠️
+- nossas crianças favoritas 💚
+- a gente cresceu, mas a essência é a mesma 💚
+- feliz dia das crianças, de um time que nunca deixou de ser 🧸
 
 ## Legenda longa (alternativa)
 
