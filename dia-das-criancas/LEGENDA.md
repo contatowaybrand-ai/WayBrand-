@@ -2,7 +2,17 @@
 
 Cards finais em `nome-e-cargo/`, na ordem de 01 a 09.
 
-## Legenda
+## Legenda curta (escolhida, no estilo da referência)
+
+construindo marcas desde o velotrol 🧸
+
+Outras no mesmo estilo:
+- crianças visionárias, vendendo desde cedo 📦
+- antes do Seller Central, já tinha estratégia 🧠
+- a gente cresceu, a marca também 💚
+- o time que nunca parou de brincar de construir 🧱
+
+## Legenda longa (alternativa)
 
 Antes de construir marcas, a gente construía castelo de areia, fantasia de festa junina e pose pra foto.
 
