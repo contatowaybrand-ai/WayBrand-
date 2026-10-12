@@ -4,13 +4,13 @@ Cards finais em `nome-e-cargo/`, na ordem de 01 a 09.
 
 ## Legenda curta (escolhida, no estilo da referência)
 
-construindo marcas desde o velotrol 🧸
+desde pequenos com cara de marca registrada ®️
 
 Outras no mesmo estilo:
-- crianças visionárias, vendendo desde cedo 📦
-- antes do Seller Central, já tinha estratégia 🧠
-- a gente cresceu, a marca também 💚
-- o time que nunca parou de brincar de construir 🧱
+- já éramos 5 estrelas antes da Amazon ⭐️
+- posicionamento de marca? a gente tinha desde o berço 🍼
+- crianças com potencial de buy box 📦
+- o primeiro produto que a gente lançou foi a gente mesmo 🧸
 
 ## Legenda longa (alternativa)
 
