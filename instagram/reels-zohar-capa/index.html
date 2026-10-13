@@ -38,14 +38,20 @@
   #b .logo{left:auto;transform:none;right:90px;bottom:330px}
 
   /* C: foto P&B do boné em tela cheia + título centralizado em faixa verde */
-  #c{background:#000}
-  #c .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  #c::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,.2) 60%,rgba(0,0,0,.85) 85%);z-index:1}
-  #c .bloco{position:absolute;z-index:2;left:0;right:0;top:1180px;text-align:center}
-  #c .apoio{color:#e8e8e8;font-size:44px;font-weight:300;margin-bottom:26px}
-  #c .apoio b{font-weight:800;color:#fff}
-  #c .faixa{display:inline-block;background:var(--green);padding:22px 50px;color:#061210;font-size:84px;font-weight:900;letter-spacing:-.03em;line-height:1.05}
-  #c .logo{z-index:2}
+  .full{background:#000}
+  .full .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .full::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,.2) 60%,rgba(0,0,0,.85) 85%);z-index:1}
+  .full .bloco{position:absolute;z-index:2;left:0;right:0;top:1180px;text-align:center}
+  .full .apoio{color:#e8e8e8;font-size:44px;font-weight:300;margin-bottom:26px}
+  .full .apoio b{font-weight:800;color:#fff}
+  .full .faixa{display:inline-block;background:var(--green);padding:22px 50px;color:#061210;font-size:84px;font-weight:900;letter-spacing:-.03em;line-height:1.05}
+  .full .logo{z-index:2}
+
+  /* D, E, F: mesmo formato da C com outros elementos do vídeo */
+  .full .foto.menor{transform:scale(.74) translateY(-230px)}
+  #d .bloco{top:1350px} #e .bloco{top:1300px}
+  #f::before{background:linear-gradient(180deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.5) 30%,rgba(0,0,0,0) 50%,rgba(0,0,0,.35) 80%,rgba(0,0,0,.8) 100%)}
+  #f .bloco{top:330px}
 </style>
 </head>
 <body class="guia">
@@ -64,11 +70,37 @@
     <img class="logo" src="assets/logo-waybrand-escuro.png">
   </div>
 
-  <div class="capa" id="c">
+  <div class="capa full" id="c">
     <img class="foto bw" src="assets/bone.png">
     <div class="bloco">
       <div class="apoio">Identidade visual da <b>Zohar</b></div>
       <div class="faixa">Do zero à marca.</div>
+    </div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+  <div class="capa full" id="d">
+    <img class="foto bw menor" src="assets/celular.png">
+    <div class="bloco">
+      <div class="apoio">Identidade visual da <b>Zohar</b></div>
+      <div class="faixa">Marca de todo dia.</div>
+    </div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+
+  <div class="capa full" id="e">
+    <img class="foto bw menor" src="assets/vinil.png">
+    <div class="bloco">
+      <div class="apoio">Identidade visual da <b>Zohar</b></div>
+      <div class="faixa">Marca tem ritmo.</div>
+    </div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+
+  <div class="capa full" id="f">
+    <img class="foto bw" src="assets/chaveiro.png">
+    <div class="bloco">
+      <div class="apoio">Identidade visual da <b>Zohar</b></div>
+      <div class="faixa">Marca que vai junto.</div>
     </div>
     <img class="logo" src="assets/logo-waybrand-claro.png">
   </div>
