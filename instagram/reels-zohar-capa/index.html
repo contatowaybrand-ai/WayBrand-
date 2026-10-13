@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Capa reels Zohar</title>
+<style>
+  @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
+  @font-face{font-family:'Inter';font-style:italic;font-weight:300 900;src:url(assets/fonts/Inter-italic.woff2) format('woff2')}
+  :root{--green:#00B490;--dark:#0C1818;--light:#EAEAEA}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#222;display:flex;gap:40px;padding:40px;font-family:'Inter',sans-serif}
+  .capa{width:1080px;height:1920px;position:relative;overflow:hidden;flex:none}
+  .logo{position:absolute;left:50%;transform:translateX(-50%);bottom:300px;height:46px}
+  .bw{filter:grayscale(1) contrast(1.15) brightness(.9)}
+  /* área que aparece na grade do perfil (3:4) */
+  .guia .capa::after{content:'';position:absolute;left:0;right:0;top:240px;height:1440px;outline:3px dashed rgba(255,80,80,.7);pointer-events:none}
+
+  /* A: visual-conceito escuro, pasta em P&B com halo verde */
+  #a{background:radial-gradient(ellipse 70% 40% at 50% 46%,#123a30 0%,var(--dark) 70%)}
+  #a .foto{position:absolute;left:0;top:520px;width:1080px;height:960px;object-fit:cover;object-position:50% 45%;
+    -webkit-mask:radial-gradient(ellipse 60% 55% at 50% 50%,#000 45%,transparent 75%);mix-blend-mode:screen}
+  #a .apoio{position:absolute;top:330px;width:100%;text-align:center;color:#cfd6d4;font-size:44px;font-weight:300}
+  #a .apoio b{font-weight:800;color:#fff}
+  #a .faixa{position:absolute;left:50%;top:1290px;transform:translateX(-50%) rotate(-2deg);background:var(--green);
+    padding:26px 54px;color:#061210;font-size:92px;font-weight:900;letter-spacing:-.03em;white-space:nowrap;box-shadow:0 30px 80px rgba(0,180,144,.35)}
+
+  /* B: WayDose claro, só tipografia + logotipo Zohar em preto */
+  #b{background:var(--light)}
+  #b::before{content:'';position:absolute;right:-260px;bottom:-200px;width:1100px;height:1100px;
+    background:repeating-conic-gradient(from 200deg at 100% 100%,rgba(0,180,144,.55) 0 2deg,transparent 2deg 9deg);
+    -webkit-mask:radial-gradient(circle at 100% 100%,#000 0,transparent 70%)}
+  #b .selo{position:absolute;top:330px;left:90px;font-size:30px;font-weight:800;letter-spacing:.12em;color:var(--dark);border:3px solid var(--dark);border-radius:999px;padding:12px 28px}
+  #b .titulo{position:absolute;top:470px;left:90px;right:90px;font-size:124px;line-height:1.02;font-weight:900;letter-spacing:-.045em;color:#0b0b0b}
+  #b .titulo em{color:var(--green);font-style:italic}
+  #b .apoio{position:absolute;top:1010px;left:90px;right:140px;font-size:46px;line-height:1.3;font-weight:300;color:#333}
+  #b .apoio b{font-weight:800}
+  #b .marca{position:absolute;left:90px;top:1240px;width:520px;height:300px;object-fit:cover;object-position:50% 50%;border-radius:22px;filter:grayscale(1) contrast(1.1)}
+  #b .logo{left:auto;transform:none;right:90px;bottom:330px}
+
+  /* C: foto P&B do boné em tela cheia + título centralizado em faixa verde */
+  #c{background:#000}
+  #c .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  #c::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,.2) 60%,rgba(0,0,0,.85) 85%);z-index:1}
+  #c .bloco{position:absolute;z-index:2;left:0;right:0;top:1180px;text-align:center}
+  #c .apoio{color:#e8e8e8;font-size:44px;font-weight:300;margin-bottom:26px}
+  #c .apoio b{font-weight:800;color:#fff}
+  #c .faixa{display:inline-block;background:var(--green);padding:22px 50px;color:#061210;font-size:84px;font-weight:900;letter-spacing:-.03em;line-height:1.05}
+  #c .logo{z-index:2}
+</style>
+</head>
+<body class="guia">
+  <div class="capa" id="a">
+    <div class="apoio">Identidade visual · <b>Zohar</b></div>
+    <img class="foto bw" src="assets/pasta.png">
+    <div class="faixa">Nasce uma marca.</div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+
+  <div class="capa" id="b">
+    <div class="selo">CASE · IDENTIDADE</div>
+    <div class="titulo">Produto todo mundo tem. <em>Marca,</em> não.</div>
+    <div class="apoio">Como criamos a identidade da <b>Zohar</b> do zero.</div>
+    <img class="marca" src="assets/simbolo.png">
+    <img class="logo" src="assets/logo-waybrand-escuro.png">
+  </div>
+
+  <div class="capa" id="c">
+    <img class="foto bw" src="assets/bone.png">
+    <div class="bloco">
+      <div class="apoio">Identidade visual da <b>Zohar</b></div>
+      <div class="faixa">Do zero à marca.</div>
+    </div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+</body>
+</html>
