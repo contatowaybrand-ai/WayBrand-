@@ -52,6 +52,15 @@
   #d .bloco{top:1350px} #e .bloco{top:1300px}
   #f::before{background:linear-gradient(180deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.5) 30%,rgba(0,0,0,0) 50%,rgba(0,0,0,.35) 80%,rgba(0,0,0,.8) 100%)}
   #f .bloco{top:330px}
+
+  /* G, H, I, J: mais elementos do vídeo no formato da C */
+  #g::before,#h::before{background:linear-gradient(180deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 30%,rgba(0,0,0,0) 50%,rgba(0,0,0,.35) 80%,rgba(0,0,0,.8) 100%)}
+  #g .bloco,#h .bloco{top:330px}
+  #h .foto{transform:translateY(120px)}
+  .inv{filter:grayscale(1) invert(1) contrast(1.1) brightness(.85)}
+  #i .bloco{top:1310px} #i .foto{transform:translateY(-110px)}
+  .escura{filter:grayscale(1) contrast(1.2) brightness(.6)}
+  #j .bloco{top:1290px}
 </style>
 </head>
 <body class="guia">
@@ -104,5 +113,41 @@
     </div>
     <img class="logo" src="assets/logo-waybrand-claro.png">
   </div>
+  <div class="capa full" id="g">
+    <img class="foto bw" src="assets/skate.png">
+    <div class="bloco">
+      <div class="apoio">Identidade visual da <b>Zohar</b></div>
+      <div class="faixa">Marca tem estilo.</div>
+    </div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+
+  <div class="capa full" id="h">
+    <img class="foto bw" src="assets/icones.png">
+    <div class="bloco">
+      <div class="apoio">Identidade visual da <b>Zohar</b></div>
+      <div class="faixa">Marca em um ícone.</div>
+    </div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+
+  <div class="capa full" id="i">
+    <img class="foto inv" src="assets/estrela.png">
+    <div class="bloco">
+      <div class="apoio">Identidade visual da <b>Zohar</b></div>
+      <div class="faixa">Marca que brilha.</div>
+    </div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+
+  <div class="capa full" id="j">
+    <img class="foto escura" src="assets/zo-har.png">
+    <div class="bloco">
+      <div class="apoio">Identidade visual da <b>Zohar</b></div>
+      <div class="faixa">Nome vira marca.</div>
+    </div>
+    <img class="logo" src="assets/logo-waybrand-claro.png">
+  </div>
+
 </body>
 </html>
