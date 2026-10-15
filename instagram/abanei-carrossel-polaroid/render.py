@@ -101,8 +101,11 @@ bed = sorted(glob.glob(os.path.join(DIR, 'assets', 'trilha-ambiente.*')))
 inputs = ['-i', muted, '-i', wav]
 if bed:
     inputs += ['-i', bed[0]]
-    mix = (f'[2:a]atrim=0:{total},asetpts=N/SR/TB,volume=0.55,afade=t=in:d=0.4,afade=t=out:st={total - 1.5}:d=1.5[b];'
-           '[1:a]aformat=channel_layouts=stereo[t];[b][t]amix=inputs=2:normalize=0,alimiter=limit=0.9[a]')
+    # trilha comprimida à parte (mais corpo sem picos) e tique ~6 dB acima dela em cada corte; total ~-18 LUFS
+    mix = (f'[2:a]atrim=0:{total},asetpts=N/SR/TB,volume=7dB,alimiter=limit=0.3:attack=5:release=120:level=false,'
+           f'afade=t=in:d=0.4,afade=t=out:st={total - 1.5}:d=1.5[b];'
+           '[1:a]aformat=channel_layouts=stereo,volume=2.0[t];'
+           '[b][t]amix=inputs=2:normalize=0,alimiter=limit=0.8:attack=1:release=60:level=false[a]')
     amap = ['-filter_complex', mix, '-map', '0:v', '-map', '[a]']
 else:
     amap = ['-map', '0:v', '-map', '1:a']
