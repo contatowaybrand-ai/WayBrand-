@@ -96,8 +96,18 @@ with wave.open(wav, 'wb') as w:
     w.writeframes((np.clip(audio, -1, 1) * 32767).astype(np.int16).tobytes())
 muted = out + '.mudo.mp4'
 os.replace(out, muted)
-subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', muted, '-i', wav, '-map', '0:v', '-map', '1:a',
-                '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ac', '2', '-shortest', '-movflags', '+faststart', out], check=True)
+# trilha ambiente opcional (assets/trilha-ambiente.*): fica por baixo dos tiques, com fade no fim
+bed = sorted(glob.glob(os.path.join(DIR, 'assets', 'trilha-ambiente.*')))
+inputs = ['-i', muted, '-i', wav]
+if bed:
+    inputs += ['-i', bed[0]]
+    mix = (f'[2:a]atrim=0:{total},asetpts=N/SR/TB,volume=0.55,afade=t=in:d=0.4,afade=t=out:st={total - 1.5}:d=1.5[b];'
+           '[1:a]aformat=channel_layouts=stereo[t];[b][t]amix=inputs=2:normalize=0,alimiter=limit=0.9[a]')
+    amap = ['-filter_complex', mix, '-map', '0:v', '-map', '[a]']
+else:
+    amap = ['-map', '0:v', '-map', '1:a']
+subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *inputs, *amap, '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k',
+                '-ac', '2', '-ar', '48000', '-t', str(total), '-movflags', '+faststart', out], check=True)
 os.remove(muted); os.remove(wav)
 for t, name in [(0.65, 'a'), (2.0, 'b'), (5.0, 'c')]:
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', str(t), '-i', out, '-frames:v', '1',
