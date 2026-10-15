@@ -72,6 +72,33 @@ for f in range(n * HOLD * LOOPS):
     ff.stdin.write(fr.convert('RGB').tobytes())
 ff.stdin.close()
 ff.wait()
+
+# "tique" sintetizado em cada corte: estalo agudo curto + um toque grave leve
+import numpy as np, wave
+SR = 48000
+tt = np.arange(int(SR * 0.06)) / SR
+rng = np.random.default_rng(7)
+click = rng.standard_normal(tt.size) * np.exp(-tt / 0.0025)
+click = np.convolve(click, [1, -1], 'same')                     # tira o grave do ruído: estalo mais seco
+tone = np.sin(2 * np.pi * 2600 * tt) * np.exp(-tt / 0.012)      # corpo do "tic"
+knock = np.sin(2 * np.pi * 180 * tt) * np.exp(-tt / 0.008)      # peso
+tick = 0.35 * click / np.abs(click).max() + 0.5 * tone + 0.3 * knock
+tick *= 0.7 / np.abs(tick).max()
+total = n * HOLD * LOOPS / FPS
+audio = np.zeros(int(SR * total) + tick.size)
+for seg in range(n * LOOPS):
+    i = round(seg * HOLD / FPS * SR)
+    audio[i:i + tick.size] += tick
+audio = audio[:int(SR * total)]
+wav = os.path.join(DIR, 'out', '.tiques.wav')
+with wave.open(wav, 'wb') as w:
+    w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR)
+    w.writeframes((np.clip(audio, -1, 1) * 32767).astype(np.int16).tobytes())
+muted = out + '.mudo.mp4'
+os.replace(out, muted)
+subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', muted, '-i', wav, '-map', '0:v', '-map', '1:a',
+                '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ac', '2', '-shortest', '-movflags', '+faststart', out], check=True)
+os.remove(muted); os.remove(wav)
 for t, name in [(0.65, 'a'), (2.0, 'b'), (5.0, 'c')]:
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', str(t), '-i', out, '-frames:v', '1',
                     os.path.join(DIR, 'out', f'quadro-{name}.png')])
