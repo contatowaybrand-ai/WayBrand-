@@ -80,7 +80,7 @@ O rodapé "DESIGN · AMAZON · CRESCIMENTO" saiu. No `index.html` há 4 variante
 
 - `cta`: "Comente **MARCA** que a gente te chama." + @waybrand.co
 - `botao`: botão amarelo estilo Amazon "Quero vender mais na Amazon →" + @waybrand.co
-- `letreiro`: faixa rolando com os serviços (A+ PREMIUM ❋ AMAZON ADS ❋ …) + @waybrand.co
+- `letreiro` (usada): faixa rolando com os serviços (A+ PREMIUM ❋ AMAZON ADS ❋ …) + @waybrand.co
 - `frase`: "Sua marca **pronta pra vender** na Amazon." + @waybrand.co
 
 ## Legenda sugerida
