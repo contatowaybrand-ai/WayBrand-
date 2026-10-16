@@ -1,4 +1,4 @@
-# Reel "Precisa de…? A Way Brand faz para você." (1080×1920, 28,8 s, loop)
+# Reel "Precisa de…? A Way Brand faz para você. / Deixa com a Way Brand." (1080×1920, 28,8 s, loop)
 
 Cópia da referência (pêndulo com a tag da marca que funciona como cortina): à esquerda do fio aparece a pergunta, à direita a resposta.
 
@@ -6,7 +6,7 @@ Cópia da referência (pêndulo com a tag da marca que funciona como cortina): �
 - Pergunta em verde-escuro `#0A2E24`, resposta em branco.
 - Logo e símbolo ❋ em verde-menta `#9BEFCB`.
 
-Para trocar as frases, edite `PERGUNTAS` e `RESPOSTA` no `index.html` e rode `node render.mjs`. Cada pergunta dura uma ida e volta do pêndulo (2,4 s). Com 12 perguntas, o vídeo tem 28,8 s. Se você mudar a quantidade de perguntas, a duração muda junto. O texto diminui sozinho quando a linha fica comprida.
+Para trocar as frases, edite `PERGUNTAS` e `RESPOSTAS` no `index.html` e rode `node render.mjs`. Cada pergunta dura uma ida e volta do pêndulo (2,4 s). Com 12 perguntas, o vídeo tem 28,8 s. Se você mudar a quantidade de perguntas, a duração muda junto. O texto diminui sozinho quando a linha fica comprida.
 
 ## Frases usadas no vídeo
 
@@ -25,7 +25,12 @@ Para trocar as frases, edite `PERGUNTAS` e `RESPOSTA` no `index.html` e rode `no
 | 11 | PRECISA DE / CONTEÚDO? |
 | 12 | PRECISA / CRESCER? |
 
-Resposta: **A WAY BRAND / FAZ PARA VOCÊ.**
+Respostas, alternando a cada pergunta (a 1ª pergunta recebe a 1ª resposta):
+
+1. **A WAY BRAND / FAZ PARA VOCÊ.**
+2. **DEIXA COM / A WAY BRAND.**
+
+A resposta troca quando o fio está na ponta direita, com ela escondida.
 
 ## Mais opções de pergunta
 
@@ -65,7 +70,7 @@ Até umas 12 letras na segunda linha, o texto fica no tamanho cheio.
 ## Opções de resposta
 
 - **A WAY BRAND / FAZ PARA VOCÊ.** (usada)
-- DEIXA COM / A WAY BRAND.
+- **DEIXA COM / A WAY BRAND.** (usada)
 - DEIXA COM / A GENTE.
 - A GENTE / RESOLVE.
 - CONTA / COM A GENTE.
@@ -86,15 +91,14 @@ O rodapé "DESIGN · AMAZON · CRESCIMENTO" saiu. No `index.html` há 4 variante
 
 ## Som
 
-"Relógio de pêndulo musical", sintetizado do zero em `som/gerar_som.py`:
+Batida trap a 100 BPM, sintetizada do zero em `som/gerar_som.py` (versão `trap`). Um compasso dura uma ida e volta do pêndulo:
 
-- tique-taque de madeira em cada ponta (tique na direita, taque na esquerda);
-- nota de marimba em cada ponta, formando uma melodia calma;
-- acorde suave de fundo + grave, trocando a cada 3 balanços (Dó, Lá menor, Fá, Sol);
-- whoosh bem baixo quando o fio passa pelo meio;
-- reverb circular, para o loop não ter emenda.
+- bumbo e baixo 808 quando o pêndulo chega nas pontas;
+- caixa quando o fio passa pelo meio;
+- chimbal feito com o tique de um relógio de pêndulo, em colcheias;
+- rufo de chimbal a cada 2 compassos.
 
-Para mudar a melodia ou os acordes, edite `ACORDES` no `som/gerar_som.py`.
+O gerador também tem as versões `relogio` e `metal` (só som de pêndulo) e `house` (outra batida). Para usar outra: `python3 som/gerar_som.py house`.
 
 Volume no padrão do Instagram (-14 LUFS). Para mexer no som: edite `som/gerar_som.py`, rode `python3 som/gerar_som.py` e depois `node render.mjs --som` (só troca o áudio, sem renderizar os quadros de novo).
 

@@ -1,5 +1,5 @@
 # Gera a trilha do reel (28,8 s, 48 kHz, estéreo) sincronizada com o pêndulo do index.html.
-# Uso: python3 som/gerar_som.py [versão] [saída.wav]     (padrão: relogio → som/som.wav)
+# Uso: python3 som/gerar_som.py [versão] [saída.wav]     (padrão: trap → som/som.wav)
 #      depois: node render.mjs --som
 # Só pêndulo:
 #   relogio – tique-taque mecânico de relógio de pêndulo (clique do mecanismo + caixa de madeira).
@@ -176,7 +176,7 @@ def house():
         por(tique_relogio(0.84, d=0.2), t0, pan=-0.4, ganho=0.35)                         # taque (esquerda)
     reverb(cauda=1.0, decai=0.22, molhado=0.14)
 
-versao = sys.argv[1] if len(sys.argv) > 1 else 'relogio'
+versao = sys.argv[1] if len(sys.argv) > 1 else 'trap'
 {'relogio': relogio, 'metal': metal, 'trap': trap, 'house': house}[versao]()
 out *= 10 ** (-1 / 20) / np.abs(out).max()                      # pico em -1 dBFS
 cam = sys.argv[2] if len(sys.argv) > 2 else os.path.join(os.path.dirname(os.path.abspath(__file__)), 'som.wav')

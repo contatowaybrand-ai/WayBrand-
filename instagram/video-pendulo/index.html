@@ -7,7 +7,8 @@
      Roteiro (cópia da referência): um pêndulo com a tag da WayBrand balança e o fio funciona como cortina.
      À esquerda do fio aparece a pergunta "PRECISA DE … ?" (verde-escuro), à direita a resposta "A WAY BRAND FAZ PARA VOCÊ." (branco).
      A pergunta troca a cada ida e volta (2,4 s), sempre com o fio no extremo esquerdo, quando ela está escondida.
-     Pra trocar as frases é só editar PERGUNTAS e RESPOSTA abaixo e rodar `node render.mjs`. -->
+     As respostas se alternam a cada pergunta e trocam com o fio no extremo direito, quando a resposta está escondida.
+     Pra trocar as frases é só editar PERGUNTAS e RESPOSTAS abaixo e rodar `node render.mjs`. -->
 <style>
   @font-face{font-family:'Inter';font-style:normal;font-weight:300 900;src:url(assets/fonts/Inter-normal.woff2) format('woff2')}
   :root{--brand:#18614D;--ink:#0A2E24;--mint:#9BEFCB}
@@ -84,7 +85,7 @@ const PERGUNTAS = [
   ['PRECISA DE', 'CONTEÚDO?'],
   ['PRECISA', 'CRESCER?'],
 ];
-const RESPOSTA = ['A WAY BRAND', 'FAZ PARA VOCÊ.'];
+const RESPOSTAS = [['A WAY BRAND', 'FAZ PARA VOCÊ.'], ['DEIXA COM', 'A WAY BRAND.']];   // se alternam
 const RODAPE = new URLSearchParams(location.search).get('rodape') || 'letreiro';   // cta | botao | letreiro | frase
 const LETREIRO = ['A+ PREMIUM', 'AMAZON ADS', 'IMAGENS', 'VITRINE', 'VÍDEO', 'ESTRATÉGIA', 'CONTEÚDO'];
 // ── Movimento ─────────────────────────────────────────────────────────
@@ -105,11 +106,14 @@ function fit(el, linhas) {
   const w = Math.max(...[...el.children].filter(c => c.tagName === 'SPAN').map(c => c.offsetWidth));
   if (w > MAXW) el.style.fontSize = (FS * MAXW / w) + 'px';
 }
-let atual = -1;
+let atual = -1, atualR = -1;
 function setT(t) {
   t = ((t % DUR) + DUR) % DUR;
   const k = Math.floor(t / T);
   if (k !== atual) { atual = k; fit(q, PERGUNTAS[k]); }
+  // resposta da pergunta k aparece na volta (de kT+T/2 até (k+1)T); troca com o fio na direita, escondida
+  const r = ((Math.floor((t - T / 2) / T) % PERGUNTAS.length) + PERGUNTAS.length) % RESPOSTAS.length;
+  if (r !== atualR) { atualR = r; fit(a, RESPOSTAS[r]); }
   letreiro(t);
   const th = -AMP * Math.cos(2 * Math.PI * t / T);   // t=0 → extremo esquerdo
   pend.style.transform = `rotate(${-th}rad)`;
@@ -119,14 +123,13 @@ function setT(t) {
   document.getElementById('q').style.clipPath = `polygon(0 0,${x0}px 0,${x1}px 1920px,0 1920px)`;
   document.getElementById('a').style.clipPath = `polygon(${x0}px 0,1080px 0,1080px 1920px,${x1}px 1920px)`;
 }
-fit(a, RESPOSTA);
 document.getElementById('foot').dataset.v = RODAPE;
 // letreiro: o texto se repete e anda um número inteiro de voltas em DUR → loop sem emenda
 const faixa = document.querySelector('.faixa'), bloco = LETREIRO.map(x => x + '<em>❋</em>').join('');
 faixa.innerHTML = bloco.repeat(6);
 function letreiro(t) { const w = faixa.scrollWidth / 6, voltas = Math.max(1, Math.round(70 * DUR / w)); faixa.style.transform = `translateX(${-(t / DUR * voltas * w) % w}px)`; }
 window.setT = setT;
-document.fonts.ready.then(() => { fit(a, RESPOSTA); atual = -1; setT(0);
+document.fonts.ready.then(() => { atual = atualR = -1; setT(0);
   if (!window.__render) { const t0 = performance.now(); (function loop(){ setT((performance.now() - t0) / 1000); requestAnimationFrame(loop); })(); } });
 </script>
 </body>
