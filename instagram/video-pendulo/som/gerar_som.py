@@ -1,8 +1,8 @@
 # Gera som/som.wav (28,8 s, 48 kHz, estéreo) sincronizado com o pêndulo do index.html.
 # Cópia da trilha da referência, sintetizada do zero:
 #   - whoosh grave em cada balanço, quando o fio passa pelo meio (panorâmico acompanha o lado);
-#   - clique duplo agudo em cada ponta;
-#   - "pop" com subida de tom na ponta direita, a cada 4 idas e voltas.
+#   - clique duplo agudo em cada ponta.
+# (o "pop" com subida de tom da referência saiu: soava como bug; a função pop() ficou guardada)
 # Uso: python3 som/gerar_som.py   (depois: node render.mjs --som)
 import numpy as np, wave, os
 SR, T, N = 48000, 2.4, 12            # mesmo T e quantidade de perguntas do index.html
@@ -32,7 +32,9 @@ def whoosh():
     x = banda(rng.standard_normal(n), 35, 9000, incl=-4.5)      # ruído escuro, grave forte
     flutter = 1 + 0.45 * suave(n, 28) / (np.abs(suave(n, 28)).max() + 1e-9)
     env = np.sin(np.pi * np.clip(t / d, 0, 1)) ** 0.8 * (0.55 + 0.45 * np.sin(np.pi * t / d))
-    return x * env * flutter / (np.abs(x).max() + 1e-9)
+    w = x * env * flutter
+    w = w / np.sqrt(np.mean(w ** 2)) * 0.18                    # todos com o mesmo volume (RMS)
+    return 0.42 * np.tanh(w / 0.42)                             # segura picos soltos
 
 def clique():
     n = int(0.12 * SR); t = np.arange(n) / SR; s = np.zeros(n)
@@ -61,8 +63,6 @@ for k in range(N):
     por(whoosh(), base + 3 * T / 4 - 0.2, pan=0.1, ganho=0.9)
     por(clique(), base + T / 2 - 0.02, pan=0.55, ganho=0.35)
     por(clique(), base + T - 0.02, pan=-0.55, ganho=0.35)
-    if k % 4 == 0:
-        por(pop(), base + T / 2 - 0.18, pan=0.3, ganho=0.55)
 
 out *= 10 ** (-1 / 20) / np.abs(out).max()                      # pico em -1 dBFS
 pcm = (out * 32767).astype('<i2')
