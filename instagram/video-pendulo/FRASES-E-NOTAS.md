@@ -84,6 +84,16 @@ O rodapé "DESIGN · AMAZON · CRESCIMENTO" saiu. No `index.html` há 4 variante
 - `letreiro` (usada): faixa rolando com os serviços (A+ PREMIUM ❋ AMAZON ADS ❋ …) + @waybrand.co
 - `frase`: "Sua marca **pronta pra vender** na Amazon." + @waybrand.co
 
+## Som
+
+Cópia da trilha da 2ª referência, sintetizada do zero em `som/gerar_som.py` (nada foi recortado do vídeo original):
+
+- whoosh grave em cada balanço, quando o fio passa pelo meio (o som vai de um lado para o outro no estéreo);
+- clique duplo agudo quando o pêndulo chega na ponta;
+- "pop" com subida de tom na ponta direita, a cada 4 idas e voltas.
+
+Volume no padrão do Instagram (-14 LUFS). Para mexer no som: edite `som/gerar_som.py`, rode `python3 som/gerar_som.py` e depois `node render.mjs --som` (só troca o áudio, sem renderizar os quadros de novo).
+
 ## Legenda sugerida
 
 > Precisa de A+ Premium? Imagem que vende? Amazon Ads? Uma vitrine que faz o cliente ficar?
