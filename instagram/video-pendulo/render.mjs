@@ -14,7 +14,7 @@ const tmp = fs.mkdtempSync(path.join(dir, '.frames-'));
 const n = Math.round(fps * dur);
 for (let f = 0; f < n; f++) { await p.evaluate(t => setT(t), f / fps); await el.screenshot({ path: path.join(tmp, `f${String(f).padStart(4, '0')}.png`) }); }
 await b.close();
-const out = path.join(dir, 'out', 'precisa-de-deixa-com-a-gente.mp4');
+const out = path.join(dir, 'out', 'precisa-de-deixa-com-a-way-brand.mp4');
 execFileSync(FFMPEG, ['-y', '-framerate', String(fps), '-i', path.join(tmp, 'f%04d.png'), '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo', '-shortest',
   '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '17', '-c:a', 'aac', '-movflags', '+faststart', out], { stdio: 'ignore' });
 fs.rmSync(tmp, { recursive: true }); console.log(out);

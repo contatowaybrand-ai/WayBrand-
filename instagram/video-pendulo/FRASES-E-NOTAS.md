@@ -1,4 +1,4 @@
-# Reel "Precisa de…? Deixa com a gente." (1080×1920, 28,8 s, loop)
+# Reel "Precisa de…? Deixa com a Way Brand." (1080×1920, 28,8 s, loop)
 
 Cópia da referência (pêndulo com a tag da marca que funciona como cortina): à esquerda do fio aparece a pergunta, à direita a resposta.
 
@@ -25,7 +25,7 @@ Para trocar as frases, edite `PERGUNTAS` e `RESPOSTA` no `index.html` e rode `no
 | 11 | PRECISA DE / CONTEÚDO? |
 | 12 | PRECISA / CRESCER? |
 
-Resposta: **DEIXA COM / A GENTE.**
+Resposta: **DEIXA COM / A WAY BRAND.**
 
 ## Mais opções de pergunta
 
@@ -64,7 +64,8 @@ Até umas 12 letras na segunda linha, o texto fica no tamanho cheio.
 
 ## Opções de resposta
 
-- **DEIXA COM / A GENTE.** (usada)
+- **DEIXA COM / A WAY BRAND.** (usada)
+- DEIXA COM / A GENTE.
 - A GENTE / RESOLVE.
 - CONTA / COM A GENTE.
 - A GENTE / FAZ.
@@ -84,6 +85,6 @@ Hoje o rodapé é "DESIGN · AMAZON · CRESCIMENTO" com "@waybrand.co". Outras o
 ## Legenda sugerida
 
 > Precisa de A+ Premium? Imagem que vende? Amazon Ads? Uma vitrine que faz o cliente ficar?
-> Deixa com a gente.
+> Deixa com a Way Brand.
 >
 > Manda "MARCA" aqui nos comentários que a gente te mostra por onde começar.
