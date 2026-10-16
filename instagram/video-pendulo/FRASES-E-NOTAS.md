@@ -86,12 +86,15 @@ O rodapé "DESIGN · AMAZON · CRESCIMENTO" saiu. No `index.html` há 4 variante
 
 ## Som
 
-Cópia da trilha da 2ª referência, sintetizada do zero em `som/gerar_som.py` (nada foi recortado do vídeo original):
+"Relógio de pêndulo musical", sintetizado do zero em `som/gerar_som.py`:
 
-- whoosh grave em cada balanço, quando o fio passa pelo meio (o som vai de um lado para o outro no estéreo);
-- clique duplo agudo quando o pêndulo chega na ponta.
+- tique-taque de madeira em cada ponta (tique na direita, taque na esquerda);
+- nota de marimba em cada ponta, formando uma melodia calma;
+- acorde suave de fundo + grave, trocando a cada 3 balanços (Dó, Lá menor, Fá, Sol);
+- whoosh bem baixo quando o fio passa pelo meio;
+- reverb circular, para o loop não ter emenda.
 
-O "pop" com subida de tom que a referência tem saiu, porque soava como bug.
+Para mudar a melodia ou os acordes, edite `ACORDES` no `som/gerar_som.py`.
 
 Volume no padrão do Instagram (-14 LUFS). Para mexer no som: edite `som/gerar_som.py`, rode `python3 som/gerar_som.py` e depois `node render.mjs --som` (só troca o áudio, sem renderizar os quadros de novo).
 

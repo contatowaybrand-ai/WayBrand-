@@ -5,7 +5,7 @@ const stills = process.argv.includes('--stills');
 const mudo = path.join(dir, 'out', 'video-sem-som.mp4'), out = path.join(dir, 'out', 'a-way-brand-faz-para-voce.mp4');
 // junta o vídeo com som/som.wav (gerado por som/gerar_som.py), volume no padrão do Instagram (-14 LUFS)
 const comSom = () => execFileSync(FFMPEG, ['-y', '-i', mudo, '-i', path.join(dir, 'som', 'som.wav'), '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
-  '-af', 'loudnorm=I=-14:TP=-1:LRA=11', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', out], { stdio: 'ignore' });
+  '-af', 'loudnorm=I=-14:TP=-1:LRA=11,alimiter=limit=0.85:level=false', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', out], { stdio: 'ignore' });
 if (process.argv.includes('--som')) {   // reaproveita o vídeo já renderizado, sem refazer os quadros
   execFileSync(FFMPEG, ['-y', '-i', out, '-map', '0:v', '-c', 'copy', mudo], { stdio: 'ignore' }); comSom(); fs.rmSync(mudo); console.log(out); process.exit(0);
 }

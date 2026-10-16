@@ -1,72 +1,98 @@
 # Gera som/som.wav (28,8 s, 48 kHz, estéreo) sincronizado com o pêndulo do index.html.
-# Cópia da trilha da referência, sintetizada do zero:
-#   - whoosh grave em cada balanço, quando o fio passa pelo meio (panorâmico acompanha o lado);
-#   - clique duplo agudo em cada ponta.
-# (o "pop" com subida de tom da referência saiu: soava como bug; a função pop() ficou guardada)
+# "Relógio de pêndulo musical", calmo e em loop:
+#   - tique-taque de madeira em cada ponta (tique na direita, taque na esquerda);
+#   - nota de marimba em cada ponta, formando uma melodia sobre os acordes;
+#   - acorde suave de fundo + grave, trocando a cada 3 idas e voltas (C, Am, F, G);
+#   - whoosh bem baixo quando o fio passa pelo meio;
+#   - reverb circular: a cauda do fim cai no começo, então o loop não tem emenda.
 # Uso: python3 som/gerar_som.py   (depois: node render.mjs --som)
 import numpy as np, wave, os
 SR, T, N = 48000, 2.4, 12            # mesmo T e quantidade de perguntas do index.html
 DUR = T * N
-rng = np.random.default_rng(7)
-L = int(DUR * SR); out = np.zeros((L, 2))
+L = int(DUR * SR)
+rng = np.random.default_rng(11)
+out = np.zeros((L, 2))
 
-def banda(x, lo, hi, incl=0.0):
-    """Filtro passa-banda por FFT, com inclinação de incl dB/oitava acima de lo."""
+def hz(nota):
+    """'C5', 'F#4'… → Hz."""
+    nomes = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
+    n = nomes[nota[0]] + (1 if '#' in nota else 0); o = int(nota[-1])
+    return 440 * 2 ** ((n + 12 * (o + 1) - 69) / 12)
+
+def banda(x, lo, hi):
     X = np.fft.rfft(x); f = np.fft.rfftfreq(len(x), 1 / SR)
-    g = ((f >= lo) & (f <= hi)).astype(float)
-    g[f > lo] *= (f[f > lo] / lo) ** (incl / 6.02)
-    return np.fft.irfft(X * g, len(x))
-
-def suave(n, corte):
-    return banda(rng.standard_normal(n), 0.5, corte)
+    return np.fft.irfft(X * ((f >= lo) & (f <= hi)), len(x))
 
 def por(sinal, t0, pan=0.0, ganho=1.0):
-    """Mixa o sinal em t0 (s) com loop: o que passa do fim volta no começo."""
-    i = int(t0 * SR) % L; n = len(sinal)
-    esq, dir_ = np.cos((pan + 1) * np.pi / 4), np.sin((pan + 1) * np.pi / 4)
-    idx = (np.arange(n) + i) % L
-    out[idx, 0] += sinal * ganho * esq * 1.41; out[idx, 1] += sinal * ganho * dir_ * 1.41
+    """Mixa em t0 (s) com loop: o que passa do fim volta no começo."""
+    i = int(round(t0 * SR)) % L; idx = (np.arange(len(sinal)) + i) % L
+    out[idx, 0] += sinal * ganho * np.cos((pan + 1) * np.pi / 4) * 1.41
+    out[idx, 1] += sinal * ganho * np.sin((pan + 1) * np.pi / 4) * 1.41
 
-def whoosh():
-    d = 0.58; n = int(d * SR); t = np.arange(n) / SR
-    x = banda(rng.standard_normal(n), 35, 9000, incl=-4.5)      # ruído escuro, grave forte
-    flutter = 1 + 0.45 * suave(n, 28) / (np.abs(suave(n, 28)).max() + 1e-9)
-    env = np.sin(np.pi * np.clip(t / d, 0, 1)) ** 0.8 * (0.55 + 0.45 * np.sin(np.pi * t / d))
-    w = x * env * flutter
-    w = w / np.sqrt(np.mean(w ** 2)) * 0.18                    # todos com o mesmo volume (RMS)
-    return 0.42 * np.tanh(w / 0.42)                             # segura picos soltos
+def marimba(f, d=2.0):
+    t = np.arange(int(d * SR)) / SR
+    s = (np.sin(2 * np.pi * f * t) * np.exp(-t / 0.55)
+         + 0.35 * np.sin(2 * np.pi * f * 3.93 * t) * np.exp(-t / 0.09)
+         + 0.12 * np.sin(2 * np.pi * f * 9.2 * t) * np.exp(-t / 0.03)
+         + 0.25 * np.sin(2 * np.pi * f * 2.0 * t + 0.3) * np.exp(-t / 0.3))   # leve brilho de kalimba
+    return s * np.minimum(1, t / 0.002) * np.minimum(1, (d - t) / 0.4)   # fecha sem estalo
 
-def clique():
-    n = int(0.12 * SR); t = np.arange(n) / SR; s = np.zeros(n)
-    for t0, a in ((0.0, 1.0), (0.032, 0.7)):
-        m = t >= t0; tt = t[m] - t0
-        s[m] += a * banda(rng.standard_normal(m.sum()), 1400, 9000) * np.exp(-tt / 0.012)
-        s[m] += 0.5 * a * np.sin(2 * np.pi * 140 * tt) * np.exp(-tt / 0.02)
-    return s / np.abs(s).max()
+def madeira(f0, d=0.12):
+    t = np.arange(int(d * SR)) / SR
+    s = banda(rng.standard_normal(len(t)), f0 * 1.4, f0 * 5) * np.exp(-t / 0.006)
+    s = s / np.abs(s).max() * 0.6
+    s += np.sin(2 * np.pi * f0 * t) * np.exp(-t / 0.035) + 0.4 * np.sin(2 * np.pi * f0 * 2.7 * t) * np.exp(-t / 0.015)
+    return s * np.minimum(1, t / 0.0008)
 
-def pop():
-    n = int(0.42 * SR); t = np.arange(n) / SR; s = np.zeros(n)
-    def tom(f, t0, d, harm=(1, .5, .3)):
-        m = (t >= t0) & (t < t0 + d); tt = t[m] - t0
-        fase = 2 * np.pi * np.cumsum(f(tt)) / SR
-        env = np.minimum(1, tt / 0.004) * np.minimum(1, (d - tt) / 0.008) * np.exp(-tt / (d * 0.6))
-        s[m] += env * sum(a * np.sin(k * fase) for k, a in enumerate(harm, 1))
-    tom(lambda tt: 600 + 0 * tt, 0.00, 0.05)                    # blip 1
-    tom(lambda tt: 300 + 0 * tt, 0.04, 0.07)                    # blip 2
-    tom(lambda tt: 300 + 320 * (tt / 0.16) ** 0.8, 0.18, 0.18, (1, .55, .35, .2))  # subida
-    return s / np.abs(s).max()
+def whoosh(d=0.6):
+    t = np.arange(int(d * SR)) / SR
+    x = banda(rng.standard_normal(len(t)), 120, 2500)
+    return x / np.sqrt(np.mean(x ** 2)) * np.sin(np.pi * t / d) ** 2
 
-for k in range(N):
-    base = k * T
-    # ida (esq → dir): meio em T/4, ponta direita em T/2; volta: meio em 3T/4, ponta esquerda em T
-    por(whoosh(), base + T / 4 - 0.2, pan=-0.1, ganho=0.9)
-    por(whoosh(), base + 3 * T / 4 - 0.2, pan=0.1, ganho=0.9)
-    por(clique(), base + T / 2 - 0.02, pan=0.55, ganho=0.35)
-    por(clique(), base + T - 0.02, pan=-0.55, ganho=0.35)
+def pad(freqs, d):
+    t = np.arange(int(d * SR)) / SR; s = np.zeros_like(t)
+    for f in freqs:
+        for k, a in ((1, 1), (2, .35), (3, .15)):
+            for det in (-0.12, 0.12):                                  # leve coro
+                s += a * np.sin(2 * np.pi * (f * k + det) * t + rng.uniform(0, 6.3))
+    env = np.minimum(1, t / 1.2) * np.minimum(1, (d - t) / 1.2)       # entra e sai devagar
+    return s * env / len(freqs)
+
+# acordes (3 idas e voltas cada) e notas da melodia (uma por ponta: 6 por acorde)
+ACORDES = [
+    (['C3'], ['E4', 'G4', 'B4', 'D5'], ['G5', 'B5', 'D6', 'B5', 'G5', 'E5']),
+    (['A2'], ['C4', 'E4', 'G4', 'B4'], ['E5', 'G5', 'B5', 'C6', 'B5', 'G5']),
+    (['F2'], ['A3', 'C4', 'E4', 'G4'], ['C5', 'E5', 'G5', 'A5', 'G5', 'E5']),
+    (['G2'], ['B3', 'D4', 'E4', 'A4'], ['D5', 'G5', 'B5', 'A5', 'G5', 'D5']),
+]
+DC = 3 * T
+for c, (baixo, notas, melodia) in enumerate(ACORDES):
+    t0 = c * DC
+    por(pad([hz(n) for n in notas], DC + 1.2), t0 - 0.6, ganho=0.05)
+    tb = np.arange(int(DC * SR)) / SR
+    grave = np.sin(2 * np.pi * hz(baixo[0]) * tb) * np.exp(-tb / 1.2) * np.minimum(1, tb / 0.01) * np.minimum(1, (DC - tb) / 0.3)
+    por(grave, t0, ganho=0.07)
+    for j, n in enumerate(melodia):
+        tp = t0 + j * T / 2                       # pontas: esquerda em k·T, direita em k·T + T/2
+        lado = -0.45 if j % 2 == 0 else 0.45
+        por(marimba(hz(n)), tp, pan=lado * 0.6, ganho=0.30)
+
+for k in range(2 * N):
+    tp = k * T / 2
+    direita = k % 2 == 1
+    por(madeira(1250 if direita else 900), tp - 0.005, pan=0.5 if direita else -0.5, ganho=0.34)   # tique / taque
+    por(whoosh(), tp + T / 4 - 0.3, pan=0.0, ganho=0.035)
+
+# reverb circular (cauda de 1,4 s), 22% molhado
+ti = np.arange(int(1.4 * SR)) / SR
+for ch in range(2):
+    ir = np.zeros(L); ir[:len(ti)] = rng.standard_normal(len(ti)) * np.exp(-ti / 0.35)
+    ir = banda(ir, 200, 7000); ir /= np.sqrt(np.sum(ir ** 2))
+    molhado = np.fft.irfft(np.fft.rfft(out[:, ch]) * np.fft.rfft(ir), L)
+    out[:, ch] = out[:, ch] + 0.22 * molhado * (np.std(out[:, ch]) / (np.std(molhado) + 1e-9))
 
 out *= 10 ** (-1 / 20) / np.abs(out).max()                      # pico em -1 dBFS
-pcm = (out * 32767).astype('<i2')
 cam = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'som.wav')
 with wave.open(cam, 'wb') as w:
-    w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes(pcm.tobytes())
+    w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((out * 32767).astype('<i2').tobytes())
 print(cam)
