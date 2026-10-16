@@ -23,9 +23,21 @@
      font-weight:900;line-height:.98;letter-spacing:-.01em;white-space:nowrap}
   #q p{color:var(--ink)}
   #a p{color:#fff}
-  #foot{position:absolute;left:0;right:0;top:1608px;text-align:center;z-index:2}
-  #foot b{display:block;color:#fff;font:700 31px/1 'Inter';letter-spacing:.14em}
-  #foot span{display:block;margin-top:22px;color:var(--mint);font:700 31px/1 'Inter';letter-spacing:.06em}
+  /* rodapé: escolha a variante em RODAPE (ou ?rodape=x na URL) */
+  #foot{position:absolute;left:0;right:0;top:1580px;text-align:center;z-index:2}
+  #foot > div{display:none}
+  #foot[data-v=cta] .cta,#foot[data-v=botao] .botao,#foot[data-v=letreiro] .letreiro,#foot[data-v=frase] .frase{display:block}
+  #foot .arroba{display:block;margin-top:26px;color:var(--mint);font:700 31px/1 'Inter';letter-spacing:.06em}
+  #foot .cta b{display:block;color:#fff;font:800 40px/1.2 'Inter';letter-spacing:-.01em}
+  #foot .cta b i{font-style:normal;color:var(--ink);background:var(--mint);padding:2px 16px 4px;border-radius:10px;margin:0 4px}
+  #foot .botao b{display:inline-block;background:#FCD800;color:#0f1111;font:700 36px/1 'Inter';padding:26px 46px;border-radius:999px;
+     box-shadow:0 14px 30px rgba(3,20,15,.35)}
+  #foot .letreiro{position:absolute;left:0;right:0;top:-10px;overflow:hidden;white-space:nowrap}
+  #foot .letreiro .faixa{display:inline-block;color:var(--mint);font:800 38px/1 'Inter';letter-spacing:.04em;will-change:transform}
+  #foot .letreiro .faixa em{font-style:normal;color:#fff;opacity:.55;margin:0 28px}
+  #foot .letreiro .arroba{margin-top:80px}
+  #foot .frase b{display:block;color:#fff;font:500 40px/1.25 'Inter';letter-spacing:-.01em}
+  #foot .frase b strong{font-weight:800;color:var(--mint)}
   /* pêndulo: o container gira em torno do pivô, acima do quadro */
   .pend{position:absolute;left:540px;top:-1600px;width:0;height:0;z-index:5}
   .pend .fio{position:absolute;left:-3.5px;top:0;width:7px;height:2512px;background:#06231B;border-radius:4px}
@@ -49,7 +61,12 @@
   <div id="pend" class="pend"><div class="fio"></div><div class="tag">
     <svg viewBox="-40 -40 80 80"><g id="raios" fill="#9BEFCB"></g></svg>
   </div></div>
-  <div id="foot"><b>DESIGN · AMAZON · CRESCIMENTO</b><span>@waybrand.co</span></div>
+  <div id="foot">
+    <div class="cta"><b>Comente <i>MARCA</i> que a gente te chama.</b><span class="arroba">@waybrand.co</span></div>
+    <div class="botao"><b>Quero vender mais na Amazon →</b><span class="arroba">@waybrand.co</span></div>
+    <div class="letreiro"><div class="faixa"></div><span class="arroba">@waybrand.co</span></div>
+    <div class="frase"><b>Sua marca <strong>pronta pra vender</strong><br>na Amazon.</b><span class="arroba">@waybrand.co</span></div>
+  </div>
 </div>
 <script>
 // ── Frases (edite aqui) ───────────────────────────────────────────────
@@ -68,6 +85,8 @@ const PERGUNTAS = [
   ['PRECISA', 'CRESCER?'],
 ];
 const RESPOSTA = ['DEIXA COM', 'A WAY BRAND.'];
+const RODAPE = new URLSearchParams(location.search).get('rodape') || 'cta';   // cta | botao | letreiro | frase
+const LETREIRO = ['A+ PREMIUM', 'AMAZON ADS', 'IMAGENS', 'VITRINE', 'VÍDEO', 'ESTRATÉGIA', 'CONTEÚDO'];
 // ── Movimento ─────────────────────────────────────────────────────────
 const T = 2.4, DUR = T * PERGUNTAS.length;     // uma ida e volta por pergunta → 28,8 s
 const AMP = 9.75 * Math.PI / 180;                // amplitude do pêndulo
@@ -91,6 +110,7 @@ function setT(t) {
   t = ((t % DUR) + DUR) % DUR;
   const k = Math.floor(t / T);
   if (k !== atual) { atual = k; fit(q, PERGUNTAS[k]); }
+  letreiro(t);
   const th = -AMP * Math.cos(2 * Math.PI * t / T);   // t=0 → extremo esquerdo
   pend.style.transform = `rotate(${-th}rad)`;
   sombra.style.transform = `translate(26px,14px) rotate(${-th}rad)`;
@@ -100,6 +120,11 @@ function setT(t) {
   document.getElementById('a').style.clipPath = `polygon(${x0}px 0,1080px 0,1080px 1920px,${x1}px 1920px)`;
 }
 fit(a, RESPOSTA);
+document.getElementById('foot').dataset.v = RODAPE;
+// letreiro: o texto se repete e anda um número inteiro de voltas em DUR → loop sem emenda
+const faixa = document.querySelector('.faixa'), bloco = LETREIRO.map(x => x + '<em>❋</em>').join('');
+faixa.innerHTML = bloco.repeat(6);
+function letreiro(t) { const w = faixa.scrollWidth / 6, voltas = Math.max(1, Math.round(70 * DUR / w)); faixa.style.transform = `translateX(${-(t / DUR * voltas * w) % w}px)`; }
 window.setT = setT;
 document.fonts.ready.then(() => { fit(a, RESPOSTA); atual = -1; setT(0);
   if (!window.__render) { const t0 = performance.now(); (function loop(){ setT((performance.now() - t0) / 1000); requestAnimationFrame(loop); })(); } });

@@ -76,11 +76,12 @@ Até umas 12 letras na segunda linha, o texto fica no tamanho cheio.
 
 ## Rodapé
 
-Hoje o rodapé é "DESIGN · AMAZON · CRESCIMENTO" com "@waybrand.co". Outras opções:
+O rodapé "DESIGN · AMAZON · CRESCIMENTO" saiu. No `index.html` há 4 variantes, escolhidas em `RODAPE` (ou com `?rodape=x` na URL):
 
-- MARCA · ANÚNCIO · VENDA
-- BRANDING · CONTEÚDO · PERFORMANCE
-- ESTRATÉGIA · DESIGN · ADS
+- `cta`: "Comente **MARCA** que a gente te chama." + @waybrand.co
+- `botao`: botão amarelo estilo Amazon "Quero vender mais na Amazon →" + @waybrand.co
+- `letreiro`: faixa rolando com os serviços (A+ PREMIUM ❋ AMAZON ADS ❋ …) + @waybrand.co
+- `frase`: "Sua marca **pronta pra vender** na Amazon." + @waybrand.co
 
 ## Legenda sugerida
 
